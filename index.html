@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teyvat Math Adventure - IB Pre-DP Quest</title>
+    <title>Ace Attorney: Mathematical Turnabout</title>
     <style>
         * {
             margin: 0;
@@ -11,1666 +11,2500 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --court-blue: #003366;
+            --objection-red: #CC0000;
+            --evidence-gold: #FFD700;
+            --wood-brown: #4A2C2A;
+            --testimony-bg: #F5F5DC;
+            --health-green: #4CAF50;
+            --text-dark: #1a1a1a;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--court-blue) 0%, #004080 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 10px;
         }
 
         .game-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 1000px;
             width: 100%;
-            padding: 40px;
             position: relative;
             overflow: hidden;
+            border: 5px solid var(--wood-brown);
         }
 
-        .game-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
-        }
-
+        /* Header */
         .header {
+            background: linear-gradient(180deg, var(--court-blue) 0%, #004d99 100%);
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 30px;
+            border-bottom: 5px solid var(--evidence-gold);
         }
 
         .title {
-            font-size: 2.5em;
-            color: #667eea;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            color: #666;
-        }
-
-        .map-container {
-            width: 100%;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            position: relative;
-            border: 3px solid #667eea;
-        }
-
-        .map-title {
-            text-align: center;
-            font-size: 1.3em;
-            color: #667eea;
+            font-size: 2em;
             font-weight: bold;
-            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
         }
 
-        .map-path {
+        .case-title {
+            font-size: 1.2em;
+            color: var(--evidence-gold);
+        }
+
+        /* Health Bar */
+        .health-container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 3px solid var(--wood-brown);
+        }
+
+        .health-bar-wrapper {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .health-label {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .health-bar {
+            background: #333;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--evidence-gold);
             position: relative;
-            margin: 20px 0;
         }
 
-        .map-path::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: #ddd;
-            z-index: 0;
-        }
-
-        .location {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
+        .health-fill {
+            background: linear-gradient(90deg, var(--health-green) 0%, #66BB6A 100%);
+            height: 100%;
+            transition: width 0.5s ease;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 2em;
-            background: white;
-            border: 4px solid #ddd;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s;
-        }
-
-        .location.visited {
-            border-color: #4facfe;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
-        }
-
-        .location.current {
-            border-color: #f5576c;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            animation: pulse 1.5s infinite;
-            box-shadow: 0 0 30px rgba(245, 87, 108, 0.7);
-        }
-
-        .location-name {
-            font-size: 0.35em;
-            margin-top: 5px;
+            color: white;
             font-weight: bold;
-            color: #333;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+        .progress-info {
+            color: white;
+            font-weight: bold;
+            text-align: right;
         }
 
-        .character-info {
+        /* Court Scene */
+        .court-scene {
+            min-height: 500px;
+            background: linear-gradient(180deg, #2c1810 0%, #4A2C2A 50%, #3d2419 100%);
+            padding: 20px;
+            position: relative;
+        }
+
+        .character-area {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-radius: 15px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            min-height: 150px;
+        }
+
+        .character {
+            flex: 1;
+            text-align: center;
+        }
+
+        .character-sprite {
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .character-sprite img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .character-name {
-            font-size: 1.5em;
-            color: #764ba2;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
             font-weight: bold;
         }
 
-        .primogems {
-            font-size: 1.3em;
-            color: #f5576c;
-            font-weight: bold;
-        }
-
-        .question-container {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 2px solid #667eea;
-        }
-
-        .question-number {
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .question-text {
-            font-size: 1.2em;
-            line-height: 1.6;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .diagram {
-            background: white;
-            padding: 20px;
+        /* Dialogue Box */
+        .dialogue-box {
+            background: var(--testimony-bg);
+            border: 4px solid var(--wood-brown);
             border-radius: 10px;
+            padding: 20px;
             margin: 20px 0;
+            min-height: 150px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .dialogue-speaker {
+            color: var(--objection-red);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .dialogue-text {
+            color: var(--text-dark);
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Question Area */
+        .question-area {
+            background: white;
+            border: 3px solid var(--court-blue);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .question-header {
+            color: var(--court-blue);
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--evidence-gold);
+        }
+
+        .diagram-container {
+            background: #f9f9f9;
+            border: 2px dashed var(--court-blue);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
             text-align: center;
-            border: 2px dashed #667eea;
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Evidence Section */
+        .evidence-section {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--evidence-gold);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .evidence-title {
+            color: var(--evidence-gold);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .evidence-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--evidence-gold);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .evidence-item:hover {
+            background: var(--evidence-gold);
+            transform: scale(1.05);
+        }
+
+        /* Answer Input */
+        .answer-section {
+            margin: 20px 0;
         }
 
         .answer-input {
             width: 100%;
             padding: 15px;
-            font-size: 1.1em;
-            border: 2px solid #667eea;
+            font-size: 1.2em;
+            font-family: 'Courier New', monospace;
+            border: 3px solid var(--court-blue);
             border-radius: 10px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
+            margin-bottom: 15px;
         }
 
         .answer-input:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+            border-color: var(--evidence-gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
         }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 40px;
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 25px;
             font-size: 1.1em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-press {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .btn-present {
+            background: linear-gradient(135deg, var(--court-blue) 0%, #004d99 100%);
+            color: white;
+        }
+
+        .btn-object {
+            background: linear-gradient(135deg, var(--objection-red) 0%, #990000 100%);
+            color: white;
+            font-size: 1.3em;
         }
 
         .btn:disabled {
-            background: #ccc;
+            background: #cccccc;
             cursor: not-allowed;
             transform: none;
         }
 
-        .hint-btn {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            color: #764ba2;
-            padding: 12px 30px;
-            font-size: 1em;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .hint-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(252, 182, 159, 0.4);
-        }
-
-        .hint-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .show-answer-btn {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: #333;
-            padding: 12px 30px;
-            font-size: 1em;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .show-answer-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(250, 112, 154, 0.4);
-        }
-
-        .show-answer-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .answer-explanation {
-            background: #e8f5e9;
-            border: 2px solid #4caf50;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 15px;
-            color: #2e7d32;
-            line-height: 1.6;
-        }
-
-        .answer-explanation strong {
-            color: #1b5e20;
-        }
-
-        /* Mini-game modal styles */
-        .modal {
+        /* Objection Animation */
+        .objection-overlay {
             display: none;
             position: fixed;
-            z-index: 1000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
         }
 
-        .modal.active {
+        .objection-overlay.active {
             display: flex;
+            animation: flash 0.5s;
         }
 
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        @keyframes flash {
+            0%, 100% { background: rgba(0, 0, 0, 0.8); }
+            50% { background: rgba(255, 0, 0, 0.8); }
         }
 
-        .modal-title {
-            font-size: 2em;
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .mini-game-container {
-            margin: 20px 0;
-        }
-
-        /* Slime Whacker game styles */
-        .slime-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .slime-hole {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            border: 4px solid #654321;
-            transition: all 0.1s;
-        }
-
-        .slime-hole:active {
-            transform: scale(0.95);
-        }
-
-        .slime {
-            font-size: 3em;
-            animation: slimePop 0.5s ease-out;
-        }
-
-        @keyframes slimePop {
-            0% {
-                transform: translateY(50px) scale(0);
-            }
-            50% {
-                transform: translateY(0) scale(1.2);
-            }
-            100% {
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .game-timer {
-            font-size: 1.5em;
-            color: #f5576c;
+        .objection-text {
+            font-size: 6em;
             font-weight: bold;
-            text-align: center;
-            margin: 20px 0;
+            color: var(--objection-red);
+            text-shadow: 5px 5px 0 white, -2px -2px 0 white;
+            animation: objectionPop 0.5s ease-out;
         }
 
-        .game-score {
-            font-size: 1.3em;
-            color: #667eea;
-            font-weight: bold;
-            text-align: center;
-            margin: 10px 0;
+        @keyframes objectionPop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .mini-game-result {
-            text-align: center;
-            font-size: 1.4em;
-            color: #4caf50;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .continue-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 40px;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            display: block;
-            margin: 20px auto;
-        }
-
-        .continue-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
+        /* Feedback */
         .feedback {
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin: 20px 0;
+            font-weight: bold;
             font-size: 1.1em;
             text-align: center;
-            font-weight: bold;
         }
 
         .feedback.correct {
             background: #d4edda;
             color: #155724;
-            border: 2px solid #c3e6cb;
+            border: 3px solid #c3e6cb;
         }
 
         .feedback.incorrect {
             background: #f8d7da;
             color: #721c24;
-            border: 2px solid #f5c6cb;
+            border: 3px solid #f5c6cb;
         }
 
-        .final-score {
+        /* Chapter Selection */
+        .chapter-selection {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .chapter-selection h2 {
+            color: var(--court-blue);
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .chapter-btn {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--court-blue) 0%, #004d99 100%);
+            color: white;
+            border: 3px solid var(--evidence-gold);
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chapter-btn:hover {
+            background: linear-gradient(135deg, #004d99 0%, var(--court-blue) 100%);
+            transform: scale(1.05);
+        }
+
+        /* Verdict Screen */
+        .verdict-screen {
             text-align: center;
             padding: 40px;
         }
 
-        .final-score h2 {
-            font-size: 2.5em;
-            color: #667eea;
+        .verdict-screen h2 {
+            font-size: 3em;
+            color: var(--court-blue);
             margin-bottom: 20px;
         }
 
-        .final-score p {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .restart-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .hint-box {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            color: #856404;
+        .final-score {
+            font-size: 2em;
+            color: var(--evidence-gold);
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
-        canvas {
-            max-width: 100%;
-            border-radius: 8px;
-            background: white;
-            display: block;
-            margin: 15px auto;
-            border: 2px solid #667eea;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.5em;
+            }
+
+            .character-sprite img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .objection-text {
+                font-size: 3em;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
         }
     </style>
+    <script src="questions-chapter5.js"></script>
+    <script src="questions-chapter8.js"></script>
+    <script src="questions-chapter13.js"></script>
+    <script src="questions-chapter14.js"></script>
+    <script src="questions-revision1.js"></script>
+    <script src="questions-chapter15.js"></script>
+    <script src="questions-chapter16.js"></script>
+    <script src="questions-revision2.js"></script>
 </head>
 <body>
     <div class="game-container">
+        <!-- Header -->
         <div class="header">
-            <h1 class="title">⚔️ Teyvat Math Adventure ⚔️</h1>
-            <p class="subtitle">Complete the quest to earn Primogems!</p>
+            <div class="title">⚖️ ACE ATTORNEY: MATHEMATICAL TURNABOUT ⚖️</div>
+            <div class="case-title" id="caseTitle">Select Your Case File</div>
         </div>
 
-        <div class="map-container">
-            <div class="map-title">🗺️ Journey Through Teyvat 🗺️</div>
-            <div class="map-path" id="mapPath">
-                <div class="location current" id="location0">
-                    <span>🏰</span>
-                    <div class="location-name">Mondstadt</div>
+        <!-- Health and Progress -->
+        <div class="health-container">
+            <div class="health-bar-wrapper">
+                <div class="health-label">CONFIDENCE</div>
+                <div class="health-bar">
+                    <div class="health-fill" id="healthFill" style="width: 100%;">100%</div>
                 </div>
-                <div class="location" id="location1">
-                    <span>⛰️</span>
-                    <div class="location-name">Dragonspine</div>
+            </div>
+            <div class="progress-info">
+                <div id="questionProgress">Question 1/10</div>
+                <div id="scoreDisplay">Score: 0</div>
+            </div>
+        </div>
+
+        <!-- Chapter Selection Screen -->
+        <div id="chapterSelection" class="chapter-selection">
+            <h2>📋 SELECT YOUR CASE 📋</h2>
+
+            <!-- Playtest Mode Toggle -->
+            <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 5px;">
+                <label style="font-weight: bold; color: #856404; cursor: pointer;">
+                    <input type="checkbox" id="playtestMode" style="margin-right: 10px; transform: scale(1.5); cursor: pointer;">
+                    🔧 PLAYTEST MODE (Debug) - Show answers and skip scoring
+                </label>
+            </div>
+
+            <button class="chapter-btn" onclick="startChapter('chapter5')">
+                Case 005: The Pythagorean Theorem Incident
+            </button>
+            <button class="chapter-btn" onclick="startChapter('chapter8')">
+                Case 008: The Measurement Mystery
+            </button>
+            <button class="chapter-btn" onclick="startChapter('chapter13')">
+                Case 013: The Congruence Conspiracy
+            </button>
+            <button class="chapter-btn" onclick="startChapter('chapter14')">
+                Case 014: The Algebraic Accusation
+            </button>
+            <button class="chapter-btn" onclick="startChapter('revision1')">
+                Case R1: The Ultimate Review Trial
+            </button>
+            <button class="chapter-btn" onclick="startChapter('chapter15')">
+                Case 015: The Trigonometry Testimony
+            </button>
+            <button class="chapter-btn" onclick="startChapter('chapter16')">
+                Case 016: The Probability Paradox
+            </button>
+            <button class="chapter-btn" onclick="startChapter('revision2')">
+                Case R2: The Final Examination
+            </button>
+            <button class="chapter-btn" style="opacity: 0.5;" disabled>
+                More Chapters Coming Soon...
+            </button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="hidden">
+            <!-- Court Scene -->
+            <div class="court-scene">
+                <!-- Characters -->
+                <div class="character-area">
+                    <div class="character">
+                        <div class="character-sprite">
+                            <img src="characters/phoenix_wright.png" alt="Phoenix Wright">
+                        </div>
+                        <div class="character-name">Phoenix Wright</div>
+                    </div>
+                    <div class="character">
+                        <div class="character-sprite" id="witnessSprite">
+                            <img id="witnessImage" src="characters/phoenix_wright.png" alt="Witness">
+                        </div>
+                        <div class="character-name" id="witnessName">Witness</div>
+                    </div>
                 </div>
-                <div class="location" id="location2">
-                    <span>🏯</span>
-                    <div class="location-name">Liyue</div>
+
+                <!-- Dialogue Box -->
+                <div class="dialogue-box">
+                    <div class="dialogue-speaker" id="speaker">Judge</div>
+                    <div class="dialogue-text" id="dialogueText">
+                        Welcome to the courtroom. We will now examine the mathematical evidence.
+                    </div>
                 </div>
-                <div class="location" id="location3">
-                    <span>⚡</span>
-                    <div class="location-name">Inazuma</div>
-                </div>
-                <div class="location" id="location4">
-                    <span>🌿</span>
-                    <div class="location-name">Sumeru</div>
-                </div>
-                <div class="location" id="location5">
-                    <span>⚖️</span>
-                    <div class="location-name">Fontaine</div>
+
+                <!-- Question Area -->
+                <div class="question-area">
+                    <div class="question-header" id="questionHeader">Question 1</div>
+                    <div class="dialogue-text" id="problemText"></div>
+
+                    <div class="diagram-container" id="diagramContainer"></div>
+
+                    <!-- Hint Section -->
+                    <div class="evidence-section" id="hintSection" class="hidden">
+                        <div class="evidence-title">💡 HINT</div>
+                        <div id="hintContent"></div>
+                    </div>
+
+                    <!-- Solution Section -->
+                    <div class="evidence-section" id="solutionSection" class="hidden">
+                        <div class="evidence-title">📜 SOLUTION</div>
+                        <div id="solutionContent"></div>
+                    </div>
+
+                    <!-- Answer Input -->
+                    <div class="answer-section">
+                        <input type="text" class="answer-input" id="answerInput" placeholder="Enter your answer...">
+
+                        <div class="button-group">
+                            <button class="btn btn-press" onclick="showHint()">💡 PRESS</button>
+                            <button class="btn btn-present" onclick="showSolution()">📜 EVIDENCE</button>
+                            <button class="btn btn-object" onclick="submitAnswer()">⚠️ OBJECT!</button>
+                        </div>
+                    </div>
+
+                    <div id="feedback" class="hidden"></div>
                 </div>
             </div>
         </div>
 
-        <div class="character-info">
-            <div class="character-name">🌟 Traveler</div>
-            <div class="primogems">💎 Primogems: <span id="score">0</span></div>
-        </div>
-
-        <div id="questionSection">
-            <div class="question-container">
-                <div class="question-number" id="questionNumber"></div>
-                <div class="question-text" id="questionText"></div>
-                <div id="diagramContainer"></div>
-                <div id="hintContainer" class="hidden"></div>
-                <div id="answerExplanation" class="hidden"></div>
-                <input type="number" step="0.01" class="answer-input" id="answerInput" placeholder="Enter your answer...">
-                <div class="button-group">
-                    <button class="hint-btn" id="hintBtn" onclick="showHint()">💡 Hint (-10 Primogems)</button>
-                    <button class="show-answer-btn" id="showAnswerBtn" onclick="showAnswer()">📖 Show Answer (1 Primogem only)</button>
-                    <button class="btn" id="submitBtn" onclick="checkAnswer()">Submit Answer</button>
-                </div>
-                <div id="feedback"></div>
-            </div>
-        </div>
-
-        <div id="finalScore" class="final-score hidden">
-            <h2>Quest Complete! 🎉</h2>
-            <p>You earned <span id="finalPrimogems"></span> Primogems!</p>
-            <p id="performanceMessage"></p>
-            <button class="btn restart-btn" onclick="restartGame()">Start New Quest</button>
-        </div>
-
-        <!-- Mini-game Modal -->
-        <div id="miniGameModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-title" id="miniGameTitle">🎮 Bonus Challenge! 🎮</div>
-                <div id="miniGameContainer" class="mini-game-container"></div>
-            </div>
+        <!-- Verdict Screen -->
+        <div id="verdictScreen" class="hidden verdict-screen">
+            <h2>⚖️ VERDICT ⚖️</h2>
+            <div class="final-score" id="finalScore"></div>
+            <div id="verdictMessage"></div>
+            <button class="btn btn-object" style="margin-top: 30px;" onclick="location.reload()">RETURN TO CASES</button>
         </div>
     </div>
 
-    <script>
-        let currentQuestion = 0;
-        let score = 0;
-        let questions = [];
-        let currentAnswer = 0;
-        let hintUsed = false;
-        let answerShown = false;
-        let maxScore = 20;
-        let miniGameTriggered = false;
+    <!-- Objection Overlay -->
+    <div class="objection-overlay" id="objectionOverlay">
+        <div class="objection-text">OBJECTION!</div>
+    </div>
 
-        // Drawing helper functions
-        function drawRightTriangle(canvas, a, b, c, labels) {
+    <script>
+        // Game State
+        let currentChapter = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let health = 100;
+        let questions = [];
+        let playtestMode = false;
+        let hintUsed = false;
+
+        // Character Image Mapping
+        const characterImages = {
+            'Phoenix Wright': 'phoenix_wright.png',
+            'Miles Edgeworth': 'miles_edgeworth.png',
+            'Maya Fey': 'maya_fey.png',
+            'Dick Gumshoe': 'dick_gumshoe.png',
+            'Apollo Justice': 'apollo_justice.png',
+            'Franziska von Karma': 'franziska_von_karma.png',
+            'Pearl Fey': 'pearl_fey.png',
+            'Klavier Gavin': 'klavier_gavin.png',
+            'Trucy Wright': 'trucy_wright.png',
+            'Godot': 'godot.png',
+            'Larry Butz': 'larry_butz.png',
+            'Wendy Oldbag': 'wendy_oldbag.png',
+            'Judge': 'judge.png'
+        };
+
+        // ========================================
+        // MODULAR QUESTION BANK SYSTEM
+        // ========================================
+        const QUESTION_BANK = {
+            chapter5: {
+                name: "Case 005: The Pythagorean Theorem Incident",
+                description: "Master the Pythagorean Theorem",
+                questions: []
+            },
+            chapter8: {
+                name: "Case 008: The Measurement Mystery",
+                description: "Master geometry and measurement",
+                questions: []
+            },
+            chapter13: {
+                name: "Case 013: The Congruence Conspiracy",
+                description: "Master congruence and similarity",
+                questions: []
+            },
+            chapter14: {
+                name: "Case 014: The Algebraic Accusation",
+                description: "Master algebra and sequences",
+                questions: []
+            },
+            revision1: {
+                name: "Case R1: The Ultimate Review Trial",
+                description: "Mixed review challenge",
+                questions: []
+            },
+            chapter15: {
+                name: "Case 015: The Trigonometry Testimony",
+                description: "Master trigonometry and bearings",
+                questions: []
+            },
+            chapter16: {
+                name: "Case 016: The Probability Paradox",
+                description: "Master probability and expected value",
+                questions: []
+            },
+            revision2: {
+                name: "Case R2: The Final Examination",
+                description: "Comprehensive mixed review",
+                questions: []
+            }
+        };
+
+        // Helper function to easily add questions
+        function addQuestion(chapter, questionData) {
+            if (!QUESTION_BANK[chapter]) {
+                console.error(`Chapter ${chapter} not found!`);
+                return;
+            }
+            QUESTION_BANK[chapter].questions.push(questionData);
+        }
+
+        // Load Chapter 5 questions from external file
+        loadChapter5Questions();
+
+        // Load Chapter 8 questions from external file
+        loadChapter8Questions();
+
+        // Load Chapter 13 questions from external file
+        loadChapter13Questions();
+
+        // Load Chapter 14 questions from external file
+        loadChapter14Questions();
+
+        // Load Revision 1 questions from external file
+        loadRevision1Questions();
+
+        // Load Chapter 15 questions from external file
+        loadChapter15Questions();
+
+        // Load Chapter 16 questions from external file
+        loadChapter16Questions();
+
+        // Load Revision 2 questions from external file
+        loadRevision2Questions();
+
+
+        // ========================================
+        // DRAWING FUNCTIONS
+        // ========================================
+
+        function drawRightTriangle(canvas, data) {
             const ctx = canvas.getContext('2d');
-            const maxDim = Math.max(a, b);
-            const scale = Math.min(250 / maxDim, 250 / maxDim);
-            const padding = 50;
-            
-            // Adjust canvas size if needed
-            canvas.width = Math.max(400, scale * b + 2 * padding);
-            canvas.height = Math.max(300, scale * a + 2 * padding);
-            
+            const { side1, side2, hypotenuse, side1Unit = 'cm', side2Unit = 'cm', unknown } = data;
+
+            // Calculate dimensions
+            const scale = 40;
+            const padding = 60;
+
+            // Handle numeric or string values for drawing
+            const numericSide1 = typeof side1 === 'number' ? side1 : 5;
+            const numericSide2 = typeof side2 === 'number' ? side2 : (typeof side1 === 'number' ? side1 : 5);
+
+            const base = numericSide2 * scale;
+            const height = numericSide1 * scale;
+
+            canvas.width = base + padding * 2;
+            canvas.height = height + padding * 2;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#667eea';
+
+            // Styling
+            ctx.strokeStyle = '#003366';
             ctx.lineWidth = 3;
-            ctx.font = 'bold 16px Arial';
-            ctx.fillStyle = '#333';
-            
-            // Calculate scaled dimensions
-            const baseLen = b * scale;
-            const heightLen = a * scale;
-            
-            // Draw triangle (bottom-left corner at origin)
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            // Draw triangle
             const startX = padding;
             const startY = canvas.height - padding;
-            
+
             ctx.beginPath();
             ctx.moveTo(startX, startY); // Bottom left
-            ctx.lineTo(startX + baseLen, startY); // Bottom right
-            ctx.lineTo(startX, startY - heightLen); // Top left
+            ctx.lineTo(startX + base, startY); // Bottom right
+            ctx.lineTo(startX, startY - height); // Top left
             ctx.closePath();
             ctx.stroke();
-            
+
             // Draw right angle indicator
             const squareSize = 15;
             ctx.strokeRect(startX, startY - squareSize, squareSize, squareSize);
-            
-            // Add labels with background for readability
+
+            // Labels
             ctx.textAlign = 'center';
-            ctx.fillText(labels.base || `${b}m`, startX + baseLen/2, startY + 30);
+            // Base label
+            if (unknown === 'base') {
+                ctx.fillStyle = '#CC0000';
+                ctx.fillText('?', startX + base/2, startY + 30);
+            } else if (side2) {
+                ctx.fillText(`${side2}${side2Unit ? ' ' + side2Unit : ''}`, startX + base/2, startY + 30);
+            } else {
+                ctx.fillText(`${side1}${side1Unit ? ' ' + side1Unit : ''}`, startX + base/2, startY + 30);
+            }
+
+            // Height label
             ctx.textAlign = 'right';
-            ctx.fillText(labels.height || `${a}m`, startX - 10, startY - heightLen/2 + 5);
+            ctx.fillStyle = '#1a1a1a';
+            if (unknown === 'height') {
+                ctx.fillStyle = '#CC0000';
+                ctx.fillText('?', startX - 15, startY - height/2);
+            } else {
+                ctx.fillText(`${side1}${side1Unit ? ' ' + side1Unit : ''}`, startX - 15, startY - height/2);
+            }
+
+            // Hypotenuse label
             ctx.textAlign = 'center';
-            ctx.fillStyle = '#f5576c';
-            ctx.fillText(labels.hypotenuse || `${c.toFixed(1)}m`, startX + baseLen/2 + 20, startY - heightLen/2 - 15);
+            if (hypotenuse) {
+                const hypUnit = data.hypotenuseUnit !== undefined ? data.hypotenuseUnit : 'cm';
+                ctx.fillText(`${hypotenuse}${hypUnit ? ' ' + hypUnit : ''}`, startX + base/2 + 30, startY - height/2 - 20);
+            } else if (unknown === 'hypotenuse') {
+                ctx.fillStyle = '#CC0000';
+                ctx.fillText('?', startX + base/2 + 30, startY - height/2 - 20);
+            }
         }
 
-        function drawCircle(canvas, radius, showChord = false, chordDistance = 0) {
+        function drawRectangle(canvas, data) {
             const ctx = canvas.getContext('2d');
-            const scale = Math.min(150 / radius, 150 / radius);
-            const padding = 70;
-            const scaledRadius = radius * scale;
-            
-            // Calculate required canvas size FIRST
-            const minWidth = 2 * scaledRadius + 2 * padding;
-            const minHeight = 2 * scaledRadius + 2 * padding;
-            
-            canvas.width = Math.max(450, minWidth);
-            canvas.height = Math.max(350, minHeight);
-            
-            // NOW calculate center AFTER canvas is resized
+            const { length, width, lengthUnit = 'cm', widthUnit = 'cm' } = data;
+
+            const scale = 40;
+            const padding = 60;
+
+            const numericLength = typeof length === 'number' ? length : 5;
+            const numericWidth = typeof width === 'number' ? width : 3;
+
+            const canvasWidth = numericLength * scale;
+            const canvasHeight = numericWidth * scale;
+
+            canvas.width = canvasWidth + padding * 2;
+            canvas.height = canvasHeight + padding * 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const startX = padding;
+            const startY = padding;
+
+            // Draw rectangle
+            ctx.strokeRect(startX, startY, canvasWidth, canvasHeight);
+
+            // Labels
+            ctx.textAlign = 'center';
+            ctx.fillText(`${length}${lengthUnit ? ' ' + lengthUnit : ''}`, startX + canvasWidth/2, startY + canvasHeight + 30);
+            ctx.textAlign = 'right';
+            ctx.fillText(`${width}${widthUnit ? ' ' + widthUnit : ''}`, startX - 15, startY + canvasHeight/2);
+        }
+
+        function drawCircle(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { radius, diameter, unit = 'cm', showRadius = false, showDiameter = false } = data;
+
+            const actualRadius = radius || (diameter ? diameter / 2 : 50);
+            const scale = 30;
+            const padding = 80;
+
+            const canvasRadius = (typeof actualRadius === 'number' ? actualRadius : 5) * scale;
+
+            canvas.width = canvasRadius * 2 + padding * 2;
+            canvas.height = canvasRadius * 2 + padding * 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#667eea';
-            ctx.lineWidth = 3;
-            ctx.font = 'bold 16px Arial';
-            ctx.fillStyle = '#333';
-            
+
             // Draw circle
             ctx.beginPath();
-            ctx.arc(centerX, centerY, scaledRadius, 0, 2 * Math.PI);
+            ctx.arc(centerX, centerY, canvasRadius, 0, 2 * Math.PI);
             ctx.stroke();
-            
+
             // Draw center point
             ctx.beginPath();
-            ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            ctx.arc(centerX, centerY, 3, 0, 2 * Math.PI);
             ctx.fill();
-            
-            // Draw radius line
-            ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.lineTo(centerX + scaledRadius, centerY);
-            ctx.stroke();
-            
-            // Label radius
-            ctx.textAlign = 'center';
-            ctx.fillText(`r = ${radius}m`, centerX + scaledRadius/2, centerY - 12);
-            
-            // Draw chord if needed
-            if (showChord && chordDistance > 0) {
-                const scaledDistance = chordDistance * scale;
-                const chordHalf = Math.sqrt(scaledRadius * scaledRadius - scaledDistance * scaledDistance);
-                
-                // Draw perpendicular from center to chord
-                ctx.strokeStyle = '#f5576c';
-                ctx.setLineDash([5, 5]);
+
+            // Show radius line if requested
+            if (showRadius) {
                 ctx.beginPath();
                 ctx.moveTo(centerX, centerY);
-                ctx.lineTo(centerX, centerY - scaledDistance);
+                ctx.lineTo(centerX + canvasRadius, centerY);
                 ctx.stroke();
-                ctx.setLineDash([]);
-                
-                // Draw chord
-                ctx.strokeStyle = '#4caf50';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(centerX - chordHalf, centerY - scaledDistance);
-                ctx.lineTo(centerX + chordHalf, centerY - scaledDistance);
-                ctx.stroke();
-                
-                // Label distance
-                ctx.fillStyle = '#f5576c';
-                ctx.textAlign = 'left';
-                ctx.fillText(`${chordDistance}m`, centerX + 10, centerY - scaledDistance/2);
+                ctx.textAlign = 'center';
+                ctx.fillText(`r = ${radius || actualRadius}${unit ? ' ' + unit : ''}`, centerX + canvasRadius/2, centerY - 10);
+            }
+
+            // Show diameter if requested
+            if (showDiameter) {
+                ctx.textAlign = 'center';
+                const diamValue = diameter || (radius ? radius * 2 : actualRadius * 2);
+                ctx.fillText(`d = ${diamValue}${unit ? ' ' + unit : ''}`, centerX, centerY + canvasRadius + 25);
             }
         }
 
-        function drawRectangularPrism(canvas, l, w, h) {
+        function drawTriangle(canvas, data) {
             const ctx = canvas.getContext('2d');
-            const maxDim = Math.max(l, w, h);
-            const scale = Math.min(180 / maxDim, 180 / maxDim);
-            
-            // Adjust canvas size
-            canvas.width = Math.max(450, (l + w) * scale + 120);
-            canvas.height = Math.max(350, (h + w) * scale + 120);
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#667eea';
-            ctx.lineWidth = 2;
-            ctx.font = 'bold 14px Arial';
-            ctx.fillStyle = '#333';
-            
-            const baseX = 80;
-            const baseY = canvas.height - 60;
-            const scaledL = l * scale;
-            const scaledW = w * scale * 0.5; // Perspective
-            const scaledH = h * scale;
-            
-            // Draw back face (dashed)
-            ctx.strokeStyle = '#999';
-            ctx.setLineDash([3, 3]);
-            ctx.strokeRect(baseX + scaledW, baseY - scaledH - scaledW, scaledL, scaledH);
-            ctx.setLineDash([]);
-            
-            // Draw front face
-            ctx.strokeStyle = '#667eea';
-            ctx.strokeRect(baseX, baseY - scaledH, scaledL, scaledH);
-            
-            // Draw connecting lines
-            ctx.beginPath();
-            ctx.moveTo(baseX, baseY - scaledH);
-            ctx.lineTo(baseX + scaledW, baseY - scaledH - scaledW);
-            ctx.moveTo(baseX + scaledL, baseY - scaledH);
-            ctx.lineTo(baseX + scaledL + scaledW, baseY - scaledH - scaledW);
-            ctx.moveTo(baseX + scaledL, baseY);
-            ctx.lineTo(baseX + scaledL + scaledW, baseY - scaledW);
-            ctx.stroke();
-            
-            // Labels
-            ctx.textAlign = 'center';
-            ctx.fillText(`${l}cm`, baseX + scaledL/2, baseY + 20);
-            ctx.textAlign = 'right';
-            ctx.fillText(`${h}cm`, baseX - 15, baseY - scaledH/2);
-            ctx.textAlign = 'left';
-            ctx.fillText(`${w}cm`, baseX + scaledL + scaledW/2, baseY - 5);
-        }
+            const { base, height, side1, side2, baseUnit = 'cm', triangleType = 'isosceles' } = data;
 
-        function drawCylinder(canvas, radius, height) {
-            const ctx = canvas.getContext('2d');
-            const maxDim = Math.max(radius, height);
-            const scale = Math.min(140 / maxDim, 140 / maxDim);
-            
-            // Adjust canvas size
-            canvas.width = Math.max(400, 2.5 * radius * scale + 100);
-            canvas.height = Math.max(350, height * scale + 2 * radius * scale * 0.4 + 80);
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#667eea';
-            ctx.lineWidth = 2;
-            ctx.font = 'bold 14px Arial';
-            ctx.fillStyle = '#333';
-            
-            const centerX = canvas.width / 2;
-            const topY = 50;
-            const scaledR = radius * scale;
-            const scaledH = height * scale;
-            
-            // Draw top ellipse
-            ctx.beginPath();
-            ctx.ellipse(centerX, topY, scaledR, scaledR * 0.3, 0, 0, 2 * Math.PI);
-            ctx.stroke();
-            
-            // Draw bottom ellipse
-            ctx.beginPath();
-            ctx.ellipse(centerX, topY + scaledH, scaledR, scaledR * 0.3, 0, 0, 2 * Math.PI);
-            ctx.stroke();
-            
-            // Draw sides
-            ctx.beginPath();
-            ctx.moveTo(centerX - scaledR, topY);
-            ctx.lineTo(centerX - scaledR, topY + scaledH);
-            ctx.moveTo(centerX + scaledR, topY);
-            ctx.lineTo(centerX + scaledR, topY + scaledH);
-            ctx.stroke();
-            
-            // Labels
-            ctx.textAlign = 'center';
-            ctx.fillText(`r = ${radius}cm`, centerX, topY - 10);
-            ctx.textAlign = 'left';
-            ctx.fillText(`h = ${height}cm`, centerX + scaledR + 15, topY + scaledH/2);
-        }
+            const scale = 40;
+            const padding = 60;
 
-        function drawTriangle(canvas, base, height) {
-            const ctx = canvas.getContext('2d');
-            const maxDim = Math.max(base, height);
-            const scale = Math.min(250 / maxDim, 250 / maxDim);
-            const padding = 50;
-            
-            // Adjust canvas size
-            canvas.width = Math.max(400, base * scale + 2 * padding);
-            canvas.height = Math.max(300, height * scale + 2 * padding);
-            
+            const numericBase = typeof base === 'number' ? base : 6;
+            const numericHeight = typeof height === 'number' ? height : 5;
+
+            const canvasBase = numericBase * scale;
+            const canvasHeight = numericHeight * scale;
+
+            canvas.width = canvasBase + padding * 2;
+            canvas.height = canvasHeight + padding * 2;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#667eea';
+
+            // Styling
+            ctx.strokeStyle = '#003366';
             ctx.lineWidth = 3;
-            ctx.font = 'bold 16px Arial';
-            ctx.fillStyle = '#333';
-            
-            const scaledBase = base * scale;
-            const scaledHeight = height * scale;
-            
-            const startX = (canvas.width - scaledBase) / 2;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const startX = padding;
             const startY = canvas.height - padding;
-            
+
             // Draw triangle
             ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(startX + scaledBase, startY);
-            ctx.lineTo(startX + scaledBase/2, startY - scaledHeight);
+            ctx.moveTo(startX, startY); // Bottom left
+            ctx.lineTo(startX + canvasBase, startY); // Bottom right
+            if (triangleType === 'isosceles') {
+                ctx.lineTo(startX + canvasBase/2, startY - canvasHeight); // Top center
+            } else {
+                ctx.lineTo(startX, startY - canvasHeight); // Top left (right triangle)
+            }
             ctx.closePath();
             ctx.stroke();
-            
-            // Draw height line
-            ctx.strokeStyle = '#f5576c';
-            ctx.setLineDash([5, 5]);
+
+            // Labels
+            ctx.textAlign = 'center';
+            ctx.fillText(`${base}${baseUnit ? ' ' + baseUnit : ''}`, startX + canvasBase/2, startY + 30);
+
+            if (triangleType === 'isosceles' && side1) {
+                ctx.textAlign = 'left';
+                ctx.fillText(`${side1}${baseUnit}`, startX - 20, startY - canvasHeight/2);
+            }
+        }
+
+        function drawCubeDiagonal(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { sideLength = 3, unit = 'cm', showFaceDiagonal = true, showSpaceDiagonal = true } = data;
+
+            const scale = 50;
+            const padding = 80;
+
+            canvas.width = 500;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            // 3D perspective: draw cube in isometric-ish view
+            const cubeSize = sideLength * scale;
+            const offsetX = 80; // 3D depth offset
+            const offsetY = 50;
+
+            // Front face vertices
+            const frontBL = [padding, padding + cubeSize]; // Bottom left
+            const frontBR = [padding + cubeSize, padding + cubeSize]; // Bottom right
+            const frontTL = [padding, padding]; // Top left
+            const frontTR = [padding + cubeSize, padding]; // Top right
+
+            // Back face vertices (offset for 3D effect)
+            const backBL = [frontBL[0] + offsetX, frontBL[1] - offsetY];
+            const backBR = [frontBR[0] + offsetX, frontBR[1] - offsetY];
+            const backTL = [frontTL[0] + offsetX, frontTL[1] - offsetY];
+            const backTR = [frontTR[0] + offsetX, frontTR[1] - offsetY];
+
+            // Draw back face (lighter)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(startX + scaledBase/2, startY);
-            ctx.lineTo(startX + scaledBase/2, startY - scaledHeight);
+            ctx.moveTo(...backBL);
+            ctx.lineTo(...backBR);
+            ctx.lineTo(...backTR);
+            ctx.lineTo(...backTL);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw connecting edges
+            ctx.beginPath();
+            ctx.moveTo(...frontBL);
+            ctx.lineTo(...backBL);
+            ctx.moveTo(...frontBR);
+            ctx.lineTo(...backBR);
+            ctx.moveTo(...frontTL);
+            ctx.lineTo(...backTL);
+            ctx.moveTo(...frontTR);
+            ctx.lineTo(...backTR);
+            ctx.stroke();
+
+            // Draw front face (darker/bolder)
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(...frontBL);
+            ctx.lineTo(...frontBR);
+            ctx.lineTo(...frontTR);
+            ctx.lineTo(...frontTL);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw face diagonal (on bottom face) in red
+            if (showFaceDiagonal) {
+                ctx.strokeStyle = '#CC0000';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]); // Dashed line
+                ctx.beginPath();
+                ctx.moveTo(...frontBL);
+                ctx.lineTo(...frontBR);
+                ctx.lineTo(...backBR);
+                ctx.stroke();
+                ctx.setLineDash([]); // Reset to solid
+
+                // Label face diagonal
+                ctx.fillStyle = '#CC0000';
+                ctx.textAlign = 'center';
+                const faceDiagValue = `${sideLength}√2`;
+                ctx.fillText(faceDiagValue + ' ' + unit, (frontBR[0] + backBR[0]) / 2, frontBR[1] + 25);
+            }
+
+            // Draw space diagonal in bold red
+            if (showSpaceDiagonal) {
+                ctx.strokeStyle = '#CC0000';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(...frontBL);
+                ctx.lineTo(...backTR);
+                ctx.stroke();
+
+                // Label space diagonal
+                ctx.fillStyle = '#CC0000';
+                ctx.textAlign = 'left';
+                const spaceDiagValue = `${sideLength}√3`;
+                ctx.fillText(spaceDiagValue + ' ' + unit, backTR[0] + 10, backTR[1] - 10);
+            }
+
+            // Label side length
+            ctx.fillStyle = '#1a1a1a';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${sideLength} ${unit}`, frontBL[0] + cubeSize / 2, frontBL[1] + 30);
+        }
+
+        function drawTangentCircles(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { radius1 = 4, radius2 = 1, radius3 = 0.25, unit = 'cm' } = data;
+
+            const scale = 60;
+            const padding = 80;
+
+            // Calculate canvas size based on largest circle
+            const maxRadius = Math.max(radius1, radius2, radius3);
+            canvas.width = 700;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 14px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            // Horizontal tangent line (ground)
+            const groundY = canvas.height - padding;
+            ctx.strokeStyle = '#4A2C2A';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding - 30, groundY);
+            ctx.lineTo(canvas.width - padding, groundY);
+            ctx.stroke();
+
+            // Circle positions (all tangent to ground line)
+            const circle1X = padding + radius1 * scale;
+            const circle1Y = groundY - radius1 * scale;
+
+            const circle2X = padding + 200;
+            const circle2Y = groundY - radius2 * scale;
+
+            const circle3X = padding + 350;
+            const circle3Y = groundY - radius3 * scale;
+
+            // Draw circles
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+
+            // Circle 1 (largest)
+            ctx.beginPath();
+            ctx.arc(circle1X, circle1Y, radius1 * scale, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillStyle = '#1a1a1a';
+            ctx.textAlign = 'center';
+            ctx.fillText(`r = ${radius1} ${unit}`, circle1X, circle1Y + 5);
+
+            // Circle 2 (middle)
+            ctx.beginPath();
+            ctx.arc(circle2X, circle2Y, radius2 * scale, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText(`r = ${radius2} ${unit}`, circle2X, circle2Y + 5);
+
+            // Circle 3 (smallest)
+            ctx.beginPath();
+            ctx.arc(circle3X, circle3Y, radius3 * scale, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText(`r = ?`, circle3X, circle3Y + 5);
+
+            // Draw center points
+            ctx.fillStyle = '#CC0000';
+            [
+                [circle1X, circle1Y],
+                [circle2X, circle2Y],
+                [circle3X, circle3Y]
+            ].forEach(([x, y]) => {
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+
+            // Draw lines connecting centers (showing the geometry)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(circle1X, circle1Y);
+            ctx.lineTo(circle2X, circle2Y);
+            ctx.lineTo(circle3X, circle3Y);
             ctx.stroke();
             ctx.setLineDash([]);
-            
-            // Labels
-            ctx.fillStyle = '#333';
+        }
+
+        function drawSector(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { radius = 12.5, angle = 60, unit = 'cm', showArc = true } = data;
+
+            const scale = 30;
+            const padding = 100;
+
+            const canvasRadius = (typeof radius === 'number' ? radius : 10) * scale;
+
+            canvas.width = canvasRadius * 2 + padding * 2;
+            canvas.height = canvasRadius * 2 + padding * 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Draw full circle (light)
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, canvasRadius, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Draw sector
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            const startAngle = -Math.PI / 2; // Start at top
+            const endAngle = startAngle + (angle * Math.PI / 180);
+
+            // Draw radii
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX, centerY - canvasRadius);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            const endX = centerX + canvasRadius * Math.sin(angle * Math.PI / 180);
+            const endY = centerY - canvasRadius * Math.cos(angle * Math.PI / 180);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+
+            // Draw arc (highlighted in red)
+            if (showArc) {
+                ctx.strokeStyle = '#CC0000';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, canvasRadius, startAngle, endAngle);
+                ctx.stroke();
+            }
+
+            // Draw center point
+            ctx.fillStyle = '#003366';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 4, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Label radius
+            ctx.fillStyle = '#1a1a1a';
             ctx.textAlign = 'center';
-            ctx.fillText(`base = ${base}m`, startX + scaledBase/2, startY + 30);
-            ctx.fillStyle = '#f5576c';
+            ctx.fillText(`r = ${radius} ${unit}`, centerX - canvasRadius/2, centerY - 20);
+
+            // Label angle
+            ctx.fillStyle = '#CC0000';
+            ctx.font = 'bold 18px Courier New';
+            ctx.fillText(`${angle}°`, centerX + 30, centerY - canvasRadius/3);
+        }
+
+        function drawRectangularPrism(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { length = 1.6, width = 1.1, height = 1.4, unit = 'm' } = data;
+
+            const scale = 50;
+            const padding = 80;
+
+            canvas.width = 500;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            // 3D perspective offsets
+            const offsetX = 60;
+            const offsetY = 40;
+
+            // Scale dimensions
+            const l = length * scale;
+            const w = width * scale;
+            const h = height * scale;
+
+            // Front face vertices
+            const frontBL = [padding, padding + h];
+            const frontBR = [padding + l, padding + h];
+            const frontTL = [padding, padding];
+            const frontTR = [padding + l, padding];
+
+            // Back face vertices
+            const backBL = [frontBL[0] + offsetX, frontBL[1] - offsetY];
+            const backBR = [frontBR[0] + offsetX, frontBR[1] - offsetY];
+            const backTL = [frontTL[0] + offsetX, frontTL[1] - offsetY];
+            const backTR = [frontTR[0] + offsetX, frontTR[1] - offsetY];
+
+            // Draw back face (lighter)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(...backBL);
+            ctx.lineTo(...backBR);
+            ctx.lineTo(...backTR);
+            ctx.lineTo(...backTL);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw connecting edges
+            ctx.beginPath();
+            ctx.moveTo(...frontBL);
+            ctx.lineTo(...backBL);
+            ctx.moveTo(...frontBR);
+            ctx.lineTo(...backBR);
+            ctx.moveTo(...frontTL);
+            ctx.lineTo(...backTL);
+            ctx.moveTo(...frontTR);
+            ctx.lineTo(...backTR);
+            ctx.stroke();
+
+            // Draw front face (darker)
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(...frontBL);
+            ctx.lineTo(...frontBR);
+            ctx.lineTo(...frontTR);
+            ctx.lineTo(...frontTL);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#1a1a1a';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${length} ${unit}`, padding + l/2, frontBL[1] + 30);
+            ctx.textAlign = 'right';
+            ctx.fillText(`${height} ${unit}`, padding - 15, padding + h/2);
             ctx.textAlign = 'left';
-            ctx.fillText(`h = ${height}m`, startX + scaledBase/2 + 15, startY - scaledHeight/2);
+            ctx.fillText(`${width} ${unit}`, backBR[0] + 10, backBR[1] - 10);
         }
 
-        // Question generators for each topic
-        const questionGenerators = [
-            generatePythagorasQuestion,
-            generateCircleAreaQuestion,
-            generateSurfaceAreaQuestion,
-            generateVolumeQuestion,
-            generateSimilarityQuestion,
-            generateUnitCircleQuestion,
-            generateBearingsQuestion,
-            generateTriangleAreaQuestion,
-            generateSineRuleQuestion,
-            generateCircleTheoremQuestion
-        ];
+        function drawCylinder(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { radius = 3, height = 8, unit = 'cm', diameter } = data;
 
-        function generatePythagorasQuestion() {
-            const a = Math.floor(Math.random() * 10) + 3;
-            const b = Math.floor(Math.random() * 10) + 3;
-            const c = Math.sqrt(a * a + b * b);
-            
-            const scenarios = [
-                {
-                    text: `Amber is using her Baron Bunny to measure distances in the Whispering Woods. She throws it ${a} meters north, then runs ${b} meters east to retrieve it. What is the straight-line distance between her starting point and Baron Bunny?`,
-                    hint: `Remember the Pythagorean Theorem: a² + b² = c². In this case, you have two legs of a right triangle (${a}m and ${b}m), and you need to find the hypotenuse.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. We have a right triangle with legs a = ${a}m and b = ${b}m<br>
-                        2. Using Pythagorean Theorem: c² = a² + b²<br>
-                        3. c² = ${a}² + ${b}² = ${a*a} + ${b*b} = ${a*a + b*b}<br>
-                        4. c = √${a*a + b*b} = ${c.toFixed(2)} meters<br>
-                        <strong>Answer: ${c.toFixed(2)} meters</strong>`,
-                    diagram: (canvas) => drawRightTriangle(canvas, a, b, c, {base: `${b}m (East)`, height: `${a}m (North)`, hypotenuse: '?'})
-                },
-                {
-                    text: `Diluc is setting up wine barrel supports at Dawn Winery. A barrel is ${a}m tall and the support beam reaches ${b}m away from the base. How long must the support beam be?`,
-                    hint: `This forms a right triangle where the height is ${a}m and the base is ${b}m. Use a² + b² = c² to find the length of the support beam (the hypotenuse).`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. The barrel height and ground distance form a right triangle<br>
-                        2. Height = ${a}m, Base = ${b}m, Beam = ?<br>
-                        3. Using Pythagorean Theorem: beam² = ${a}² + ${b}²<br>
-                        4. beam² = ${a*a} + ${b*b} = ${a*a + b*b}<br>
-                        5. beam = √${a*a + b*b} = ${c.toFixed(2)} meters<br>
-                        <strong>Answer: ${c.toFixed(2)} meters</strong>`,
-                    diagram: (canvas) => drawRightTriangle(canvas, a, b, c, {base: `${b}m`, height: `${a}m`, hypotenuse: '?'})
-                },
-                {
-                    text: `Zhongli is studying a pillar in the Guili Plains. The pillar is ${a}m high, and a rope reaches from the top to a point ${b}m from the base of the pillar. How long is the rope?`,
-                    hint: `You know both legs of the right triangle: height = ${a}m and base = ${b}m. Use the Pythagorean Theorem: c² = a² + b² to find the rope length.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. We have a right triangle with height = ${a}m and base = ${b}m<br>
-                        2. Using Pythagorean Theorem: c² = a² + b²<br>
-                        3. c² = ${a}² + ${b}² = ${a*a} + ${b*b} = ${a*a + b*b}<br>
-                        4. c = √${a*a + b*b} = ${c.toFixed(2)} meters<br>
-                        <strong>Answer: ${c.toFixed(2)} meters</strong>`,
-                    diagram: (canvas) => drawRightTriangle(canvas, a, b, c, {base: `${b}m`, height: `${a}m`, hypotenuse: '?'})
-                }
-            ];
-            
-            const type = Math.floor(Math.random() * 3);
-            const answer = c;
-            
-            return {
-                text: scenarios[type].text,
-                hint: scenarios[type].hint,
-                explanation: scenarios[type].explanation,
-                diagram: scenarios[type].diagram,
-                answer: answer,
-                tolerance: 0.05,
-                topic: "Pythagorean Theorem",
-                needsRounding: true
-            };
+            const actualRadius = radius || (diameter ? diameter / 2 : 3);
+            const scale = 35;
+            const padding = 100;
+
+            canvas.width = 500;
+            canvas.height = 450;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const centerX = canvas.width / 2;
+            const topY = padding;
+            const bottomY = topY + height * scale;
+
+            const r = actualRadius * scale;
+            const ellipseHeight = r * 0.3;
+
+            // Draw top ellipse
+            ctx.strokeStyle = '#003366';
+            ctx.beginPath();
+            ctx.ellipse(centerX, topY, r, ellipseHeight, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Draw sides
+            ctx.beginPath();
+            ctx.moveTo(centerX - r, topY);
+            ctx.lineTo(centerX - r, bottomY);
+            ctx.moveTo(centerX + r, topY);
+            ctx.lineTo(centerX + r, bottomY);
+            ctx.stroke();
+
+            // Draw bottom ellipse (dashed for hidden part)
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = '#6699CC';
+            ctx.beginPath();
+            ctx.ellipse(centerX, bottomY, r, ellipseHeight, 0, Math.PI, 2 * Math.PI);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.strokeStyle = '#003366';
+            ctx.beginPath();
+            ctx.ellipse(centerX, bottomY, r, ellipseHeight, 0, 0, Math.PI);
+            ctx.stroke();
+
+            // Draw radius line
+            ctx.strokeStyle = '#CC0000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, topY);
+            ctx.lineTo(centerX + r, topY);
+            ctx.stroke();
+
+            // Draw height line
+            ctx.beginPath();
+            ctx.moveTo(centerX, topY);
+            ctx.lineTo(centerX, bottomY);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#CC0000';
+            ctx.textAlign = 'center';
+            ctx.fillText(`r = ${actualRadius} ${unit}`, centerX + r/2, topY - 10);
+            ctx.fillText(`h = ${height} ${unit}`, centerX - r - 40, topY + (height * scale)/2);
         }
 
-        function generateCircleAreaQuestion() {
-            const radius = Math.floor(Math.random() * 8) + 3;
-            const area = Math.PI * radius * radius;
-            
-            const scenarios = [
-                {
-                    text: `Jean is planning a circular training ground in front of the Knights of Favonius headquarters. The radius is ${radius} meters. What is the area of this training ground?`,
-                    hint: `The formula for the area of a circle is A = πr². Here, r = ${radius}m. Use π ≈ 3.14159 and don't forget to square the radius!`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Circle area formula: A = πr²<br>
-                        2. Given: radius r = ${radius}m<br>
-                        3. First, square the radius: ${radius}² = ${radius * radius}<br>
-                        4. Then multiply by π: A = 3.14159 × ${radius * radius}<br>
-                        5. A = ${area.toFixed(2)} square meters<br>
-                        <strong>Answer: ${area.toFixed(2)} m²</strong>`,
-                    diagram: (canvas) => drawCircle(canvas, radius, false, 0)
-                },
-                {
-                    text: `Klee is calculating the blast radius of her Jumpy Dumpty. If it forms a perfect circle with radius ${radius}m, what's the area of effect?`,
-                    hint: `Use the circle area formula: A = πr². Substitute r = ${radius} and π ≈ 3.14159. Remember: ${radius}² = ${radius * radius}.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. We need to find the area of a circle with radius ${radius}m<br>
-                        2. Formula: A = πr²<br>
-                        3. Substitute values: A = π × ${radius}²<br>
-                        4. Calculate: A = 3.14159 × ${radius * radius} = ${area.toFixed(2)}<br>
-                        <strong>Answer: ${area.toFixed(2)} m²</strong>`,
-                    diagram: (canvas) => drawCircle(canvas, radius, false, 0)
-                },
-                {
-                    text: `Fischl's Oz patrols in a circular pattern with radius ${radius}m around her. Calculate the area Oz covers.`,
-                    hint: `Circle area = πr² where r = ${radius}m. Calculate ${radius}² first, then multiply by π (≈ 3.14159).`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Given: radius = ${radius}m<br>
-                        2. Use formula: A = πr²<br>
-                        3. Step 1: ${radius}² = ${radius * radius}<br>
-                        4. Step 2: A = 3.14159 × ${radius * radius} = ${area.toFixed(2)}<br>
-                        <strong>Answer: ${area.toFixed(2)} m²</strong>`,
-                    diagram: (canvas) => drawCircle(canvas, radius, false, 0)
-                }
-            ];
-            
-            const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-            
-            return {
-                text: scenario.text,
-                hint: scenario.hint,
-                explanation: scenario.explanation,
-                diagram: scenario.diagram,
-                answer: area,
-                tolerance: 0.5,
-                topic: "Circle Area",
-                needsRounding: true
-            };
+        function drawPyramid(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { baseSide = 6, height = 4, unit = 'm' } = data;
+
+            const scale = 40;
+            const padding = 100;
+
+            canvas.width = 500;
+            canvas.height = 450;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const baseSize = baseSide * scale;
+            const h = height * scale;
+            const offsetX = 50;
+            const offsetY = 30;
+
+            const centerX = canvas.width / 2;
+            const bottomY = canvas.height - padding;
+
+            // Apex (top point)
+            const apex = [centerX, bottomY - h];
+
+            // Base vertices (square)
+            const baseFrontL = [centerX - baseSize/2, bottomY];
+            const baseFrontR = [centerX + baseSize/2, bottomY];
+            const baseBackL = [baseFrontL[0] + offsetX, baseFrontL[1] - offsetY];
+            const baseBackR = [baseFrontR[0] + offsetX, baseFrontR[1] - offsetY];
+
+            // Draw base (back edges dashed)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(...baseBackL);
+            ctx.lineTo(...baseBackR);
+            ctx.lineTo(...baseFrontR);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw base front edge
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(...baseFrontL);
+            ctx.lineTo(...baseFrontR);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(...baseFrontL);
+            ctx.lineTo(...baseBackL);
+            ctx.stroke();
+
+            // Draw pyramid edges
+            ctx.beginPath();
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseFrontL);
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseFrontR);
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseBackR);
+            ctx.stroke();
+
+            // Draw back edge (dashed)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseBackL);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw height line (red)
+            ctx.strokeStyle = '#CC0000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(...apex);
+            ctx.lineTo(centerX, bottomY);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#1a1a1a';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${baseSide} ${unit}`, centerX, bottomY + 30);
+            ctx.fillStyle = '#CC0000';
+            ctx.fillText(`h = ${height} ${unit}`, centerX + 40, apex[1] + h/2);
         }
 
-        function generateSurfaceAreaQuestion() {
-            const l = Math.floor(Math.random() * 6) + 3;
-            const w = Math.floor(Math.random() * 6) + 3;
-            const h = Math.floor(Math.random() * 6) + 3;
-            const surfaceArea = 2 * (l * w + l * h + w * h);
-            
-            const scenarios = [
-                {
-                    text: `Ningguang is commissioning a jade jewelry box for the Jade Chamber measuring ${l}cm × ${w}cm × ${h}cm. How much surface area needs to be covered with jade inlay?`,
-                    hint: `A rectangular box has 6 faces. Surface Area = 2(lw + lh + wh). Calculate: 2(${l}×${w} + ${l}×${h} + ${w}×${h}).`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Surface Area of rectangular prism: SA = 2(lw + lh + wh)<br>
-                        2. Given: l = ${l}cm, w = ${w}cm, h = ${h}cm<br>
-                        3. Calculate each face area:<br>
-                           - lw = ${l} × ${w} = ${l*w}<br>
-                           - lh = ${l} × ${h} = ${l*h}<br>
-                           - wh = ${w} × ${h} = ${w*h}<br>
-                        4. Sum: ${l*w} + ${l*h} + ${w*h} = ${l*w + l*h + w*h}<br>
-                        5. Multiply by 2: SA = 2 × ${l*w + l*h + w*h} = ${surfaceArea}<br>
-                        <strong>Answer: ${surfaceArea} cm²</strong>`
-                },
-                {
-                    text: `Bennett found a treasure chest in a domain! It measures ${l}cm × ${w}cm × ${h}cm. He wants to cover it completely with protective coating. What's the total surface area?`,
-                    hint: `For a rectangular prism: SA = 2(length × width) + 2(length × height) + 2(width × height). Plug in the values: l=${l}, w=${w}, h=${h}.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. We have a box with dimensions ${l} × ${w} × ${h} cm<br>
-                        2. Formula: SA = 2(lw + lh + wh)<br>
-                        3. Calculate: lw = ${l*w}, lh = ${l*h}, wh = ${w*h}<br>
-                        4. Add them: ${l*w} + ${l*h} + ${w*h} = ${l*w + l*h + w*h}<br>
-                        5. Double it: 2 × ${l*w + l*h + w*h} = ${surfaceArea} cm²<br>
-                        <strong>Answer: ${surfaceArea} cm²</strong>`
-                },
-                {
-                    text: `Xingqiu is wrapping a book as a gift. The book is ${l}cm × ${w}cm × ${h}cm. Calculate the wrapping paper needed (surface area).`,
-                    hint: `Think of all 6 faces: top and bottom (2 × ${l}×${w}), front and back (2 × ${l}×${h}), left and right sides (2 × ${w}×${h}). Add them all up!`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. A rectangular box has 6 faces (3 pairs)<br>
-                        2. Top/Bottom: 2 × (${l} × ${w}) = 2 × ${l*w} = ${2*l*w}<br>
-                        3. Front/Back: 2 × (${l} × ${h}) = 2 × ${l*h} = ${2*l*h}<br>
-                        4. Left/Right: 2 × (${w} × ${h}) = 2 × ${w*h} = ${2*w*h}<br>
-                        5. Total: ${2*l*w} + ${2*l*h} + ${2*w*h} = ${surfaceArea} cm²<br>
-                        <strong>Answer: ${surfaceArea} cm²</strong>`
-                }
-            ];
-            
-            const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-            
-            return {
-                text: scenario.text,
-                hint: scenario.hint,
-                explanation: scenario.explanation,
-                diagram: (canvas) => drawRectangularPrism(canvas, l, w, h),
-                answer: surfaceArea,
-                tolerance: 1,
-                topic: "Surface Area",
-                needsRounding: false
-            };
+        function drawCone(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { radius = 3, height = 7, unit = 'cm' } = data;
+
+            const scale = 35;
+            const padding = 100;
+
+            canvas.width = 500;
+            canvas.height = 450;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const centerX = canvas.width / 2;
+            const bottomY = canvas.height - padding;
+            const apexY = bottomY - height * scale;
+
+            const r = radius * scale;
+            const ellipseHeight = r * 0.3;
+
+            // Draw base ellipse
+            ctx.strokeStyle = '#003366';
+            ctx.beginPath();
+            ctx.ellipse(centerX, bottomY, r, ellipseHeight, 0, 0, Math.PI);
+            ctx.stroke();
+
+            // Draw hidden back of base (dashed)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.ellipse(centerX, bottomY, r, ellipseHeight, 0, Math.PI, 2 * Math.PI);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw cone sides
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(centerX, apexY);
+            ctx.lineTo(centerX - r, bottomY);
+            ctx.moveTo(centerX, apexY);
+            ctx.lineTo(centerX + r, bottomY);
+            ctx.stroke();
+
+            // Draw height line (red)
+            ctx.strokeStyle = '#CC0000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, apexY);
+            ctx.lineTo(centerX, bottomY);
+            ctx.stroke();
+
+            // Draw radius line (red)
+            ctx.beginPath();
+            ctx.moveTo(centerX, bottomY);
+            ctx.lineTo(centerX + r, bottomY);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#CC0000';
+            ctx.textAlign = 'center';
+            ctx.fillText(`r = ${radius} ${unit}`, centerX + r/2, bottomY + 25);
+            ctx.fillText(`h = ${height} ${unit}`, centerX - r - 40, apexY + (height * scale)/2);
         }
 
-        function generateVolumeQuestion() {
-            const type = Math.floor(Math.random() * 2);
-            
-            if (type === 0) {
-                const radius = Math.floor(Math.random() * 5) + 2;
-                const height = Math.floor(Math.random() * 8) + 4;
-                const volume = Math.PI * radius * radius * height;
-                
-                return {
-                    text: `Xiangling has a cylindrical pot at Wanmin Restaurant with radius ${radius}cm and height ${height}cm. What's the volume of Jueyun Chili soup it can hold?`,
-                    hint: `Volume of a cylinder = πr²h. Here r = ${radius}cm and h = ${height}cm. First calculate r² = ${radius * radius}, then multiply by π and h.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Cylinder volume formula: V = πr²h<br>
-                        2. Given: r = ${radius}cm, h = ${height}cm<br>
-                        3. Calculate r²: ${radius}² = ${radius * radius}<br>
-                        4. Multiply: V = π × ${radius * radius} × ${height}<br>
-                        5. V = 3.14159 × ${radius * radius * height} = ${volume.toFixed(2)} cm³<br>
-                        <strong>Answer: ${volume.toFixed(2)} cm³</strong>`,
-                    diagram: (canvas) => drawCylinder(canvas, radius, height),
-                    answer: volume,
-                    tolerance: 1,
-                    topic: "Volume & Capacity",
-                    needsRounding: true
-                };
-            } else {
-                const l = Math.floor(Math.random() * 8) + 3;
-                const w = Math.floor(Math.random() * 8) + 3;
-                const h = Math.floor(Math.random() * 8) + 3;
-                const volume = l * w * h;
-                
-                return {
-                    text: `Hu Tao is calculating storage space at the Wangsheng Funeral Parlor. A storage box measures ${l}m × ${w}m × ${h}m. What's the volume?`,
-                    hint: `Volume of a rectangular prism = length × width × height. Simply multiply: ${l} × ${w} × ${h}.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Rectangular prism volume: V = l × w × h<br>
-                        2. Given: length = ${l}m, width = ${w}m, height = ${h}m<br>
-                        3. Multiply all three dimensions:<br>
-                        4. V = ${l} × ${w} × ${h} = ${volume} m³<br>
-                        <strong>Answer: ${volume} m³</strong>`,
-                    diagram: (canvas) => drawRectangularPrism(canvas, l, w, h),
-                    answer: volume,
-                    tolerance: 0.5,
-                    topic: "Volume & Capacity",
-                    needsRounding: false
-                };
+        function drawSphere(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { radius = 3.6, unit = 'cm' } = data;
+
+            const scale = 40;
+            const padding = 100;
+
+            const r = (typeof radius === 'number' ? radius : 3.6) * scale;
+
+            canvas.width = r * 2 + padding * 2;
+            canvas.height = r * 2 + padding * 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Draw sphere
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, r, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Draw equator (ellipse for 3D effect)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY, r, r * 0.3, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw center point
+            ctx.fillStyle = '#CC0000';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 4, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Draw radius line
+            ctx.strokeStyle = '#CC0000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + r, centerY);
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#CC0000';
+            ctx.textAlign = 'center';
+            ctx.fillText(`r = ${radius} ${unit}`, centerX + r/2, centerY - 15);
+        }
+
+        function drawTriangularPrism(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { base = 4, height = 3, length = 6, unit = 'cm' } = data;
+
+            const scale = 40;
+            const padding = 80;
+
+            canvas.width = 550;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const b = base * scale;
+            const h = height * scale;
+            const l = length * scale;
+            const offsetX = l;
+
+            const startX = padding;
+            const startY = canvas.height - padding;
+
+            // Front triangle vertices
+            const frontBL = [startX, startY];
+            const frontBR = [startX + b, startY];
+            const frontTop = [startX + b/2, startY - h];
+
+            // Back triangle vertices
+            const backBL = [frontBL[0] + offsetX, frontBL[1]];
+            const backBR = [frontBR[0] + offsetX, frontBR[1]];
+            const backTop = [frontTop[0] + offsetX, frontTop[1]];
+
+            // Draw back triangle (lighter)
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(...backBL);
+            ctx.lineTo(...backBR);
+            ctx.lineTo(...backTop);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw connecting edges
+            ctx.beginPath();
+            ctx.moveTo(...frontBL);
+            ctx.lineTo(...backBL);
+            ctx.moveTo(...frontBR);
+            ctx.lineTo(...backBR);
+            ctx.moveTo(...frontTop);
+            ctx.lineTo(...backTop);
+            ctx.stroke();
+
+            // Draw front triangle (darker)
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(...frontBL);
+            ctx.lineTo(...frontBR);
+            ctx.lineTo(...frontTop);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#1a1a1a';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${base} ${unit}`, startX + b/2, startY + 30);
+            ctx.textAlign = 'right';
+            ctx.fillText(`${height} ${unit}`, startX - 15, startY - h/2);
+            ctx.textAlign = 'left';
+            ctx.fillText(`${length} ${unit}`, backBR[0] + 10, backBR[1] - 20);
+        }
+
+        function drawSimilarTrianglesIntersecting(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { angle1 = 40, angle2 = 40, showAngles = true } = data;
+
+            canvas.width = 500;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const centerX = 250;
+            const centerY = 200;
+
+            // Draw first triangle (ABC)
+            const A = [150, 300];
+            const B = [200, 150];
+            const C = [centerX, centerY];
+
+            ctx.beginPath();
+            ctx.moveTo(...A);
+            ctx.lineTo(...B);
+            ctx.lineTo(...C);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw second triangle (CDE) intersecting at C
+            const D = [300, 250];
+            const E = [350, 100];
+
+            ctx.beginPath();
+            ctx.moveTo(...C);
+            ctx.lineTo(...D);
+            ctx.lineTo(...E);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Label vertices
+            ctx.fillStyle = '#CC0000';
+            ctx.font = 'bold 18px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText('A', A[0] - 20, A[1] + 10);
+            ctx.fillText('B', B[0] - 20, B[1]);
+            ctx.fillText('C', C[0], C[1] - 20);
+            ctx.fillText('D', D[0] + 20, D[1]);
+            ctx.fillText('E', E[0] + 20, E[1]);
+
+            // Mark angles
+            if (showAngles) {
+                ctx.fillStyle = '#FFD700';
+                ctx.font = 'bold 14px Courier New';
+                ctx.fillText(`${angle1}°`, B[0] + 15, B[1] + 25);
+                ctx.fillText(`${angle2}°`, D[0] - 15, D[1] - 15);
+
+                // Mark vertically opposite angles at C
+                ctx.fillText('∠ACB = ∠DCE', centerX, centerY + 40);
             }
         }
 
-        function generateSimilarityQuestion() {
-            const small = Math.floor(Math.random() * 5) + 3;
-            const ratio = Math.floor(Math.random() * 3) + 2;
-            const large = small * ratio;
-            
-            const type = Math.floor(Math.random() * 2);
-            
-            if (type === 0) {
-                return {
-                    text: `Albedo discovered similar Cryo crystals in Dragonspine. A small crystal has an edge of ${small}cm. A larger similar crystal has a scale factor of ${ratio}:1. What is the corresponding edge length of the larger crystal?`,
-                    hint: `In similar figures, corresponding lengths are proportional. If the scale factor is ${ratio}:1, multiply the small crystal's edge by ${ratio}.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Similar figures have proportional corresponding sides<br>
-                        2. Scale factor = ${ratio}:1 (larger : smaller)<br>
-                        3. Small crystal edge = ${small}cm<br>
-                        4. Large crystal edge = ${small} × ${ratio} = ${large}cm<br>
-                        <strong>Answer: ${large} cm</strong>`,
-                    answer: large,
-                    tolerance: 0.1,
-                    topic: "Congruence & Similarity",
-                    needsRounding: false
-                };
-            } else {
-                const smallArea = small * small;
-                const largeArea = smallArea * ratio * ratio;
-                return {
-                    text: `Mona is studying similar magic circles. The smaller circle has an area of ${smallArea} cm². If a larger similar circle has a linear scale factor of ${ratio}:1, what is its area?`,
-                    hint: `IMPORTANT: When scale factor for length is ${ratio}:1, the scale factor for AREA is ${ratio}²:1 (or ${ratio * ratio}:1). Multiply the small area by ${ratio}².`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Linear scale factor = ${ratio}:1<br>
-                        2. Area scale factor = (linear scale factor)² = ${ratio}² = ${ratio * ratio}:1<br>
-                        3. Small area = ${smallArea} cm²<br>
-                        4. Large area = ${smallArea} × ${ratio * ratio} = ${largeArea} cm²<br>
-                        5. Remember: Areas scale with the SQUARE of the linear scale!<br>
-                        <strong>Answer: ${largeArea} cm²</strong>`,
-                    answer: largeArea,
-                    tolerance: 1,
-                    topic: "Similarity & Area",
-                    needsRounding: false
-                };
+        function drawSimilarTrianglesNested(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { angle = 100, showAngles = true } = data;
+
+            canvas.width = 550;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            // Draw outer triangle (isosceles with 100° angles at base)
+            const outerBase = 400;
+            const outerHeight = 150;
+            const outerLeft = [75, 320];
+            const outerRight = [475, 320];
+            const outerTop = [275, 170];
+
+            ctx.beginPath();
+            ctx.moveTo(...outerLeft);
+            ctx.lineTo(...outerRight);
+            ctx.lineTo(...outerTop);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw inner triangle (smaller, similar)
+            const innerLeft = [200, 270];
+            const innerRight = [350, 270];
+            const innerTop = [275, 215];
+
+            ctx.strokeStyle = '#CC0000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(...innerLeft);
+            ctx.lineTo(...innerRight);
+            ctx.lineTo(...innerTop);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 18px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText('A', outerLeft[0] - 20, outerLeft[1]);
+            ctx.fillText('E', outerRight[0] + 20, outerRight[1]);
+            ctx.fillText('B', outerTop[0], outerTop[1] - 20);
+
+            ctx.fillStyle = '#CC0000';
+            ctx.fillText('D', innerLeft[0], innerLeft[1] + 25);
+            ctx.fillText('C', innerRight[0], innerRight[1] + 25);
+
+            // Mark angles
+            if (showAngles) {
+                ctx.fillStyle = '#FFD700';
+                ctx.font = 'bold 14px Courier New';
+                ctx.fillText(`${angle}°`, outerLeft[0] + 30, outerLeft[1] - 10);
+                ctx.fillText(`${angle}°`, outerRight[0] - 30, outerRight[1] - 10);
             }
         }
 
-        function generateUnitCircleQuestion() {
-            const angles = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330];
-            const angle = angles[Math.floor(Math.random() * angles.length)];
-            const rad = angle * Math.PI / 180;
-            
-            const type = Math.floor(Math.random() * 2);
-            
-            if (type === 0) {
-                const answer = Math.cos(rad);
-                return {
-                    text: `Lisa is calculating elemental reaction angles in her research. She needs cos(${angle}°) for her Electro calculations. What is this value?`,
-                    hint: `For special angles on the unit circle: cos(0°)=1, cos(30°)≈0.866, cos(45°)≈0.707, cos(60°)=0.5, cos(90°)=0. Use these or your calculator!`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. We need to find cos(${angle}°)<br>
-                        2. Convert to radians if needed: ${angle}° = ${rad.toFixed(4)} radians<br>
-                        3. Using unit circle or calculator: cos(${angle}°) = ${answer.toFixed(4)}<br>
-                        4. This represents the x-coordinate on the unit circle at ${angle}°<br>
-                        <strong>Answer: ${answer.toFixed(4)}</strong>`,
-                    answer: answer,
-                    tolerance: 0.01,
-                    topic: "Unit Circle",
-                    needsRounding: true
-                };
-            } else {
-                const answer = Math.sin(rad);
-                return {
-                    text: `Sucrose is analyzing wind current trajectories. She needs to calculate sin(${angle}°). What is this value?`,
-                    hint: `For special angles: sin(0°)=0, sin(30°)=0.5, sin(45°)≈0.707, sin(60°)≈0.866, sin(90°)=1. Use symmetry for other angles or your calculator.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. We need to find sin(${angle}°)<br>
-                        2. Convert to radians: ${angle}° = ${rad.toFixed(4)} radians<br>
-                        3. Using unit circle or calculator: sin(${angle}°) = ${answer.toFixed(4)}<br>
-                        4. This represents the y-coordinate on the unit circle at ${angle}°<br>
-                        <strong>Answer: ${answer.toFixed(4)}</strong>`,
-                    answer: answer,
-                    tolerance: 0.01,
-                    topic: "Unit Circle",
-                    needsRounding: true
-                };
+        function drawSimilarSolidsComparison(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { shape = 'cube', size1 = 3, size2 = 6, unit = 'cm', volume1, volume2 } = data;
+
+            canvas.width = 600;
+            canvas.height = 400;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 16px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            const scale1 = 40;
+            const scale2 = scale1 * (size2 / size1);
+
+            if (shape === 'cube') {
+                // Draw first cube (smaller)
+                drawMiniCube(ctx, 100, 250, size1 * scale1, size1, unit, volume1);
+
+                // Draw second cube (larger)
+                drawMiniCube(ctx, 350, 250, size2 * scale1, size2, unit, volume2);
+
+            } else if (shape === 'pyramid') {
+                // Draw first pyramid (smaller)
+                drawMiniPyramid(ctx, 100, 300, size1 * 30, size1 * 25, size1, unit);
+
+                // Draw second pyramid (larger)
+                drawMiniPyramid(ctx, 350, 300, size2 * 30, size2 * 25, size2, unit);
+
+            } else if (shape === 'cylinder') {
+                // Draw first cylinder (smaller)
+                drawMiniCylinder(ctx, 100, 300, size1 * 20, size1 * 40, size1, unit);
+
+                // Draw second cylinder (larger)
+                drawMiniCylinder(ctx, 400, 300, size2 * 20, size2 * 40, size2, unit);
+
+            } else if (shape === 'rectangular-prism') {
+                // Draw first prism (smaller)
+                drawMiniRectangularPrism(ctx, 100, 300, size1 * 25, size1 * 20, size1 * 30, size1, unit, volume1);
+
+                // Draw second prism (larger)
+                drawMiniRectangularPrism(ctx, 400, 300, size2 * 25, size2 * 20, size2 * 30, size2, unit, volume2);
+            }
+
+            // Add labels
+            ctx.fillStyle = '#CC0000';
+            ctx.font = 'bold 18px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText('Solid A', 150, 50);
+            ctx.fillText('Solid B', 450, 50);
+
+            // Show scale factor
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = 'bold 14px Courier New';
+            const k = size2 / size1;
+            ctx.fillText(`Scale factor k = ${k}`, 300, 380);
+        }
+
+        function drawMiniCube(ctx, x, y, size, label, unit, volume) {
+            const offsetX = size * 0.4;
+            const offsetY = size * 0.25;
+
+            // Front face
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y - size, size, size);
+
+            // Back face
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x + offsetX, y - size - offsetY, size, size);
+
+            // Connecting edges
+            ctx.beginPath();
+            ctx.moveTo(x, y - size);
+            ctx.lineTo(x + offsetX, y - size - offsetY);
+            ctx.moveTo(x + size, y - size);
+            ctx.lineTo(x + size + offsetX, y - size - offsetY);
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + offsetX, y - offsetY);
+            ctx.moveTo(x + size, y);
+            ctx.lineTo(x + size + offsetX, y - offsetY);
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = 'bold 12px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText(`side = ${label} ${unit}`, x + size/2, y + 20);
+            if (volume) {
+                ctx.fillText(`V = ${volume} ${unit}³`, x + size/2, y + 35);
             }
         }
 
-        function generateBearingsQuestion() {
-            const bearing1 = Math.floor(Math.random() * 90) + 30;
-            const distance = Math.floor(Math.random() * 20) + 10;
-            
-            const scenarios = [
-                {
-                    text: `Beidou sails The Crux from Liyue Harbor on bearing ${bearing1}° for ${distance}km, then changes course to bearing ${bearing1 + 90}° for another ${distance}km. What is the straight-line distance from Liyue Harbor?`,
-                    hint: `The two legs form a right angle (${bearing1}° and ${bearing1 + 90}° are perpendicular). Use Pythagoras: distance² = ${distance}² + ${distance}².`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. First leg: ${distance}km on bearing ${bearing1}°<br>
-                        2. Second leg: ${distance}km on bearing ${bearing1 + 90}° (90° difference = right angle!)<br>
-                        3. This forms a right triangle with both legs = ${distance}km<br>
-                        4. Using Pythagorean Theorem: c² = ${distance}² + ${distance}²<br>
-                        5. c² = ${distance * distance} + ${distance * distance} = ${2 * distance * distance}<br>
-                        6. c = √${2 * distance * distance} = ${Math.sqrt(2 * distance * distance).toFixed(2)} km<br>
-                        <strong>Answer: ${Math.sqrt(2 * distance * distance).toFixed(2)} km</strong>`
-                },
-                {
-                    text: `Kazuha follows wind currents ${distance}km on bearing ${bearing1}°, then ${distance}km on bearing ${(bearing1 + 90) % 360}°. Calculate his straight-line distance from the starting point.`,
-                    hint: `These bearings differ by 90°, creating a right triangle with both legs = ${distance}km. Apply Pythagorean theorem to find the hypotenuse.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Two legs of journey: ${distance}km and ${distance}km at right angles<br>
-                        2. Forms a right triangle (90° difference in bearings)<br>
-                        3. Use Pythagorean Theorem: c² = a² + b²<br>
-                        4. c² = ${distance}² + ${distance}² = ${distance * distance} + ${distance * distance}<br>
-                        5. c² = ${2 * distance * distance}<br>
-                        6. c = √${2 * distance * distance} = ${Math.sqrt(2 * distance * distance).toFixed(2)} km<br>
-                        <strong>Answer: ${Math.sqrt(2 * distance * distance).toFixed(2)} km</strong>`
-                }
-            ];
-            
-            const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-            const answer = Math.sqrt(2 * distance * distance);
-            
-            return {
-                text: scenario.text,
-                hint: scenario.hint,
-                explanation: scenario.explanation,
-                answer: answer,
-                tolerance: 0.5,
-                topic: "Bearings",
-                needsRounding: true
-            };
+        function drawMiniPyramid(ctx, x, y, baseSize, height, label, unit) {
+            const apex = [x + baseSize/2, y - height];
+            const baseFrontL = [x, y];
+            const baseFrontR = [x + baseSize, y];
+            const offsetX = 20;
+            const offsetY = 15;
+            const baseBackL = [x + offsetX, y - offsetY];
+            const baseBackR = [x + baseSize + offsetX, y - offsetY];
+
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 2;
+
+            // Base
+            ctx.beginPath();
+            ctx.moveTo(...baseFrontL);
+            ctx.lineTo(...baseFrontR);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(...baseBackL);
+            ctx.lineTo(...baseBackR);
+            ctx.lineTo(...baseFrontR);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Edges
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseFrontL);
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseFrontR);
+            ctx.moveTo(...apex);
+            ctx.lineTo(...baseBackR);
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = 'bold 12px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText(`base = ${label} ${unit}`, x + baseSize/2, y + 20);
         }
 
-        function generateTriangleAreaQuestion() {
-            const base = Math.floor(Math.random() * 10) + 5;
-            const height = Math.floor(Math.random() * 10) + 5;
-            const area = 0.5 * base * height;
-            
-            const scenarios = [
-                {
-                    text: `Venti creates a triangular wind current with his Skyward Sonnet. The base spans ${base}m and the height reaches ${height}m. What's the area of this wind current?`,
-                    hint: `Triangle area formula: A = ½ × base × height. Calculate: ½ × ${base} × ${height}.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Triangle area formula: A = ½ × base × height<br>
-                        2. Given: base = ${base}m, height = ${height}m<br>
-                        3. Substitute: A = ½ × ${base} × ${height}<br>
-                        4. Calculate: A = ½ × ${base * height} = ${area} m²<br>
-                        <strong>Answer: ${area} m²</strong>`,
-                    diagram: (canvas) => drawTriangle(canvas, base, height)
-                },
-                {
-                    text: `Razor marks his wolf pack's territory with a triangular boundary. Base: ${base}m, height: ${height}m. What's the territory area?`,
-                    hint: `Use A = (base × height) ÷ 2. Plug in: (${base} × ${height}) ÷ 2.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Formula: A = (base × height) ÷ 2<br>
-                        2. base = ${base}m, height = ${height}m<br>
-                        3. First multiply: ${base} × ${height} = ${base * height}<br>
-                        4. Then divide by 2: ${base * height} ÷ 2 = ${area} m²<br>
-                        <strong>Answer: ${area} m²</strong>`,
-                    diagram: (canvas) => drawTriangle(canvas, base, height)
-                },
-                {
-                    text: `Ganyu creates a triangular ice formation using her Celestial Shower. Base ${base}m, height ${height}m. Calculate the area.`,
-                    hint: `Remember: Area = ½bh where b = ${base} and h = ${height}. Multiply base by height, then divide by 2.`,
-                    explanation: `<strong>Step-by-step solution:</strong><br>
-                        1. Triangle area: A = ½bh<br>
-                        2. b = ${base}m, h = ${height}m<br>
-                        3. Multiply: ${base} × ${height} = ${base * height}<br>
-                        4. Divide by 2: ${base * height} ÷ 2 = ${area}<br>
-                        <strong>Answer: ${area} m²</strong>`,
-                    diagram: (canvas) => drawTriangle(canvas, base, height)
-                }
-            ];
-            
-            const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-            
-            return {
-                text: scenario.text,
-                hint: scenario.hint,
-                explanation: scenario.explanation,
-                diagram: scenario.diagram,
-                answer: area,
-                tolerance: 0.5,
-                topic: "Triangle Area",
-                needsRounding: false
-            };
+        function drawMiniCylinder(ctx, x, y, radius, height, label, unit) {
+            const topY = y - height;
+            const ellipseH = radius * 0.3;
+
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 2;
+
+            // Top ellipse
+            ctx.beginPath();
+            ctx.ellipse(x, topY, radius, ellipseH, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Sides
+            ctx.beginPath();
+            ctx.moveTo(x - radius, topY);
+            ctx.lineTo(x - radius, y);
+            ctx.moveTo(x + radius, topY);
+            ctx.lineTo(x + radius, y);
+            ctx.stroke();
+
+            // Bottom ellipse
+            ctx.beginPath();
+            ctx.ellipse(x, y, radius, ellipseH, 0, 0, Math.PI);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.ellipse(x, y, radius, ellipseH, 0, Math.PI, 2 * Math.PI);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Label
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = 'bold 12px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText(`r = ${label} ${unit}`, x, y + 20);
         }
 
-        function generateSineRuleQuestion() {
-            const a = Math.floor(Math.random() * 10) + 8;
-            const angleA = 30 + Math.floor(Math.random() * 30);
-            const angleB = 40 + Math.floor(Math.random() * 30);
-            
-            const b = a * Math.sin(angleB * Math.PI / 180) / Math.sin(angleA * Math.PI / 180);
-            
-            return {
-                text: `Yelan is triangulating positions in The Chasm. In a triangle, side a = ${a}m (opposite angle A = ${angleA}°), and angle B = ${angleB}°. Use the sine rule to find side b (opposite angle B).`,
-                hint: `Sine Rule: a/sin(A) = b/sin(B). Rearrange to find b: b = a × sin(B) / sin(A). Calculate: b = ${a} × sin(${angleB}°) / sin(${angleA}°).`,
-                explanation: `<strong>Step-by-step solution:</strong><br>
-                    1. Sine Rule: a/sin(A) = b/sin(B)<br>
-                    2. Given: a = ${a}m, A = ${angleA}°, B = ${angleB}°<br>
-                    3. Rearrange to find b: b = a × sin(B) / sin(A)<br>
-                    4. Calculate: sin(${angleB}°) = ${Math.sin(angleB * Math.PI / 180).toFixed(4)}<br>
-                    5. Calculate: sin(${angleA}°) = ${Math.sin(angleA * Math.PI / 180).toFixed(4)}<br>
-                    6. b = ${a} × ${Math.sin(angleB * Math.PI / 180).toFixed(4)} / ${Math.sin(angleA * Math.PI / 180).toFixed(4)}<br>
-                    7. b = ${b.toFixed(2)} m<br>
-                    <strong>Answer: ${b.toFixed(2)} m</strong>`,
-                answer: b,
-                tolerance: 0.5,
-                topic: "Sine Rule",
-                needsRounding: true
-            };
+        function drawMiniRectangularPrism(ctx, x, y, width, depth, height, label, unit, volume) {
+            const offsetX = depth * 0.7;
+            const offsetY = depth * 0.5;
+            const topY = y - height;
+
+            // Front face
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, topY, width, height);
+
+            // Back face
+            ctx.strokeStyle = '#6699CC';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x + offsetX, topY - offsetY, width, height);
+
+            // Top face
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x, topY);
+            ctx.lineTo(x + offsetX, topY - offsetY);
+            ctx.lineTo(x + width + offsetX, topY - offsetY);
+            ctx.lineTo(x + width, topY);
+            ctx.closePath();
+            ctx.stroke();
+
+            // Connecting edges (right side visible edges)
+            ctx.beginPath();
+            ctx.moveTo(x + width, y);
+            ctx.lineTo(x + width + offsetX, y - offsetY);
+            ctx.lineTo(x + width + offsetX, topY - offsetY);
+            ctx.stroke();
+
+            // Label
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = 'bold 12px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText(`h = ${label} ${unit}`, x + width/2, y + 20);
+            if (volume) {
+                ctx.fillText(`V = ${volume} ${unit}³`, x + width/2, y + 35);
+            }
         }
 
-        function generateCircleTheoremQuestion() {
-            const radius = Math.floor(Math.random() * 8) + 5;
-            const chordDistance = Math.floor(Math.random() * (radius - 2)) + 1;
-            
-            const chordHalf = Math.sqrt(radius * radius - chordDistance * chordDistance);
-            const chord = 2 * chordHalf;
-            
-            return {
-                text: `Ayaka studies a circular frozen pond in Inazuma with radius ${radius}m. A chord (straight line across the circle) is ${chordDistance}m from the center. Using circle theorems, find the chord's length.`,
-                hint: `Draw a perpendicular from the center to the chord - it bisects the chord! This creates a right triangle: radius = ${radius}m (hypotenuse), distance = ${chordDistance}m (one leg). Find the other leg, then double it for the full chord.`,
-                explanation: `<strong>Step-by-step solution:</strong><br>
-                    1. Circle Theorem: A perpendicular from center to chord bisects the chord<br>
-                    2. This creates a right triangle where:<br>
-                       - Hypotenuse = radius = ${radius}m<br>
-                       - One leg = distance to chord = ${chordDistance}m<br>
-                       - Other leg = half the chord length<br>
-                    3. Using Pythagorean Theorem: (half-chord)² = ${radius}² - ${chordDistance}²<br>
-                    4. (half-chord)² = ${radius * radius} - ${chordDistance * chordDistance} = ${radius * radius - chordDistance * chordDistance}<br>
-                    5. half-chord = √${radius * radius - chordDistance * chordDistance} = ${chordHalf.toFixed(2)}m<br>
-                    6. Full chord = 2 × ${chordHalf.toFixed(2)} = ${chord.toFixed(2)}m<br>
-                    <strong>Answer: ${chord.toFixed(2)} m</strong>`,
-                diagram: (canvas) => drawCircle(canvas, radius, true, chordDistance),
-                answer: chord,
-                tolerance: 0.5,
-                topic: "Circle Theorems",
-                needsRounding: true
-            };
+        function drawCongruentTriangles(canvas, data) {
+            const ctx = canvas.getContext('2d');
+            const { triangle1, triangle2, congruenceType = 'SSS' } = data;
+
+            const scale = 35;
+            const padding = 80;
+            const spacing = 150;
+
+            canvas.width = 600;
+            canvas.height = 350;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Styling
+            ctx.strokeStyle = '#003366';
+            ctx.lineWidth = 3;
+            ctx.font = 'bold 14px Courier New';
+            ctx.fillStyle = '#1a1a1a';
+
+            // Draw Triangle 1 (left)
+            drawSingleTriangle(ctx, padding, padding + 100, triangle1, scale, 1);
+
+            // Draw Triangle 2 (right)
+            drawSingleTriangle(ctx, padding + spacing + 100, padding + 100, triangle2, scale, 2);
+
+            // Add labels
+            ctx.font = 'bold 16px Courier New';
+            ctx.textAlign = 'center';
+            ctx.fillText(triangle1.label || 'ABC', padding + 60, canvas.height - 30);
+            ctx.fillText(triangle2.label || 'DEF', padding + spacing + 160, canvas.height - 30);
         }
 
-        function startGame() {
-            currentQuestion = 0;
+        function drawSingleTriangle(ctx, startX, startY, triData, scale, triNum) {
+            const { base = 4, height = 3, marks = {}, rightAngle = false } = triData;
+
+            const baseWidth = base * scale;
+            const triHeight = height * scale;
+
+            // Draw triangle
+            ctx.beginPath();
+            ctx.moveTo(startX, startY); // Bottom left
+            ctx.lineTo(startX + baseWidth, startY); // Bottom right
+            ctx.lineTo(startX + baseWidth/2, startY - triHeight); // Top
+            ctx.closePath();
+            ctx.stroke();
+
+            // Draw tick marks for equal sides
+            if (marks.side1) {
+                drawTickMarks(ctx, startX, startY, startX + baseWidth/2, startY - triHeight, marks.side1);
+            }
+            if (marks.side2) {
+                drawTickMarks(ctx, startX + baseWidth/2, startY - triHeight, startX + baseWidth, startY, marks.side2);
+            }
+            if (marks.base) {
+                drawTickMarks(ctx, startX, startY, startX + baseWidth, startY, marks.base);
+            }
+
+            // Draw right angle if specified
+            if (rightAngle) {
+                const squareSize = 12;
+                ctx.strokeRect(startX, startY - squareSize, squareSize, squareSize);
+            }
+        }
+
+        function drawTickMarks(ctx, x1, y1, x2, y2, count) {
+            const midX = (x1 + x2) / 2;
+            const midY = (y1 + y2) / 2;
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            const perpX = -dy / length * 8;
+            const perpY = dx / length * 8;
+
+            ctx.save();
+            ctx.strokeStyle = '#CC0000';
+            ctx.lineWidth = 2;
+
+            for (let i = 0; i < count; i++) {
+                const offset = (i - (count - 1) / 2) * 8;
+                const startMarkX = midX + perpX * 0.5 + (perpY / 8) * offset;
+                const startMarkY = midY + perpY * 0.5 - (perpX / 8) * offset;
+                ctx.beginPath();
+                ctx.moveTo(startMarkX - perpX, startMarkY - perpY);
+                ctx.lineTo(startMarkX + perpX, startMarkY + perpY);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        // ========================================
+        // GAME FUNCTIONS
+        // ========================================
+
+        function startChapter(chapter) {
+            currentChapter = chapter;
+
+            // Check if playtest mode is enabled
+            playtestMode = document.getElementById('playtestMode').checked;
+
+            // Group questions by section
+            const allQuestions = QUESTION_BANK[chapter].questions;
+
+            if (playtestMode) {
+                // PLAYTEST MODE: Use ALL questions in order
+                questions = [...allQuestions];
+                console.log(`🔧 PLAYTEST MODE: Loading all ${questions.length} questions for ${chapter}`);
+            } else {
+                // NORMAL MODE: Random selection
+                const questionsBySection = {};
+
+                allQuestions.forEach(q => {
+                    if (!questionsBySection[q.section]) {
+                        questionsBySection[q.section] = [];
+                    }
+                    questionsBySection[q.section].push(q);
+                });
+
+                // Randomly select 1-2 questions from each section
+                const selectedQuestions = [];
+                const sections = Object.keys(questionsBySection);
+
+                sections.forEach(section => {
+                    const sectionQuestions = questionsBySection[section];
+                    // Randomly decide: 1 or 2 questions from this section
+                    const numToSelect = Math.random() < 0.5 ? 1 : 2;
+
+                    // Shuffle and pick
+                    const shuffled = [...sectionQuestions].sort(() => Math.random() - 0.5);
+                    selectedQuestions.push(...shuffled.slice(0, Math.min(numToSelect, sectionQuestions.length)));
+                });
+
+                // Shuffle the selected questions and limit to 8 total
+                questions = selectedQuestions.sort(() => Math.random() - 0.5).slice(0, 8);
+            }
+
+            currentQuestionIndex = 0;
             score = 0;
-            questions = [];
-            
-            // Select 5 random question types
-            const shuffled = [...questionGenerators].sort(() => Math.random() - 0.5);
-            for (let i = 0; i < 5; i++) {
-                questions.push(shuffled[i]());
-            }
-            
-            document.getElementById('score').textContent = score;
-            document.getElementById('questionSection').classList.remove('hidden');
-            document.getElementById('finalScore').classList.add('hidden');
-            
+            health = 100;
+
+            document.getElementById('chapterSelection').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+
+            const caseTitle = QUESTION_BANK[chapter].name;
+            document.getElementById('caseTitle').textContent = playtestMode ?
+                `🔧 [PLAYTEST] ${caseTitle}` : caseTitle;
+
             showQuestion();
         }
 
         function showQuestion() {
-            const question = questions[currentQuestion];
-            
-            // Update map progress
-            updateMapProgress();
-            
-            const roundingText = question.needsRounding ? " (Round to 2 decimal places)" : "";
-            document.getElementById('questionNumber').textContent = `Quest ${currentQuestion + 1}/5 - ${question.topic}`;
-            document.getElementById('questionText').textContent = question.text + roundingText;
-            
-            // Draw diagram if available
+            if (currentQuestionIndex >= questions.length) {
+                showVerdict();
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+
+            // Update UI
+            document.getElementById('questionProgress').textContent =
+                `Question ${currentQuestionIndex + 1}/${questions.length}`;
+            document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+
+            // Set witness
+            document.getElementById('witnessName').textContent = question.witness;
+            const witnessImage = document.getElementById('witnessImage');
+            const imageName = characterImages[question.witness] || 'phoenix_wright.png';
+            witnessImage.src = 'characters/' + imageName;
+            witnessImage.alt = question.witness;
+
+            // Set defense attorney (left side) - use Miles Edgeworth when Phoenix is the witness
+            const defenseImage = document.querySelector('.character:first-child .character-sprite img');
+            const defenseName = document.querySelector('.character:first-child .character-name');
+
+            if (question.witness === 'Phoenix Wright') {
+                defenseImage.src = 'characters/miles_edgeworth.png';
+                defenseImage.alt = 'Miles Edgeworth';
+                defenseName.textContent = 'Miles Edgeworth';
+            } else {
+                defenseImage.src = 'characters/phoenix_wright.png';
+                defenseImage.alt = 'Phoenix Wright';
+                defenseName.textContent = 'Phoenix Wright';
+            }
+
+            // Set dialogue
+            document.getElementById('speaker').textContent = question.witness;
+            document.getElementById('dialogueText').textContent = question.problem;
+
+            // Set question header
+            document.getElementById('questionHeader').textContent =
+                `Exercise ${question.section} - Question ${question.questionNum} - Page ${question.page}`;
+
+            // Clear previous
+            document.getElementById('answerInput').value = '';
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('hintSection').classList.add('hidden');
+            document.getElementById('solutionSection').classList.add('hidden');
+
+            // Draw diagram
             const diagramContainer = document.getElementById('diagramContainer');
             if (question.diagram) {
-                // Create canvas with initial size, drawing function will adjust if needed
-                diagramContainer.innerHTML = '<canvas id="questionCanvas" width="400" height="300"></canvas>';
+                diagramContainer.innerHTML = '<canvas id="questionCanvas"></canvas>';
                 const canvas = document.getElementById('questionCanvas');
-                question.diagram(canvas);
+
+                if (question.diagram.type === 'right-triangle') {
+                    drawRightTriangle(canvas, question.diagram);
+                } else if (question.diagram.type === 'rectangle') {
+                    drawRectangle(canvas, question.diagram);
+                } else if (question.diagram.type === 'circle') {
+                    drawCircle(canvas, question.diagram);
+                } else if (question.diagram.type === 'triangle') {
+                    drawTriangle(canvas, question.diagram);
+                } else if (question.diagram.type === 'congruent-triangles') {
+                    drawCongruentTriangles(canvas, question.diagram);
+                } else if (question.diagram.type === 'cube-diagonal') {
+                    drawCubeDiagonal(canvas, question.diagram);
+                } else if (question.diagram.type === 'tangent-circles') {
+                    drawTangentCircles(canvas, question.diagram);
+                } else if (question.diagram.type === 'sector') {
+                    drawSector(canvas, question.diagram);
+                } else if (question.diagram.type === 'rectangular-prism') {
+                    drawRectangularPrism(canvas, question.diagram);
+                } else if (question.diagram.type === 'cylinder') {
+                    drawCylinder(canvas, question.diagram);
+                } else if (question.diagram.type === 'pyramid') {
+                    drawPyramid(canvas, question.diagram);
+                } else if (question.diagram.type === 'cone') {
+                    drawCone(canvas, question.diagram);
+                } else if (question.diagram.type === 'sphere') {
+                    drawSphere(canvas, question.diagram);
+                } else if (question.diagram.type === 'triangular-prism') {
+                    drawTriangularPrism(canvas, question.diagram);
+                } else if (question.diagram.type === 'similar-triangles-intersecting') {
+                    drawSimilarTrianglesIntersecting(canvas, question.diagram);
+                } else if (question.diagram.type === 'similar-triangles-nested') {
+                    drawSimilarTrianglesNested(canvas, question.diagram);
+                } else if (question.diagram.type === 'similar-solids') {
+                    drawSimilarSolidsComparison(canvas, question.diagram);
+                }
             } else {
                 diagramContainer.innerHTML = '';
             }
-            
-            document.getElementById('answerInput').value = '';
-            document.getElementById('feedback').innerHTML = '';
-            document.getElementById('hintContainer').innerHTML = '';
-            document.getElementById('hintContainer').classList.add('hidden');
-            document.getElementById('answerExplanation').innerHTML = '';
-            document.getElementById('answerExplanation').classList.add('hidden');
-            document.getElementById('answerInput').focus();
-            document.getElementById('hintBtn').disabled = false;
-            document.getElementById('showAnswerBtn').disabled = false;
-            document.getElementById('submitBtn').disabled = false;
-            
-            hintUsed = false;
-            answerShown = false;
-            maxScore = 20;
-            currentAnswer = question.answer;
-        }
 
-        function updateMapProgress() {
-            // Reset all locations
-            for (let i = 0; i <= 5; i++) {
-                const location = document.getElementById(`location${i}`);
-                location.classList.remove('visited', 'current');
+            // PLAYTEST MODE: Show answer (collapsible)
+            if (playtestMode) {
+                let playtestInfo = document.getElementById('playtestInfo');
+                if (!playtestInfo) {
+                    // Create playtest info display
+                    const infoDiv = document.createElement('div');
+                    infoDiv.id = 'playtestInfo';
+                    infoDiv.style.cssText = 'background: #d4edda; border: 3px solid #28a745; padding: 15px; margin: 15px 0; border-radius: 5px; font-weight: bold; color: #155724;';
+                    document.getElementById('dialogueText').parentElement.after(infoDiv);
+                    // Re-fetch the element after creating it
+                    playtestInfo = document.getElementById('playtestInfo');
+                }
+
+                // Set collapsed state by default (start collapsed)
+                if (playtestInfo.dataset.expanded === undefined) {
+                    playtestInfo.dataset.expanded = 'false';
+                }
+                const isExpanded = playtestInfo.dataset.expanded === 'true';
+
+                playtestInfo.innerHTML = `
+                    <div id="playtestHeader" style="cursor: pointer;">
+                        🔧 <strong>PLAYTEST MODE</strong> ${isExpanded ? '▼' : '▶'} <span style="font-size: 0.9em; font-weight: normal;">(Click to ${isExpanded ? 'hide' : 'show'} answer)</span>
+                    </div>
+                    <div id="playtestDetails" style="display: ${isExpanded ? 'block' : 'none'}; margin-top: 10px; padding-top: 10px; border-top: 2px solid #28a745;">
+                        ✅ Correct Answer: <span style="color: #0066cc; font-size: 1.2em;">${question.correctAnswer}</span><br>
+                        📝 Acceptable: ${question.acceptableAnswers.join(', ')}<br>
+                        🔢 Question ID: ${question.id}
+                    </div>
+                `;
+
+                // Add click handler to toggle
+                document.getElementById('playtestHeader').onclick = function() {
+                    const info = document.getElementById('playtestInfo');
+                    const details = document.getElementById('playtestDetails');
+                    const header = document.getElementById('playtestHeader');
+                    const isCurrentlyExpanded = info.dataset.expanded === 'true';
+
+                    info.dataset.expanded = isCurrentlyExpanded ? 'false' : 'true';
+                    details.style.display = isCurrentlyExpanded ? 'none' : 'block';
+                    header.innerHTML = `🔧 <strong>PLAYTEST MODE</strong> ${isCurrentlyExpanded ? '▶' : '▼'} <span style="font-size: 0.9em; font-weight: normal;">(Click to ${isCurrentlyExpanded ? 'show' : 'hide'} answer)</span>`;
+                };
             }
-            
-            // Mark visited locations
-            for (let i = 0; i < currentQuestion; i++) {
-                document.getElementById(`location${i}`).classList.add('visited');
-            }
-            
-            // Mark current location
-            document.getElementById(`location${currentQuestion}`).classList.add('current');
         }
 
         function showHint() {
-            const question = questions[currentQuestion];
-            const hintContainer = document.getElementById('hintContainer');
-            
-            hintContainer.innerHTML = `<div class="hint-box">💡 <strong>Hint:</strong> ${question.hint}</div>`;
-            hintContainer.classList.remove('hidden');
-            
-            hintUsed = true;
-            maxScore = 10;
-            document.getElementById('hintBtn').disabled = true;
+            const question = questions[currentQuestionIndex];
+            const hintSection = document.getElementById('hintSection');
+
+            if (hintSection.classList.contains('hidden')) {
+                hintSection.classList.remove('hidden');
+                document.getElementById('hintContent').innerHTML = `
+                    <div class="evidence-item">${question.hint}</div>
+                `;
+            } else {
+                hintSection.classList.add('hidden');
+            }
         }
 
-        function showAnswer() {
-            const question = questions[currentQuestion];
-            const answerContainer = document.getElementById('answerExplanation');
-            
-            answerContainer.innerHTML = `<div class="answer-explanation">📖 <strong>Complete Solution:</strong><br><br>${question.explanation}</div>`;
-            answerContainer.classList.remove('hidden');
-            
-            answerShown = true;
-            maxScore = 1;
-            document.getElementById('showAnswerBtn').disabled = true;
-            document.getElementById('hintBtn').disabled = true;
+        function showSolution() {
+            const question = questions[currentQuestionIndex];
+            const solutionSection = document.getElementById('solutionSection');
+
+            if (solutionSection.classList.contains('hidden')) {
+                solutionSection.classList.remove('hidden');
+                document.getElementById('solutionContent').innerHTML = `
+                    <div class="evidence-item">${question.explanation}</div>
+                `;
+            } else {
+                solutionSection.classList.add('hidden');
+            }
         }
 
-        function checkAnswer() {
-            const userAnswer = parseFloat(document.getElementById('answerInput').value);
-            const question = questions[currentQuestion];
-            const feedback = document.getElementById('feedback');
-            
-            if (isNaN(userAnswer)) {
-                feedback.innerHTML = '<div class="feedback incorrect">Please enter a valid number!</div>';
+        function submitAnswer() {
+            const question = questions[currentQuestionIndex];
+            const userAnswer = document.getElementById('answerInput').value.trim();
+
+            if (!userAnswer) {
+                alert('Please enter an answer!');
                 return;
             }
-            
-            const isCorrect = Math.abs(userAnswer - question.answer) <= question.tolerance;
-            
-            if (isCorrect) {
-                score += maxScore;
-                document.getElementById('score').textContent = score;
-                
-                let feedbackMessage = '';
-                if (answerShown) {
-                    feedbackMessage = `
-                        <div class="feedback correct">
-                            ✓ Correct! You earned ${maxScore} Primogem! 
-                            <br>The answer is ${question.answer.toFixed(2)}
-                            <br><em>(Full solution viewed: 1 point awarded)</em>
-                        </div>
-                    `;
-                } else if (hintUsed) {
-                    feedbackMessage = `
-                        <div class="feedback correct">
-                            ⭐ Correct! You earned ${maxScore} Primogems! ⭐
-                            <br>The answer is ${question.answer.toFixed(2)}
-                            <br><em>(Hint used: Half points awarded)</em>
-                        </div>
-                    `;
-                } else {
-                    feedbackMessage = `
-                        <div class="feedback correct">
-                            ⭐ Perfect! You earned ${maxScore} Primogems! ⭐
-                            <br>The answer is ${question.answer.toFixed(2)}
-                        </div>
-                    `;
-                }
-                feedback.innerHTML = feedbackMessage;
-            } else {
-                feedback.innerHTML = `
-                    <div class="feedback incorrect">
-                        Not quite right. The correct answer is ${question.answer.toFixed(2)}
-                        <br>Keep practicing, Traveler! 💪
-                    </div>
-                `;
-            }
-            
-            document.getElementById('submitBtn').disabled = true;
-            document.getElementById('hintBtn').disabled = true;
-            document.getElementById('showAnswerBtn').disabled = true;
-            
-            setTimeout(() => {
-                currentQuestion++;
-                
-                // Check if we should trigger mini-game (after question 2 or 4, randomly)
-                if (!miniGameTriggered && currentQuestion < 5 && (currentQuestion === 2 || currentQuestion === 4) && Math.random() < 0.5) {
-                    miniGameTriggered = true;
-                    startMiniGame();
-                } else if (currentQuestion < 5) {
-                    showQuestion();
-                } else {
-                    showFinalScore();
-                }
-            }, 3000);
-        }
 
-        function startMiniGame() {
-            const modal = document.getElementById('miniGameModal');
-            const container = document.getElementById('miniGameContainer');
-            
-            document.getElementById('miniGameTitle').textContent = '🎮 Bonus Challenge: Slime Whacker! 🎮';
-            
-            container.innerHTML = `
-                <p style="text-align: center; font-size: 1.1em; color: #666; margin-bottom: 20px;">
-                    Quick! Help Amber clear out the slimes invading Mondstadt!<br>
-                    Click the slimes as fast as you can!
-                </p>
-                <div class="game-timer" id="miniGameTimer">Time: 10s</div>
-                <div class="game-score" id="miniGameScore">Slimes Defeated: 0</div>
-                <div class="slime-grid" id="slimeGrid">
-                    <div class="slime-hole" onclick="whackSlime(0)"></div>
-                    <div class="slime-hole" onclick="whackSlime(1)"></div>
-                    <div class="slime-hole" onclick="whackSlime(2)"></div>
-                    <div class="slime-hole" onclick="whackSlime(3)"></div>
-                    <div class="slime-hole" onclick="whackSlime(4)"></div>
-                    <div class="slime-hole" onclick="whackSlime(5)"></div>
-                    <div class="slime-hole" onclick="whackSlime(6)"></div>
-                    <div class="slime-hole" onclick="whackSlime(7)"></div>
-                    <div class="slime-hole" onclick="whackSlime(8)"></div>
-                </div>
-            `;
-            
-            modal.classList.add('active');
-            
-            // Start the game
-            window.miniGameActive = true;
-            window.miniGameScore = 0;
-            window.miniGameTime = 10;
-            window.activeSlimes = [];
-            
-            // Slime emojis
-            window.slimeTypes = ['💧', '🔥', '⚡', '🌿', '❄️', '💨'];
-            
-            // Start spawning slimes
-            window.slimeInterval = setInterval(spawnSlime, 800);
-            
-            // Start timer
-            window.timerInterval = setInterval(() => {
-                window.miniGameTime--;
-                document.getElementById('miniGameTimer').textContent = `Time: ${window.miniGameTime}s`;
-                
-                if (window.miniGameTime <= 0) {
-                    endMiniGame();
-                }
+            // Show objection animation
+            const overlay = document.getElementById('objectionOverlay');
+            overlay.classList.add('active');
+            setTimeout(() => overlay.classList.remove('active'), 1000);
+
+            // Check answer
+            setTimeout(() => {
+                checkAnswer(userAnswer, question);
             }, 1000);
         }
 
-        function spawnSlime() {
-            if (!window.miniGameActive) return;
-            
-            // Choose random hole
-            const holeIndex = Math.floor(Math.random() * 9);
-            const hole = document.querySelectorAll('.slime-hole')[holeIndex];
-            
-            // Don't spawn if already has slime
-            if (hole.querySelector('.slime')) return;
-            
-            // Choose random slime type
-            const slimeType = window.slimeTypes[Math.floor(Math.random() * window.slimeTypes.length)];
-            
-            // Add slime
-            const slimeElement = document.createElement('span');
-            slimeElement.className = 'slime';
-            slimeElement.textContent = slimeType;
-            slimeElement.dataset.index = holeIndex;
-            hole.appendChild(slimeElement);
-            
-            window.activeSlimes[holeIndex] = true;
-            
-            // Remove slime after 1.5 seconds if not clicked
-            setTimeout(() => {
-                if (hole.contains(slimeElement)) {
-                    hole.removeChild(slimeElement);
-                    window.activeSlimes[holeIndex] = false;
-                }
-            }, 1500);
-        }
+        function checkAnswer(userAnswer, question) {
+            const feedbackDiv = document.getElementById('feedback');
+            let isCorrect = false;
 
-        function whackSlime(index) {
-            if (!window.miniGameActive) return;
-            
-            const hole = document.querySelectorAll('.slime-hole')[index];
-            const slime = hole.querySelector('.slime');
-            
-            if (slime && window.activeSlimes[index]) {
-                // Successful hit!
-                window.miniGameScore++;
-                document.getElementById('miniGameScore').textContent = `Slimes Defeated: ${window.miniGameScore}`;
-                
-                // Visual feedback
-                hole.style.background = 'linear-gradient(135deg, #90EE90 0%, #98FB98 100%)';
+            // Check against acceptable answers
+            if (question.acceptableAnswers) {
+                isCorrect = question.acceptableAnswers.some(ans =>
+                    userAnswer.toLowerCase().replace(/\s/g, '') === ans.toLowerCase().replace(/\s/g, '')
+                );
+            }
+
+            // Also check decimal equivalent if provided
+            if (!isCorrect && question.decimalEquivalent) {
+                const numAnswer = parseFloat(userAnswer);
+                if (!isNaN(numAnswer)) {
+                    isCorrect = Math.abs(numAnswer - question.decimalEquivalent) <= question.tolerance;
+                }
+            }
+
+            if (isCorrect) {
+                const pointsEarned = playtestMode ? 0 : 100;
+                if (!playtestMode) score += pointsEarned;
+                feedbackDiv.className = 'feedback correct';
+                feedbackDiv.innerHTML = `
+                    <strong>✓ OBJECTION SUSTAINED!</strong><br><br>
+                    ${question.explanation}<br><br>
+                    ${playtestMode ? '<em>🔧 Playtest Mode - No scoring</em>' : `<em>+${pointsEarned} points</em>`}
+                `;
+            } else {
+                if (!playtestMode) {
+                    health = Math.max(0, health - 20);
+                    updateHealth();
+                }
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.innerHTML = `
+                    <strong>✗ OBJECTION OVERRULED!</strong><br><br>
+                    ${question.explanation}<br><br>
+                    ${playtestMode ? '<em>🔧 Playtest Mode - No penalty</em>' : '<em>-20 Confidence</em>'}
+                `;
+            }
+
+            feedbackDiv.classList.remove('hidden');
+
+            // Auto-advance after delay (skip in playtest mode)
+            if (playtestMode) {
+                // PLAYTEST MODE: Show "Next Question" button instead of auto-advance
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn btn-object';
+                nextBtn.textContent = 'NEXT QUESTION ➜';
+                nextBtn.style.cssText = 'margin-top: 20px; font-size: 1.2em;';
+                nextBtn.onclick = () => {
+                    currentQuestionIndex++;
+                    showQuestion();
+                };
+                feedbackDiv.appendChild(nextBtn);
+            } else {
+                // NORMAL MODE: Auto-advance after 5 seconds
                 setTimeout(() => {
-                    hole.style.background = 'linear-gradient(135deg, #8B7355 0%, #A0826D 100%)';
-                }, 200);
-                
-                hole.removeChild(slime);
-                window.activeSlimes[index] = false;
+                    currentQuestionIndex++;
+                    showQuestion();
+                }, 5000);
             }
         }
 
-        function endMiniGame() {
-            window.miniGameActive = false;
-            clearInterval(window.slimeInterval);
-            clearInterval(window.timerInterval);
-            
-            // Calculate bonus primogems (1 per slime, max 10)
-            const bonusPrimogems = Math.min(window.miniGameScore, 10);
-            score += bonusPrimogems;
-            document.getElementById('score').textContent = score;
-            
-            const container = document.getElementById('miniGameContainer');
-            
-            let message = '';
-            if (window.miniGameScore >= 15) {
-                message = '🌟 Amazing! You\'re as quick as Diluc with his claymore!';
-            } else if (window.miniGameScore >= 10) {
-                message = '⭐ Great job! Bennett would be proud of your adventuring skills!';
-            } else if (window.miniGameScore >= 5) {
-                message = '👍 Good effort! Keep practicing and you\'ll be a pro slime hunter!';
-            } else {
-                message = '💪 Those slimes are tricky! Better luck next time, Traveler!';
+        function updateHealth() {
+            const healthFill = document.getElementById('healthFill');
+            healthFill.style.width = health + '%';
+            healthFill.textContent = health + '%';
+
+            if (health <= 0) {
+                alert('Your confidence has been depleted! Case dismissed!');
+                showVerdict();
             }
-            
-            container.innerHTML = `
-                <div class="mini-game-result">
-                    <p style="font-size: 2em; margin: 20px 0;">Time's Up!</p>
-                    <p style="font-size: 1.5em; color: #667eea; margin: 10px 0;">
-                        You defeated ${window.miniGameScore} slimes!
+        }
+
+        function showVerdict() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('verdictScreen').classList.remove('hidden');
+
+            const finalScoreDiv = document.getElementById('finalScore');
+            const verdictMessage = document.getElementById('verdictMessage');
+
+            if (playtestMode) {
+                finalScoreDiv.innerHTML = `
+                    <div style="background: #d4edda; border: 3px solid #28a745; padding: 20px; border-radius: 10px; color: #155724;">
+                        <h3>🔧 PLAYTEST COMPLETE</h3>
+                        <p style="font-size: 1.2em; margin: 10px 0;">Reviewed ${questions.length} questions</p>
+                    </div>
+                `;
+                verdictMessage.innerHTML = `
+                    <p style="font-size: 1.3em; margin: 20px 0;">
+                        ✅ All questions from ${QUESTION_BANK[currentChapter].name} have been reviewed!<br><br>
+                        This was a playtest session - no scoring or penalties applied.
                     </p>
-                    <p style="font-size: 1.3em; color: #f5576c; margin: 20px 0;">
-                        💎 Bonus: +${bonusPrimogems} Primogems!
-                    </p>
-                    <p style="color: #666; margin: 20px 0;">${message}</p>
-                    <button class="continue-btn" onclick="closeMiniGame()">Continue Quest</button>
-                </div>
-            `;
-        }
-
-        function closeMiniGame() {
-            document.getElementById('miniGameModal').classList.remove('active');
-            
-            if (currentQuestion < 5) {
-                showQuestion();
+                `;
             } else {
-                showFinalScore();
-            }
-        }
+                finalScoreDiv.textContent = `Final Score: ${score} points`;
 
-        function showFinalScore() {
-            document.getElementById('questionSection').classList.add('hidden');
-            document.getElementById('finalScore').classList.remove('hidden');
-            document.getElementById('finalPrimogems').textContent = score;
-            
-            // Update map to show all locations as visited
-            for (let i = 0; i <= 5; i++) {
-                const location = document.getElementById(`location${i}`);
-                location.classList.remove('current');
-                location.classList.add('visited');
-            }
-            
-            let message = '';
-            if (score === 100) {
-                message = '🌟 Perfect! You are a true scholar of Teyvat! The Sumeru Akademiya would be proud! 🌟';
-            } else if (score >= 80) {
-                message = '✨ Excellent work! Your skills rival the Liyue Qixing! Keep it up! ✨';
-            } else if (score >= 60) {
-                message = '👍 Good effort! With practice, you\'ll master these techniques like the Knights of Favonius! 👍';
-            } else if (score >= 40) {
-                message = '💪 Keep training! Even the greatest adventurers started somewhere. Try using hints next time! 💪';
-            } else {
-                message = '🎯 Don\'t give up, Traveler! Remember, hints are there to help you learn. Let\'s try again! 🎯';
-            }
-            
-            document.getElementById('performanceMessage').textContent = message;
-        }
-
-        function restartGame() {
-            miniGameTriggered = false;
-            startGame();
-        }
-
-        // Handle Enter key
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('answerInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !document.getElementById('submitBtn').disabled) {
-                    checkAnswer();
+                let message = '';
+                if (score >= 800 && health > 50) {
+                    message = '⭐⭐⭐ PERFECT VERDICT! ⭐⭐⭐<br>You are a true mathematical attorney!';
+                } else if (score >= 600) {
+                    message = '⭐⭐ GUILTY... of being pretty good!<br>Well done, counselor!';
+                } else if (score >= 400) {
+                    message = '⭐ NOT GUILTY... but room for improvement!<br>Keep practicing!';
+                } else {
+                    message = 'CASE DISMISSED!<br>Study the evidence more carefully next time!';
                 }
-            });
-            startGame();
+
+                verdictMessage.innerHTML = `
+                    <p style="font-size: 1.5em; margin: 20px 0;">${message}</p>
+                    <p>Health Remaining: ${health}%</p>
+                `;
+            }
+        }
+
+        // ========================================
+        // URL PARAMETER AUTOSTART
+        // ========================================
+        function checkURLParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const chapter = urlParams.get('chapter');
+            const question = urlParams.get('question');
+            const playtest = urlParams.get('playtest');
+
+            // Enable playtest mode if requested
+            if (playtest === 'true' || playtest === '1') {
+                document.getElementById('playtestMode').checked = true;
+            }
+
+            // Auto-start chapter if specified
+            if (chapter) {
+                // Validate chapter exists
+                if (QUESTION_BANK[chapter]) {
+                    // Start the chapter
+                    startChapter(chapter);
+
+                    // If question index is specified, jump to that question
+                    if (question) {
+                        const questionIndex = parseInt(question);
+                        if (!isNaN(questionIndex) && questionIndex >= 0 && questionIndex < questions.length) {
+                            currentQuestionIndex = questionIndex;
+                            showQuestion();
+                        }
+                    }
+                } else {
+                    console.error(`Chapter '${chapter}' not found in QUESTION_BANK`);
+                    alert(`Error: Chapter '${chapter}' does not exist. Available chapters: ${Object.keys(QUESTION_BANK).join(', ')}`);
+                }
+            }
+        }
+
+        // Initialize
+        document.getElementById('answerInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitAnswer();
+            }
         });
+
+        // Check URL parameters on page load
+        window.addEventListener('DOMContentLoaded', checkURLParams);
     </script>
 </body>
 </html>
