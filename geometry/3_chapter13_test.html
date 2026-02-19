@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 13 — Congruence & Similarity Test</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f0e8; font-family: 'Lora', Georgia, serif; color: #1a1a1a; padding: 40px 20px; }
+
+  h1 { text-align: center; font-size: 1.7rem; font-weight: 600; margin-bottom: 6px; color: #2c2c2c; }
+  .subtitle { text-align: center; font-style: italic; color: #666; margin-bottom: 48px; font-size: 0.95rem; }
+
+  .section-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; color: #888;
+    border-bottom: 1px solid #ccc; padding-bottom: 6px; margin: 40px 0 20px;
+    max-width: 900px; margin-left: auto; margin-right: auto;
+  }
+
+  .questions { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+
+  .qcard {
+    background: #fff; border: 1.5px solid #ddd; border-radius: 4px;
+    padding: 24px 28px; box-shadow: 3px 3px 0 #d0c9bc;
+  }
+  .qlabel {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #b05020; margin-bottom: 8px;
+  }
+  .qtext { font-size: 1rem; line-height: 1.6; color: #222; margin-bottom: 14px; }
+  canvas { display: block; margin: 10px 0 4px; border: 1px solid #e8e0d4; border-radius: 2px; background: #fdfaf6; }
+
+  details { margin-top: 14px; }
+  summary {
+    cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    font-weight: 600; color: #3a6ea5; letter-spacing: 0.06em; user-select: none;
+  }
+  summary:hover { color: #b05020; }
+  .answer {
+    margin-top: 12px; background: #f0f6ee; border-left: 3px solid #4a8a60;
+    padding: 14px 16px; font-size: 0.92rem; line-height: 1.7; color: #1a1a1a;
+    border-radius: 0 4px 4px 0;
+  }
+  .answer strong { color: #2c6e40; }
+  .answer em { color: #b05020; font-style: normal; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Chapter 13 — Congruence &amp; Similarity</h1>
+<p class="subtitle">10 questions · click "Show answer" to reveal working</p>
+
+<!-- ═══════════════════════════════════════════════════════ CONGRUENCE -->
+<p class="section-title">Part 1 — Congruence (13A)</p>
+<div class="questions">
+
+<!-- Q1 -->
+<div class="qcard">
+  <div class="qlabel">Question 1 · 13A Q1a</div>
+  <div class="qtext">Are these two triangles congruent? Give a reason.</div>
+  <canvas id="q1" width="380" height="180"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Triangle ABC has a tick on AB and BC, and a dot on angle C.<br>
+    Triangle DEF has a tick on EF and DE, and a dot on angle F.<br><br>
+    AB = DE (one tick), BC = EF (one tick), and angle C = angle F (dot).<br>
+    Two sides and the included angle are equal → <em>SAS congruence</em>.<br>
+    <strong>Yes, △ABC ≅ △DEF (SAS).</strong>
+  </div></details>
+</div>
+
+<!-- Q2 -->
+<div class="qcard">
+  <div class="qlabel">Question 2 · 13A Q1c</div>
+  <div class="qtext">Are these two triangles congruent? Give a reason.</div>
+  <canvas id="q2" width="380" height="180"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Triangle ABC: tick on AB, dot on angle B, cross on BC.<br>
+    Triangle DEF: tick on DE, dot on angle D (but placed at D, not matching), cross on EF — wait, checking marks: dot on B and dot on D is at a different vertex relative to the ticked sides.<br><br>
+    AB = DE (tick), BC = EF (cross), but the equal angle (dot) is at B (between the two marked sides in △ABC) and at D (which is not between the two marked sides DE and EF in △DEF).<br><br>
+    The equal angle is <em>not</em> between the two equal sides in both triangles → SSA, which does not guarantee congruence.<br>
+    <strong>Cannot be determined as congruent — SSA is not a valid congruence condition.</strong>
+  </div></details>
+</div>
+
+<!-- Q3 -->
+<div class="qcard">
+  <div class="qlabel">Question 3 · 13A Q1e</div>
+  <div class="qtext">Are these two triangles congruent? Give a reason. (The figure shows triangles XYZ and DEF sharing a common rectangle outline, with right angles at Y and F, and equal tick marks on two sides.)</div>
+  <canvas id="q3" width="420" height="200"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Both triangles have a right angle (90°).<br>
+    XZ = DF (hypotenuse, double tick) and XY = DE (single tick).<br><br>
+    Right angle + hypotenuse + one other side equal → <em>RHS congruence</em>.<br>
+    <strong>Yes, △XYZ ≅ △DEF (RHS).</strong>
+  </div></details>
+</div>
+
+<!-- Q4 -->
+<div class="qcard">
+  <div class="qlabel">Question 4 · 13A Q1f</div>
+  <div class="qtext">Are these two triangles congruent? Give a reason.</div>
+  <canvas id="q4" width="420" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Triangle ABC: angles α at B and β at C, tick mark on BC.<br>
+    Triangle DEF: angles α at D and β at E, tick mark on DF.<br><br>
+    Angle B = angle D (both α), angle C = angle E (both β), and BC = DF (tick).<br>
+    Two angles and the side between them are equal → <em>AAS congruence</em>.<br>
+    <strong>Yes, △ABC ≅ △DEF (AAS).</strong>
+  </div></details>
+</div>
+
+<!-- Q5 -->
+<div class="qcard">
+  <div class="qlabel">Question 5 · 13A Q2a</div>
+  <div class="qtext">Four triangles are shown below. Two of them are congruent. Which pair is it, and why?</div>
+  <canvas id="q5" width="560" height="160"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    All four triangles have sides involving 5 m and 7 m and angle α.<br><br>
+    Triangle A: sides 5 m, 7 m with α opposite the 7 m side (not between the marked sides).<br>
+    Triangle B: sides 5 m, 7 m with α between the two sides → SAS setup.<br>
+    Triangle C: sides 7 m, 5 m with α opposite the 7 m side — same as A.<br>
+    Triangle D: sides 7 m, 5 m with α between them — same as B.<br><br>
+    A and C share the same two sides and angle in the same configuration.<br>
+    B and D share the same two sides and the included angle.<br><br>
+    <em>Triangles A and C are congruent (SAS — same two sides and included angle arrangement).</em><br>
+    <strong>Also, triangles B and D are congruent (SAS).</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SIMILARITY -->
+<p class="section-title">Part 2 — Similarity (13C)</p>
+<div class="questions">
+
+<!-- Q6 -->
+<div class="qcard">
+  <div class="qlabel">Question 6 · 13C Q1a</div>
+  <div class="qtext">Show that the figure below contains similar triangles. (Triangle PQS and triangle PTR share a right angle at Q and S respectively.)</div>
+  <canvas id="q6" width="340" height="200"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    In the figure, PQS and the larger triangle PTR:<br>
+    • Angle P is common to both triangles.<br>
+    • Angle PQS = angle PST = 90° (both right angles, shown by the square markers).<br><br>
+    Two angles equal → <em>AA similarity</em>.<br>
+    <strong>△PQS ∼ △PTR (AA).</strong>
+  </div></details>
+</div>
+
+<!-- Q7 -->
+<div class="qcard">
+  <div class="qlabel">Question 7 · 13C Q1b</div>
+  <div class="qtext">Show that the figure contains similar triangles. (Two triangles ABC and DEC overlap at point C, with 40° angles marked at B and at C on one triangle, and 40° at C on the other.)</div>
+  <canvas id="q7" width="340" height="220"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    In triangles ABC and EDC:<br>
+    • Angle ACB = angle DCE (vertically opposite angles).<br>
+    • Angle ABC = angle DEC = 40° (marked equal).<br><br>
+    Two pairs of equal angles → <em>AA similarity</em>.<br>
+    <strong>△ABC ∼ △EDC (AA).</strong>
+  </div></details>
+</div>
+
+<!-- Q8 -->
+<div class="qcard">
+  <div class="qlabel">Question 8 · 13C Q1f</div>
+  <div class="qtext">Show that the figure contains similar triangles. (Triangle ABC contains point D on AB and point on BC, with tick marks indicating AD = DC and DB = BC — actually DB = DC, forming an inner triangle BDC.)</div>
+  <canvas id="q8" width="340" height="220"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    In triangles ABC and DBC:<br>
+    • AD = DC (single tick) and DC = DB (single tick), so AD = DB = DC — D is equidistant, meaning △ADC is isosceles.<br>
+    • Angle ABС = angle DBC (same angle at B, shared).<br>
+    • Since AD = DC, triangle ADC is isosceles → angle DAC = angle DCA.<br>
+    • Angle BDC = angle DAC + angle DCA = 2 × angle BAC (exterior angle of △ADC).<br>
+    • This gives angle BDC = 2 × angle BAC, and combined with the shared angle at B:<br><br>
+    Angle ACB = angle DBC and angle ABC is common → <em>AA similarity</em>.<br>
+    <strong>△ABC ∼ △DBC (AA).</strong>
+  </div></details>
+</div>
+
+<!-- Q9 -->
+<div class="qcard">
+  <div class="qlabel">Question 9 · 13C Q3</div>
+  <div class="qtext">
+    Two similar triangles have corresponding sides in the ratio 3 : 5.<br>
+    The smaller triangle has a base of 9 cm and a height of 6 cm.<br>
+    Find the base and height of the larger triangle.
+  </div>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Scale factor k = 5/3.<br><br>
+    Base of larger = 9 × (5/3) = <strong>15 cm</strong><br>
+    Height of larger = 6 × (5/3) = <strong>10 cm</strong>
+  </div></details>
+</div>
+
+<!-- Q10 -->
+<div class="qcard">
+  <div class="qlabel">Question 10 · 13C Q5</div>
+  <div class="qtext">
+    A 1.8 m tall person stands 4 m from a lamppost and casts a shadow 3 m long.<br>
+    Find the height of the lamppost.
+  </div>
+  <canvas id="q10" width="420" height="180"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    The person and the lamppost both cast rays from the same light source to the tip of the shadow.<br>
+    This creates two similar triangles (both share the angle at the shadow tip).<br><br>
+    Small triangle: height 1.8 m, base 3 m (shadow length).<br>
+    Large triangle: height h, base 3 + 4 = 7 m (shadow + distance to post).<br><br>
+    Ratio of corresponding sides: h / 1.8 = 7 / 3<br>
+    h = 1.8 × 7/3 = 1.8 × 2.333… = <strong>4.2 m</strong><br><br>
+    <strong>The lamppost is 4.2 m tall.</strong>
+  </div></details>
+</div>
+
+</div>
+
+<script>
+// ─── Drawing helpers ────────────────────────────────────────────────────────
+function lbl(ctx, text, x, y, opts={}) {
+  ctx.save();
+  ctx.font = opts.font || '13px "JetBrains Mono",monospace';
+  ctx.fillStyle = opts.color || '#222';
+  ctx.textAlign = opts.align || 'center';
+  ctx.textBaseline = opts.base || 'middle';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+function line(ctx, x1,y1,x2,y2, color='#333', width=1.8, dash=[]) {
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=width; ctx.setLineDash(dash);
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  ctx.restore();
+}
+function poly(ctx, pts, fill, stroke, lw=1.8) {
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  pts.slice(1).forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+  if(fill){ctx.fillStyle=fill; ctx.fill();}
+  if(stroke){ctx.strokeStyle=stroke; ctx.lineWidth=lw; ctx.stroke();}
+}
+function tick(ctx, x1,y1,x2,y2,n=1,color='#555') {
+  // draw n tick marks perpendicular to midpoint of segment
+  const mx=(x1+x2)/2, my=(y1+y2)/2;
+  const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+  const px=-dy/len*7, py=dx/len*7;
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=1.6;
+  const gap=4;
+  for(let i=0;i<n;i++){
+    const off=(i-(n-1)/2)*gap;
+    const nx=mx+(dx/len)*off, ny=my+(dy/len)*off;
+    ctx.beginPath(); ctx.moveTo(nx-px,ny-py); ctx.lineTo(nx+px,ny+py); ctx.stroke();
+  }
+  ctx.restore();
+}
+function dot(ctx,x,y,r=4,color='#555'){
+  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle=color; ctx.fill();
+}
+function rightAngle(ctx,vx,vy,ax,ay,bx,by,size=10,color='#555'){
+  // draw right angle marker at vertex v, with legs towards a and b
+  const da=[ax-vx,ay-vy], la=Math.sqrt(da[0]*da[0]+da[1]*da[1]);
+  const db=[bx-vx,by-vy], lb=Math.sqrt(db[0]*db[0]+db[1]*db[1]);
+  const ua=[da[0]/la,da[1]/la], ub=[db[0]/lb,db[1]/lb];
+  const p1=[vx+ua[0]*size,vy+ua[1]*size];
+  const p2=[vx+ua[0]*size+ub[0]*size, vy+ua[1]*size+ub[1]*size];
+  const p3=[vx+ub[0]*size,vy+ub[1]*size];
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.moveTo(p1[0],p1[1]); ctx.lineTo(p2[0],p2[1]); ctx.lineTo(p3[0],p3[1]); ctx.stroke();
+  ctx.restore();
+}
+
+// ─── Q1: SAS congruent triangles ABC and DEF ────────────────────────────────
+(()=>{
+  const c=document.getElementById('q1'), ctx=c.getContext('2d');
+  // Triangle ABC
+  const A=[80,30], B=[20,150], C=[160,155];
+  poly(ctx,[A,B,C],'#d4e8d0','#4a8a60');
+  tick(ctx,A[0],A[1],B[0],B[1],1); // AB single tick
+  tick(ctx,B[0],B[1],C[0],C[1],1); // BC single tick
+  dot(ctx,C[0]-12,C[1]-8,4,'#444'); // dot at C
+  lbl(ctx,'A',A[0],A[1]-14); lbl(ctx,'B',B[0]-14,B[1]); lbl(ctx,'C',C[0]+12,C[1]);
+
+  // Triangle DEF
+  const D=[230,30], E=[310,155], F=[200,155];
+  poly(ctx,[D,E,F],'#d4e8d0','#4a8a60');
+  tick(ctx,D[0],D[1],E[0],E[1],1); // DE
+  tick(ctx,E[0],E[1],F[0],F[1],1); // EF
+  dot(ctx,F[0]+12,F[1]-8,4,'#444'); // dot at F
+  lbl(ctx,'D',D[0],D[1]-14); lbl(ctx,'E',E[0]+14,E[1]); lbl(ctx,'F',F[0]-14,F[1]);
+})();
+
+// ─── Q2: Non-congruent (SSA) triangles ABC and DEF ──────────────────────────
+(()=>{
+  const c=document.getElementById('q2'), ctx=c.getContext('2d');
+  // Triangle ABC
+  const A=[150,30], B=[20,155], C=[160,155];
+  poly(ctx,[A,B,C],'#f0d8c8','#a04030');
+  tick(ctx,A[0],A[1],B[0],B[1],1);    // AB tick
+  tick(ctx,B[0],B[1],C[0],C[1],2,'#a04030'); // BC double tick (cross)
+  dot(ctx,B[0]+14,B[1]-10,4,'#444');   // dot at B
+  lbl(ctx,'A',A[0],A[1]-14); lbl(ctx,'B',B[0]-14,B[1]); lbl(ctx,'C',C[0]+12,C[1]);
+
+  // Triangle DEF — similar marks but angle dot at D (not between marked sides)
+  const D=[230,155], E=[330,155], F=[270,30];
+  poly(ctx,[D,E,F],'#f0d8c8','#a04030');
+  tick(ctx,D[0],D[1],F[0],F[1],1);    // DF tick
+  tick(ctx,D[0],D[1],E[0],E[1],2,'#a04030'); // DE double tick
+  dot(ctx,D[0]+14,D[1]-12,4,'#444');   // dot at D — but D is not between the two ticked sides in the same way
+  lbl(ctx,'D',D[0]-14,D[1]); lbl(ctx,'E',E[0]+12,E[1]); lbl(ctx,'F',F[0],F[1]-14);
+})();
+
+// ─── Q3: RHS triangles ──────────────────────────────────────────────────────
+(()=>{
+  const c=document.getElementById('q3'), ctx=c.getContext('2d');
+  // Triangle XYZ: right angle at Y
+  const X=[20,30], Y=[20,170], Z=[140,170];
+  poly(ctx,[X,Y,Z],'#c8daf0','#3a6ea5');
+  rightAngle(ctx,Y[0],Y[1],X[0],X[1],Z[0],Z[1],10,'#3a6ea5');
+  tick(ctx,X[0],X[1],Z[0],Z[1],2); // hypotenuse XZ double tick
+  tick(ctx,X[0],X[1],Y[0],Y[1],1); // leg XY single tick
+  lbl(ctx,'X',X[0]-14,X[1]); lbl(ctx,'Y',Y[0]-14,Y[1]); lbl(ctx,'Z',Z[0]+12,Z[1]);
+
+  // Triangle DEF: right angle at F
+  const D=[230,30], E=[370,30], F=[370,170];
+  poly(ctx,[D,E,F],'#c8daf0','#3a6ea5');
+  rightAngle(ctx,F[0],F[1],E[0],E[1],D[0],D[1],10,'#3a6ea5');
+  tick(ctx,D[0],D[1],F[0],F[1],2); // hypotenuse DF double tick
+  tick(ctx,D[0],D[1],E[0],E[1],1); // leg DE single tick
+  lbl(ctx,'D',D[0],D[1]-14); lbl(ctx,'E',E[0]+14,E[1]); lbl(ctx,'F',F[0]+14,F[1]);
+})();
+
+// ─── Q4: AAS triangles ABC and DEF ──────────────────────────────────────────
+(()=>{
+  const c=document.getElementById('q4'), ctx=c.getContext('2d');
+  // Triangle ABC
+  const A=[90,25], B=[20,165], C=[185,165];
+  poly(ctx,[A,B,C],'#ead8f0','#6a3a8a');
+  tick(ctx,B[0],B[1],C[0],C[1],1); // BC tick
+  // angle arcs: α at B, β at C
+  ctx.save(); ctx.strokeStyle='#6a3a8a'; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.arc(B[0],B[1],22,-.3,.55); ctx.stroke(); lbl(ctx,'α',B[0]+20,B[1]-12,{color:'#6a3a8a',font:'12px Lora,serif'});
+  ctx.beginPath(); ctx.arc(C[0],C[1],22,Math.PI-.55,Math.PI+.3); ctx.stroke(); lbl(ctx,'β',C[0]-20,C[1]-12,{color:'#6a3a8a',font:'12px Lora,serif'});
+  ctx.restore();
+  lbl(ctx,'A',A[0],A[1]-14); lbl(ctx,'B',B[0]-14,B[1]); lbl(ctx,'C',C[0]+14,C[1]);
+
+  // Triangle DEF
+  const D=[240,165], E=[390,165], F=[310,25];
+  poly(ctx,[D,E,F],'#ead8f0','#6a3a8a');
+  tick(ctx,D[0],D[1],F[0],F[1],1); // DF tick
+  ctx.save(); ctx.strokeStyle='#6a3a8a'; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.arc(D[0],D[1],22,-.6,.2); ctx.stroke(); lbl(ctx,'α',D[0]+20,D[1]-14,{color:'#6a3a8a',font:'12px Lora,serif'});
+  ctx.beginPath(); ctx.arc(E[0],E[1],22,Math.PI-.2,Math.PI+.6); ctx.stroke(); lbl(ctx,'β',E[0]-20,E[1]-14,{color:'#6a3a8a',font:'12px Lora,serif'});
+  ctx.restore();
+  lbl(ctx,'D',D[0]-14,D[1]); lbl(ctx,'E',E[0]+14,E[1]); lbl(ctx,'F',F[0],F[1]-14);
+})();
+
+// ─── Q5: Four triangles 2a ───────────────────────────────────────────────────
+(()=>{
+  const c=document.getElementById('q5'), ctx=c.getContext('2d');
+  const configs = [
+    // [label, verts, α-vertex-index, side labels, fill]
+    { lbl:'A', pts:[[20,140],[80,140],[20,30]], sides:['5m','7m'], fill:'#fdd8a0' },
+    { lbl:'B', pts:[[140,140],[200,140],[140,30]], sides:['5m','7m'], fill:'#fdd8a0' },
+    { lbl:'C', pts:[[300,30],[260,140],[380,140]], sides:['7m','5m'], fill:'#c8daf0' },
+    { lbl:'D', pts:[[440,30],[420,140],[520,140]], sides:['7m','5m'], fill:'#c8daf0' },
+  ];
+
+  // Draw A: 5m (left), 7m (bottom), α at bottom-left
+  poly(ctx,[[20,140],[80,140],[20,30]],'#fdd8a0','#b08020');
+  lbl(ctx,'5m',8,85,{align:'right',font:'11px "JetBrains Mono",monospace',color:'#555'});
+  lbl(ctx,'7m',50,152,{font:'11px "JetBrains Mono",monospace',color:'#555'});
+  ctx.save(); ctx.strokeStyle='#b08020'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(20,140,18,-.5,.05); ctx.stroke();
+  ctx.restore(); lbl(ctx,'α',42,128,{font:'11px Lora,serif',color:'#b08020'});
+  lbl(ctx,'A',40,95,{font:'bold 14px Lora,serif',color:'#b08020'});
+
+  // Draw B: 5m (left), 7m (bottom), α between them (same as A but α is INCLUDED)
+  poly(ctx,[[140,140],[210,140],[140,40]],'#fdd8a0','#b08020');
+  lbl(ctx,'5m',128,90,{align:'right',font:'11px "JetBrains Mono",monospace',color:'#555'});
+  lbl(ctx,'7m',175,152,{font:'11px "JetBrains Mono",monospace',color:'#555'});
+  ctx.save(); ctx.strokeStyle='#b08020'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(140,140,18,-.48,.02); ctx.stroke();
+  ctx.restore(); lbl(ctx,'α',162,128,{font:'11px Lora,serif',color:'#b08020'});
+  lbl(ctx,'B',168,100,{font:'bold 14px Lora,serif',color:'#b08020'});
+
+  // Draw C: 7m (left), 5m (right), α at bottom-left
+  poly(ctx,[[300,40],[260,150],[380,150]],'#c8daf0','#3a6ea5');
+  lbl(ctx,'7m',272,100,{align:'right',font:'11px "JetBrains Mono",monospace',color:'#555'});
+  lbl(ctx,'5m',385,100,{align:'left',font:'11px "JetBrains Mono",monospace',color:'#555'});
+  ctx.save(); ctx.strokeStyle='#3a6ea5'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(260,150,18,-.3,.5); ctx.stroke();
+  ctx.restore(); lbl(ctx,'α',285,138,{font:'11px Lora,serif',color:'#3a6ea5'});
+  lbl(ctx,'C',315,110,{font:'bold 14px Lora,serif',color:'#3a6ea5'});
+
+  // Draw D: 7m and 5m, α between them
+  poly(ctx,[[460,40],[425,150],[530,150]],'#c8daf0','#3a6ea5');
+  lbl(ctx,'7m',432,100,{align:'right',font:'11px "JetBrains Mono",monospace',color:'#555'});
+  lbl(ctx,'5m',542,100,{align:'left',font:'11px "JetBrains Mono",monospace',color:'#555'});
+  ctx.save(); ctx.strokeStyle='#3a6ea5'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(425,150,18,-.3,.4); ctx.stroke();
+  ctx.restore(); lbl(ctx,'α',450,138,{font:'11px Lora,serif',color:'#3a6ea5'});
+  lbl(ctx,'D',466,110,{font:'bold 14px Lora,serif',color:'#3a6ea5'});
+})();
+
+// ─── Q6: Similar triangles PQS and PTR (nested right triangles) ─────────────
+(()=>{
+  const c=document.getElementById('q6'), ctx=c.getContext('2d');
+  // Outer triangle: P at top-left, T at bottom-right, R at bottom-right
+  const P=[40,30], T=[40,175], R=[300,175];
+  poly(ctx,[P,T,R],'#d4e8d0','#4a8a60');
+  // Inner point Q on PT, S on PR
+  const Q=[40,110], S=[190,175];
+  poly(ctx,[P,Q,S],'#b8d4f0','#3a6ea5');
+  rightAngle(ctx,Q[0],Q[1],P[0],P[1],S[0],S[1],10,'#3a6ea5');
+  rightAngle(ctx,T[0],T[1],P[0],P[1],R[0],R[1],10,'#4a8a60');
+
+  lbl(ctx,'P',P[0]-14,P[1]); lbl(ctx,'Q',Q[0]-14,Q[1]); lbl(ctx,'T',T[0]-14,T[1]);
+  lbl(ctx,'S',S[0],S[1]+14); lbl(ctx,'R',R[0]+14,R[1]);
+
+  // mark angle at P shared
+  ctx.save(); ctx.strokeStyle='#a04030'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(P[0],P[1],20,0.1,0.7); ctx.stroke();
+  ctx.restore(); lbl(ctx,'∠P',P[0]+28,P[1]+18,{color:'#a04030',font:'11px Lora,serif'});
+})();
+
+// ─── Q7: Similar triangles ABC and EDC (crossing/overlapping) ───────────────
+(()=>{
+  const c=document.getElementById('q7'), ctx=c.getContext('2d');
+  // Two triangles crossing at C
+  const A=[40,30], B=[40,200], C_=[200,110];
+  const D=[340,30], E=[340,200];
+  poly(ctx,[A,B,C_],'#d4e8d0cc','#4a8a60');
+  poly(ctx,[D,E,C_],'#fdd8a0cc','#b08020');
+
+  // 40° marks at B and at E
+  ctx.save(); ctx.strokeStyle='#4a8a60'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(B[0],B[1],20,-1.1,-.5); ctx.stroke();
+  ctx.restore(); lbl(ctx,'40°',B[0]+26,B[1]-20,{color:'#4a8a60',font:'11px "JetBrains Mono",monospace'});
+  ctx.save(); ctx.strokeStyle='#b08020'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(E[0],E[1],20,Math.PI+.5,Math.PI+1.1); ctx.stroke();
+  ctx.restore(); lbl(ctx,'40°',E[0]-54,E[1]-20,{color:'#b08020',font:'11px "JetBrains Mono",monospace'});
+
+  // Vertical angle mark at C
+  ctx.save(); ctx.strokeStyle='#a04030'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.arc(C_[0],C_[1],14,-.3,.3); ctx.stroke();
+  ctx.beginPath(); ctx.arc(C_[0],C_[1],14,Math.PI-.3,Math.PI+.3); ctx.stroke();
+  ctx.restore();
+
+  lbl(ctx,'A',A[0]-14,A[1]); lbl(ctx,'B',B[0]-14,B[1]); lbl(ctx,'C',C_[0]+4,C_[1]-18);
+  lbl(ctx,'D',D[0]+14,D[1]); lbl(ctx,'E',E[0]+14,E[1]);
+})();
+
+// ─── Q8: Similar triangles ABC and DBC (with isosceles inner) ───────────────
+(()=>{
+  const c=document.getElementById('q8'), ctx=c.getContext('2d');
+  const A=[170,25], B=[30,200], C=[310,200];
+  poly(ctx,[A,B,C],'#ead8f0','#6a3a8a');
+  // D is on AB such that AD=DC (midpoint-ish)
+  const D=[100,112];
+  poly(ctx,[D,B,C],'#c8daf0cc','#3a6ea5');
+
+  // tick marks: AD = DC = DB
+  tick(ctx,A[0],A[1],D[0],D[1],1,'#6a3a8a'); // AD
+  tick(ctx,D[0],D[1],C[0],C[1],1,'#6a3a8a'); // DC
+  tick(ctx,D[0],D[1],B[0],B[1],1,'#3a6ea5'); // DB — same tick (isosceles)
+
+  lbl(ctx,'A',A[0],A[1]-14); lbl(ctx,'B',B[0]-14,B[1]); lbl(ctx,'C',C[0]+14,C[1]);
+  lbl(ctx,'D',D[0]-18,D[1]);
+})();
+
+// ─── Q10: Lamppost shadow similar triangles ──────────────────────────────────
+(()=>{
+  const c=document.getElementById('q10'), ctx=c.getContext('2d');
+  const groundY=155;
+  // Shadow tip
+  const tip=[30,groundY];
+  // Person base and top
+  const personBase=[160,groundY], personTop=[160,groundY-60]; // 1.8m scaled
+  // Post base and top
+  const postBase=[290,groundY], postTop=[290,groundY-140]; // 4.2m scaled
+
+  // Ground line
+  line(ctx,20,groundY,400,groundY,'#aaa',1.5);
+
+  // Large triangle (lamppost)
+  poly(ctx,[tip,postBase,postTop],'#fdd8a0aa','#b08020',1.5);
+  // Small triangle (person) on top
+  poly(ctx,[tip,personBase,personTop],'#c8daf0aa','#3a6ea5',1.5);
+
+  // Person
+  line(ctx,personBase[0],personBase[1],personTop[0],personTop[1],'#3a6ea5',2.5);
+  // Post
+  line(ctx,postBase[0],postBase[1],postTop[0],postTop[1],'#b08020',2.5);
+
+  // Labels
+  lbl(ctx,'1.8 m',personBase[0]+18,(personBase[1]+personTop[1])/2,{color:'#3a6ea5',font:'11px "JetBrains Mono",monospace',align:'left'});
+  lbl(ctx,'h = ?',postBase[0]+14,(postBase[1]+postTop[1])/2,{color:'#b08020',font:'11px "JetBrains Mono",monospace',align:'left'});
+  lbl(ctx,'3 m',(tip[0]+personBase[0])/2,groundY+16,{font:'11px "JetBrains Mono",monospace',color:'#555'});
+  lbl(ctx,'4 m',(personBase[0]+postBase[0])/2,groundY+16,{font:'11px "JetBrains Mono",monospace',color:'#555'});
+
+  // dimension ticks on ground
+  line(ctx,tip[0],groundY+6,personBase[0],groundY+6,'#888',1,[3,2]);
+  line(ctx,personBase[0],groundY+6,postBase[0],groundY+6,'#888',1,[3,2]);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Revision 1 — Review Sets 8A &amp; 13B</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f0e8; font-family: 'Lora', Georgia, serif; color: #1a1a1a; padding: 40px 20px; }
+  h1 { text-align: center; font-size: 1.7rem; font-weight: 600; margin-bottom: 6px; color: #2c2c2c; }
+  .subtitle { text-align: center; font-style: italic; color: #666; margin-bottom: 48px; font-size: 0.95rem; }
+  .section-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; color: #888;
+    border-bottom: 1px solid #ccc; padding-bottom: 6px; margin: 40px auto 20px;
+    max-width: 900px;
+  }
+  .questions { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+  .qcard {
+    background: #fff; border: 1.5px solid #ddd; border-radius: 4px;
+    padding: 24px 28px; box-shadow: 3px 3px 0 #d0c9bc;
+  }
+  .qlabel { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #b05020; margin-bottom: 8px; }
+  .qtext { font-size: 1rem; line-height: 1.6; color: #222; margin-bottom: 12px; }
+  canvas { display: block; margin: 10px 0 6px; border: 1px solid #e8e0d4; border-radius: 2px; background: #fdfaf6; max-width: 100%; }
+  details { margin-top: 14px; }
+  summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 600; color: #3a6ea5; letter-spacing: 0.06em; user-select: none; }
+  summary:hover { color: #b05020; }
+  .answer { margin-top: 12px; background: #f0f6ee; border-left: 3px solid #4a8a60; padding: 14px 16px; font-size: 0.92rem; line-height: 1.8; color: #1a1a1a; border-radius: 0 4px 4px 0; }
+  .answer strong { color: #2c6e40; }
+  .answer em { color: #b05020; font-style: normal; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Revision 1 — Midterm Review</h1>
+<p class="subtitle">Review Set 8A (Measures) &amp; Review Set 13B (Congruence &amp; Similarity) · click "Show answer" to reveal working</p>
+
+<!-- ═══════════════════════════════════════ REVIEW SET 8A -->
+<p class="section-title">Review Set 8A — Measures (p. 162)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 1 · 8A Q2</div>
+  <div class="qtext">The diameter of a car tyre is 50 cm. How many revolutions does the tyre complete if the car travels 2 km?</div>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Circumference = πd = π × 50 cm = 50π cm<br>
+    Distance = 2 km = 200 000 cm<br><br>
+    Revolutions = 200 000 / (50π) = 4000 / π ≈ <strong>1273 revolutions</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 2 · 8A Q4</div>
+  <div class="qtext">Find, in terms of π, the perimeter and area of the shaded region below. The square has side 2 m, and the four petal shapes are each a semicircle of diameter 1 m (radius ½ m) fitting inside the square.</div>
+  <canvas id="q2" width="200" height="200"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Each petal is made from two quarter-circle arcs of radius 1 m (the full side).<br>
+    There are 4 petals, each bounded by two arcs. Each arc is a quarter of a circle with radius 1 m.<br><br>
+    <em>Perimeter:</em> 8 quarter-circle arcs of radius 1 m<br>
+    = 8 × (¼ × 2π × 1) = 8 × π/2 = <strong>4π m</strong><br><br>
+    <em>Area of square:</em> 2² = 4 m²<br>
+    Area of 4 full circles of radius 1 m = 4 × π(1)² = 4π m²<br>
+    But the 4 circles overlap at the centre. By inclusion-exclusion, total circle area inside square = 4 × (half-circle area) = 4 × π/2 = 2π.<br>
+    Shaded area = 2π − (area of square − 4 × semicircle) ... <br>
+    Simpler approach: each petal = 2 × (quarter-circle − triangle) = 2 × (π/4 − ½) = π/2 − 1<br>
+    4 petals = 4(π/2 − 1) = <strong>2π − 4 m²</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 3 · 8A Q5a</div>
+  <div class="qtext">Find the surface area of the cuboid with dimensions 8.4 cm × 5.1 cm × 3.6 cm.</div>
+  <canvas id="q3" width="300" height="200"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    A cuboid has 3 pairs of rectangular faces.<br>
+    SA = 2(lw + lh + wh)<br>
+    = 2(8.4×5.1 + 8.4×3.6 + 5.1×3.6)<br>
+    = 2(42.84 + 30.24 + 18.36)<br>
+    = 2 × 91.44<br>
+    <strong>SA = 182.88 cm²</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 4 · 8A Q5b</div>
+  <div class="qtext">Find the surface area of the open-top cylinder with radius 9.7 mm and height 38.3 mm.</div>
+  <canvas id="q4" width="240" height="220"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Open-top cylinder: 1 base circle + curved surface (no top).<br>
+    Radius = 19.4/2 = 9.7 mm<br><br>
+    Base area = πr² = π × 9.7² = 94.09π<br>
+    Curved SA = 2πrh = 2π × 9.7 × 38.3 = 743.02π<br><br>
+    Total SA = 94.09π + 743.02π = 837.11π<br>
+    <strong>SA ≈ 2629 mm²</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 5 · 8A Q6</div>
+  <div class="qtext">What area of leather is required to manufacture 10 dozen footballs, each with diameter 24 cm?</div>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    10 dozen = 120 footballs. Radius = 12 cm.<br>
+    Surface area of one sphere = 4πr² = 4π × 12² = 576π cm²<br>
+    Total = 120 × 576π = 69 120π<br>
+    <strong>≈ 217 136 cm²</strong> (or about 21.7 m²)
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ REVIEW SET 13B -->
+<p class="section-title">Review Set 13B — Congruence &amp; Similarity (p. 272)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 6 · 13B Q1</div>
+  <div class="qtext">Three triangles are shown. State which pair is congruent, giving a reason.</div>
+  <canvas id="q6" width="500" height="160"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Triangle A: sides 5 m and unknown, angle α — no right angle.<br>
+    Triangle B: sides 5 m, angle α, right angle marker — RHS candidate.<br>
+    Triangle C: sides 5 m, angle α, right angle marker — same as B.<br><br>
+    Triangles B and C both have: a right angle, the same side 5 m, and angle α.<br>
+    Two angles and a corresponding side are equal → <em>AAS</em>.<br>
+    <strong>Triangles B and C are congruent (AAS).</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 7 · 13B Q2</div>
+  <div class="qtext">In parallelogram ABCD, [DX] is the angle bisector of angle ADC, and [BY] is the angle bisector of angle ABC. Prove that triangles DXY and BYX are congruent.</div>
+  <canvas id="q7" width="420" height="180"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    In a parallelogram: AB ∥ DC and AB = DC, AD ∥ BC and AD = BC.<br>
+    Also, opposite angles are equal: angle ADC = angle ABC.<br><br>
+    Since DX bisects angle ADC: angle XDC = ½ angle ADC<br>
+    Since BY bisects angle ABC: angle YBC = ½ angle ABC<br>
+    ∴ angle XDC = angle YBC (both = half of equal angles)<br><br>
+    Also: DC = AB (opposite sides of parallelogram), so DY ... <br>
+    In triangles DXY and BYX:<br>
+    • XY is common to both triangles.<br>
+    • angle DYX = angle BXY (alternate angles, DX ∥ BY since both bisect equal alternate angles in the parallelogram)<br>
+    • angle DXY = angle BYX (same reason)<br><br>
+    Two angles and the included side (XY) are equal → <em>ASA congruence</em>.<br>
+    <strong>△DXY ≅ △BYX (ASA).</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 8 · 13B Q5a</div>
+  <div class="qtext">Show that the triangles UVZ and XZY are similar, then find x.</div>
+  <canvas id="q8" width="380" height="220"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    In the figure, angle θ is marked at both U (in △UVZ) and at X (in △XZY).<br>
+    Also, angle UZV = angle XZY (vertically opposite angles)... actually angle Z is shared or vertically opposite.<br>
+    Looking at the diagram: the two triangles share angle Z (the crossing point), and both have angle θ marked.<br><br>
+    Two pairs of equal angles → <em>AA similarity</em>: △UVZ ∼ △XZY.<br><br>
+    Corresponding sides are proportional:<br>
+    UV/XZ = VZ/ZY = UZ/XY<br>
+    10/8 = 5/x<br>
+    x = 5 × 8/10 = 5 × 0.8<br>
+    <strong>x = 4 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 9 · 13B Q5b</div>
+  <div class="qtext">Show that the triangles ABC and DEC are similar, then find x.</div>
+  <canvas id="q9" width="360" height="240"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    BC is a transversal crossing AB ∥ DE (indicated by the arrows).<br>
+    angle ABC = angle DEC (alternate angles, AB ∥ DE)<br>
+    angle BAC = angle EDC (alternate angles)<br><br>
+    Two pairs of equal angles → <em>AA similarity</em>: △ABC ∼ △DEC.<br><br>
+    Corresponding sides:<br>
+    AC/DC = BC/EC = AB/DE<br>
+    x/5 = 3/8 → x = 15/8<br>
+    <strong>x = 1.875 cm ≈ 1.88 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 10 · 13B Q5c</div>
+  <div class="qtext">Show that triangles JKM and JML are similar, then find x.</div>
+  <canvas id="q10" width="360" height="220"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    In the figure, angle J is common to both triangles JKM and JML.<br>
+    The right angle is at K (in △JKM) ... checking: from the image, M is on JL, and KM appears to be an altitude. So angle JMK = 90°? Actually looking at the diagram: it appears JK and ML are sides, with M on JL and K below.<br><br>
+    More carefully: angle J is shared, and angle JKM = angle JML = 90° (both right angles).<br>
+    Two angles equal → <em>AA similarity</em>: △JKM ∼ △JML.<br><br>
+    Corresponding sides:<br>
+    JK/JM = JM/JL<br>
+    x/(3x−2) = (3x−2)/(2x−3+3x−2) — using the side labels from the diagram:<br>
+    JK = x, KM = (3x−2), ML = (2x−3)<br><br>
+    By similar triangles: JK/JM = KM/ML<br>
+    x/(3x−2) = (3x−2)/(2x−3)<br>
+    x(2x−3) = (3x−2)²<br>
+    2x² − 3x = 9x² − 12x + 4<br>
+    0 = 7x² − 9x + 4 ... this doesn't factor cleanly, so let's use the ratio differently:<br>
+    JM² = JK × JL (geometric mean relation)<br>
+    (3x−2)² = x × (x + 3x−2) = x(4x−2)<br>
+    9x²−12x+4 = 4x²−2x<br>
+    5x²−10x+4 = 0<br>
+    x = (10 ± √(100−80))/10 = (10 ± √20)/10<br>
+    <strong>x = (10 + 2√5)/10 ≈ 1.45 m</strong> (taking the positive solution that gives positive side lengths)
+  </div></details>
+</div>
+
+</div>
+
+<script>
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function lbl(ctx,text,x,y,opts={}) {
+  ctx.save();
+  ctx.font=opts.font||'13px "JetBrains Mono",monospace';
+  ctx.fillStyle=opts.color||'#333';
+  ctx.textAlign=opts.align||'center';
+  ctx.textBaseline=opts.base||'middle';
+  ctx.fillText(text,x,y);
+  ctx.restore();
+}
+function poly(ctx,pts,fill,stroke,lw=2) {
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  pts.slice(1).forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+  if(fill){ctx.fillStyle=fill;ctx.fill();}
+  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}
+}
+function line(ctx,x1,y1,x2,y2,color='#333',w=1.8,dash=[]) {
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=w;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore();
+}
+function rightAngle(ctx,vx,vy,ax,ay,bx,by,size=11,color='#555') {
+  const da=[ax-vx,ay-vy],la=Math.sqrt(da[0]*da[0]+da[1]*da[1]);
+  const db=[bx-vx,by-vy],lb=Math.sqrt(db[0]*db[0]+db[1]*db[1]);
+  const ua=[da[0]/la,da[1]/la],ub=[db[0]/lb,db[1]/lb];
+  const p1=[vx+ua[0]*size,vy+ua[1]*size];
+  const p2=[vx+ua[0]*size+ub[0]*size,vy+ua[1]*size+ub[1]*size];
+  const p3=[vx+ub[0]*size,vy+ub[1]*size];
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.lineTo(p3[0],p3[1]);ctx.stroke();ctx.restore();
+}
+function angleArc(ctx,vx,vy,ax,ay,bx,by,r,label,color='#b05020') {
+  const a1=Math.atan2(ay-vy,ax-vx), a2=Math.atan2(by-vy,bx-vx);
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.arc(vx,vy,r,a1,a2);ctx.stroke();ctx.restore();
+  const mid=(a1+a2)/2;
+  lbl(ctx,label,vx+Math.cos(mid)*(r+14),vy+Math.sin(mid)*(r+14),{color,font:'12px Lora,serif'});
+}
+function tick(ctx,x1,y1,x2,y2,n=1,color='#555') {
+  const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+  const px=-dy/len*7,py=dx/len*7;
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.6;
+  for(let i=0;i<n;i++){
+    const off=(i-(n-1)/2)*5;
+    const nx=mx+(dx/len)*off,ny=my+(dy/len)*off;
+    ctx.beginPath();ctx.moveTo(nx-px,ny-py);ctx.lineTo(nx+px,ny+py);ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// ── Q2: Four-petal flower in 2m square ───────────────────────────────────────
+(()=>{
+  const c=document.getElementById('q2'),ctx=c.getContext('2d');
+  const cx=100,cy=100,r=80; // square half-side = r, full side = 2r (scaled to canvas)
+  // Square
+  ctx.strokeStyle='#aaa';ctx.lineWidth=1.2;ctx.setLineDash([4,3]);
+  ctx.strokeRect(cx-r,cy-r,2*r,2*r);ctx.setLineDash([]);
+  // 4 petals: each petal is intersection of two circles centred on adjacent corners
+  // Centre petal = intersection of circles centred at top & bottom midpoints of side
+  // Draw 4 petals using arc paths
+  ctx.save();
+  // Right petal: circles from top-right and bottom-right corners
+  function petal(ctx,cx1,cy1,cx2,cy2,R,fill) {
+    // intersection of two circles of radius R centred at (cx1,cy1) and (cx2,cy2)
+    // approximate with arcs
+    const a1=Math.atan2(cy-cy1,cx-cx1), a2=Math.atan2(cy-cy2,cx-cx2);
+    ctx.beginPath();
+    ctx.arc(cx1,cy1,R,Math.atan2(cy2-cy1,cx2-cx1)-Math.PI/2+Math.PI/6,Math.atan2(cy2-cy1,cx2-cx1)+Math.PI/2-Math.PI/6);
+    ctx.arc(cx2,cy2,R,Math.atan2(cy1-cy2,cx1-cx2)+Math.PI/2-Math.PI/6,Math.atan2(cy1-cy2,cx1-cx2)-Math.PI/2+Math.PI/6,true);
+    ctx.closePath();
+    ctx.fillStyle=fill;ctx.fill();
+    ctx.strokeStyle='#a05080';ctx.lineWidth=1.5;ctx.stroke();
+  }
+  // Top petal: centred on left and right midpoints of top side
+  petal(ctx,cx-r,cy,cx+r,cy,r*Math.SQRT2,'#f0b0c888'); // top
+  // This simple approach won't be precise; let's use clipping arcs instead
+  ctx.restore();
+
+  // Cleaner: draw each petal as two arc curves
+  ctx.clearRect(0,0,c.width,c.height);
+  // redrawn square
+  ctx.strokeStyle='#bbb';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  ctx.strokeRect(cx-r,cy-r,2*r,2*r);ctx.setLineDash([]);
+
+  // Each petal: between two opposite edge-midpoints, using arcs of radius = side length
+  const TM=[cx,cy-r],BM=[cx,cy+r],LM=[cx-r,cy],RM=[cx+r,cy]; // edge midpoints
+  // Top petal (between LM and RM, bulging upward): arc centred at TM... 
+  // Actually each petal is bounded by two quarter-circle arcs of radius = r (half the side = 1m scaled)
+  // Petal between two adjacent midpoints: say top-petal between TM going toward LM and RM
+  // Use: arc centred at top-left corner from LM to TM, and arc centred at top-right corner from TM to RM... 
+  // Simplest: each petal = two arcs of radius r, centred at opposite corners
+  function drawPetal(ctx,ax,ay,bx,by,r,fill) {
+    // arc from a going through midpoint to b, centred at the corner opposite
+    // We'll just approximate with bezier
+    const mx=(ax+bx)/2,my=(ay+by)/2;
+    const bulge=r*0.55;
+    const dx=my-cy,dy=cx-mx; // perpendicular toward centre... outward
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const ox=(mx-cx)/len*bulge,oy=(my-cy)/len*bulge;
+    ctx.beginPath();
+    ctx.moveTo(ax,ay);
+    ctx.quadraticCurveTo(mx+ox*1.6,my+oy*1.6,bx,by);
+    ctx.quadraticCurveTo(mx-ox*0.4,my-oy*0.4,ax,ay);
+    ctx.fillStyle=fill;ctx.fill();
+    ctx.strokeStyle='#a04070';ctx.lineWidth=1.5;ctx.stroke();
+  }
+  drawPetal(ctx,LM[0],LM[1],TM[0],TM[1],r,'#f0b0c8aa'); // top-left
+  drawPetal(ctx,TM[0],TM[1],RM[0],RM[1],r,'#f0b0c8aa'); // top-right
+  drawPetal(ctx,RM[0],RM[1],BM[0],BM[1],r,'#f0b0c8aa'); // bot-right
+  drawPetal(ctx,BM[0],BM[1],LM[0],LM[1],r,'#f0b0c8aa'); // bot-left
+
+  // dimension label
+  line(ctx,cx+r+4,cy-r,cx+r+4,cy+r,'#888',1);
+  line(ctx,cx+r,cy-r,cx+r+8,cy-r,'#888',1);
+  line(ctx,cx+r,cy+r,cx+r+8,cy+r,'#888',1);
+  lbl(ctx,'2 m',cx+r+22,cy,{align:'left',color:'#555'});
+})();
+
+// ── Q3: Cuboid 8.4 × 5.1 × 3.6 cm ───────────────────────────────────────────
+(()=>{
+  const c=document.getElementById('q3'),ctx=c.getContext('2d');
+  const ox=50,oy=160,w=140,h=70,dx=50,dy=-25;
+  const A=[ox,oy],B=[ox+w,oy],C=[ox+w,oy-h],D=[ox,oy-h];
+  const A2=[ox+dx,oy+dy],B2=[ox+w+dx,oy+dy],C2=[ox+w+dx,oy-h+dy],D2=[ox+dx,oy-h+dy];
+  function p(pts,fill,stroke){poly(ctx,pts,fill,stroke);}
+  ctx.save();ctx.strokeStyle='#bbb';ctx.lineWidth=1.2;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(A2[0],A2[1]);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(D[0],D[1]);ctx.lineTo(D2[0],D2[1]);ctx.stroke();
+  ctx.setLineDash([]);ctx.restore();
+  p([A,B,C,D],'#e8d8a0','#b09030');
+  p([B,B2,C2,C],'#d4e0b0','#6a8030');
+  p([D,C,C2,D2],'#f0e8c0','#a09028');
+  line(ctx,D2[0],D2[1],C2[0],C2[1],'#b09030',1.8);
+  line(ctx,C2[0],C2[1],B2[0],B2[1],'#b09030',1.8);
+  line(ctx,B2[0],B2[1],B[0],B[1],'#b09030',1.8);
+  lbl(ctx,'8.4 cm',(A[0]+B[0])/2,A[1]+18);
+  lbl(ctx,'3.6 cm',B[0]+12,(B[1]+C[1])/2,{align:'left'});
+  lbl(ctx,'5.1 cm',B2[0]+12,(B2[1]+C2[1])/2,{align:'left',color:'#6a8030'});
+})();
+
+// ── Q4: Open-top cylinder r=9.7mm, h=38.3mm ──────────────────────────────────
+(()=>{
+  const c=document.getElementById('q4'),ctx=c.getContext('2d');
+  const cx=120,topY=45,botY=185,rx=70,ry=18;
+  // body
+  ctx.beginPath();ctx.ellipse(cx,botY,rx,ry,0,0,Math.PI*2);
+  ctx.fillStyle='#f0d8b0';ctx.fill();ctx.strokeStyle='#a07030';ctx.lineWidth=1.8;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-rx,topY);ctx.lineTo(cx-rx,botY);
+  ctx.moveTo(cx+rx,topY);ctx.lineTo(cx+rx,botY);ctx.stroke();
+  // top ellipse (open, dashed)
+  ctx.save();ctx.setLineDash([4,3]);ctx.strokeStyle='#aaa';ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.ellipse(cx,topY,rx,ry,0,0,Math.PI*2);ctx.stroke();
+  ctx.restore();
+  // shading on body
+  ctx.beginPath();ctx.rect(cx-rx,topY,rx*2,botY-topY);
+  ctx.fillStyle='#f8ecd088';ctx.fill();
+  ctx.beginPath();ctx.moveTo(cx-rx,topY);ctx.lineTo(cx-rx,botY);
+  ctx.lineTo(cx+rx,botY);ctx.lineTo(cx+rx,topY);ctx.stroke();
+  // dimension lines
+  line(ctx,cx+rx+5,topY,cx+rx+5,botY,'#888',1);
+  line(ctx,cx+rx,topY,cx+rx+10,topY,'#888',1);
+  line(ctx,cx+rx,botY,cx+rx+10,botY,'#888',1);
+  lbl(ctx,'38.3 mm',cx+rx+28,(topY+botY)/2,{align:'left',color:'#555'});
+  line(ctx,cx-rx,botY+10,cx+rx,botY+10,'#888',1);
+  line(ctx,cx-rx,botY+5,cx-rx,botY+15,'#888',1);
+  line(ctx,cx+rx,botY+5,cx+rx,botY+15,'#888',1);
+  lbl(ctx,'19.4 mm',cx,botY+24,{color:'#555'});
+  lbl(ctx,'(open top)',cx,topY-14,{color:'#888',font:'11px Lora,serif'});
+})();
+
+// ── Q6: Three triangles for 13B Q1 ───────────────────────────────────────────
+(()=>{
+  const c=document.getElementById('q6'),ctx=c.getContext('2d');
+
+  // Triangle A: 5m side, angle α, no right angle
+  const A1=[20,140],A2=[100,140],A3=[30,45];
+  poly(ctx,[A1,A2,A3],'#fdd8a0','#b08020');
+  angleArc(ctx,A1[0],A1[1],A2[0],A2[1],A3[0],A3[1],22,'α','#b08020');
+  lbl(ctx,'5 m',(A1[0]+A2[0])/2,A1[1]+16);
+  lbl(ctx,'A',60,100,{font:'bold 13px Lora,serif',color:'#b08020'});
+
+  // Triangle B: 5m side, angle α, right angle marker
+  const B1=[165,140],B2=[255,140],B3=[255,55];
+  poly(ctx,[B1,B2,B3],'#fdd8a0','#b08020');
+  rightAngle(ctx,B2[0],B2[1],B1[0],B1[1],B3[0],B3[1]);
+  angleArc(ctx,B1[0],B1[1],B2[0],B2[1],B3[0],B3[1],22,'α','#b08020');
+  lbl(ctx,'5 m',(B1[0]+B3[0])/2-12,(B1[1]+B3[1])/2,{align:'right'});
+  lbl(ctx,'B',210,100,{font:'bold 13px Lora,serif',color:'#b08020'});
+
+  // Triangle C: 5m side, angle α, right angle marker (mirror of B)
+  const C1=[330,55],C2=[330,140],C3=[430,140];
+  poly(ctx,[C1,C2,C3],'#c8daf0','#3a6ea5');
+  rightAngle(ctx,C2[0],C2[1],C1[0],C1[1],C3[0],C3[1]);
+  angleArc(ctx,C1[0],C1[1],C2[0],C2[1],C3[0],C3[1],22,'α','#3a6ea5');
+  lbl(ctx,'5 m',C1[0]-12,(C1[1]+C2[1])/2,{align:'right'});
+  lbl(ctx,'C',370,100,{font:'bold 13px Lora,serif',color:'#3a6ea5'});
+})();
+
+// ── Q7: Parallelogram ABCD with bisectors DX and BY ──────────────────────────
+(()=>{
+  const c=document.getElementById('q7'),ctx=c.getContext('2d');
+  const A=[60,40],B=[340,40],D=[20,145],CC=[300,145];
+  // parallelogram
+  poly(ctx,[A,B,CC,D],'#e8e8f8','#5050a0');
+  // Points X on AB and Y on DC
+  const X=[190,40], Y=[160,145];
+  // Bisectors
+  line(ctx,D[0],D[1],X[0],X[1],'#e05020',1.8); // DX
+  line(ctx,B[0],B[1],Y[0],Y[1],'#3a6ea5',1.8); // BY
+  // Shaded triangles
+  poly(ctx,[D,X,Y],'#e05020',null);ctx.globalAlpha=0.15;ctx.fillStyle='#e05020';
+  ctx.beginPath();ctx.moveTo(D[0],D[1]);ctx.lineTo(X[0],X[1]);ctx.lineTo(Y[0],Y[1]);ctx.closePath();ctx.fill();
+  ctx.globalAlpha=1;
+  poly(ctx,[B,Y,X],'#3a6ea5',null);ctx.globalAlpha=0.15;ctx.fillStyle='#3a6ea5';
+  ctx.beginPath();ctx.moveTo(B[0],B[1]);ctx.lineTo(Y[0],Y[1]);ctx.lineTo(X[0],X[1]);ctx.closePath();ctx.fill();
+  ctx.globalAlpha=1;
+  lbl(ctx,'A',A[0]-12,A[1]-12);lbl(ctx,'B',B[0]+12,B[1]-12);
+  lbl(ctx,'D',D[0]-14,D[1]+12);lbl(ctx,'C',CC[0]+12,CC[1]+12);
+  lbl(ctx,'X',X[0],X[1]-14);lbl(ctx,'Y',Y[0],Y[1]+14);
+})();
+
+// ── Q8: Crossing triangles UVZ and XZY, θ at U and X ────────────────────────
+(()=>{
+  const c=document.getElementById('q8'),ctx=c.getContext('2d');
+  const U=[30,40],V=[30,195],Z=[220,130],X=[330,60],Y=[215,195];
+  poly(ctx,[U,V,Z],'#fdd8a0aa','#b08020');
+  poly(ctx,[X,Z,Y],'#c8daf0aa','#3a6ea5');
+  // θ marks
+  ctx.save();ctx.strokeStyle='#b08020';ctx.lineWidth=1.3;
+  ctx.beginPath();ctx.arc(U[0],U[1],20,Math.atan2(V[1]-U[1],V[0]-U[0]),Math.atan2(Z[1]-U[1],Z[0]-U[0]));ctx.stroke();
+  ctx.restore();
+  lbl(ctx,'θ',U[0]+24,U[1]+24,{color:'#b08020',font:'12px Lora,serif'});
+  ctx.save();ctx.strokeStyle='#3a6ea5';ctx.lineWidth=1.3;
+  ctx.beginPath();ctx.arc(X[0],X[1],20,Math.atan2(Y[1]-X[1],Y[0]-X[0]),Math.atan2(Z[1]-X[1],Z[0]-X[0]));ctx.stroke();
+  ctx.restore();
+  lbl(ctx,'θ',X[0]-26,X[1]+20,{color:'#3a6ea5',font:'12px Lora,serif'});
+  // Labels
+  lbl(ctx,'U',U[0]-14,U[1]);lbl(ctx,'V',V[0]-14,V[1]+8);lbl(ctx,'Z',Z[0]+14,Z[1]);
+  lbl(ctx,'X',X[0]+14,X[1]);lbl(ctx,'Y',Y[0]+10,Y[1]+10);
+  // Side labels
+  lbl(ctx,'10 cm',U[0]-14,(U[1]+V[1])/2,{align:'right'});
+  lbl(ctx,'5 cm',(V[0]+Z[0])/2,(V[1]+Z[1])/2+14);
+  lbl(ctx,'8 cm',(X[0]+Z[0])/2+10,(X[1]+Z[1])/2-14);
+  lbl(ctx,'x cm',(Z[0]+Y[0])/2+10,(Z[1]+Y[1])/2+14,{color:'#b05020'});
+})();
+
+// ── Q9: Triangles ABC and DEC, AB∥DE, arrows on AB and DE ────────────────────
+(()=>{
+  const c=document.getElementById('q9'),ctx=c.getContext('2d');
+  // C at top-centre, A bot-left, B bot-right, D further bot-left, E further bot-right
+  const CC=[180,30], A=[80,170], B=[200,170], D=[30,220], E=[300,220];
+  poly(ctx,[CC,A,B],'#d4e8d0aa','#4a8a60');
+  poly(ctx,[CC,D,E],'#fdd8a0aa','#b08020');
+  // arrows on AB and DE (parallel indicator)
+  function arrow(ctx,x1,y1,x2,y2,color){
+    const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+    const ux=dx/len,uy=dy/len;
+    ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(mx-ux*6-uy*5,my-uy*6+ux*5);ctx.lineTo(mx+ux*6,my+uy*6);ctx.lineTo(mx-ux*6+uy*5,my-uy*6-ux*5);ctx.stroke();
+    ctx.restore();
+  }
+  arrow(ctx,A[0],A[1],B[0],B[1],'#4a8a60');
+  arrow(ctx,D[0],D[1],E[0],E[1],'#b08020');
+  lbl(ctx,'A',A[0]-14,A[1]);lbl(ctx,'B',B[0]+10,B[1]);lbl(ctx,'C',CC[0],CC[1]-14);
+  lbl(ctx,'D',D[0]-14,D[1]);lbl(ctx,'E',E[0]+10,E[1]);
+  lbl(ctx,'x cm',(CC[0]+A[0])/2-14,(CC[1]+A[1])/2,{align:'right',color:'#b05020'});
+  lbl(ctx,'3 cm',(A[0]+B[0])/2,(A[1])+14);
+  lbl(ctx,'5 cm',(CC[0]+D[0])/2-14,(CC[1]+D[1])/2,{align:'right'});
+  lbl(ctx,'8 cm',(D[0]+E[0])/2,(D[1])+14);
+})();
+
+// ── Q10: Triangle JKL with M on KL, JK=x, KM=(3x-2), ML=(2x-3) ──────────────
+(()=>{
+  const c=document.getElementById('q10'),ctx=c.getContext('2d');
+  const J=[180,25], K=[30,195], L=[330,195];
+  // M is a point on KL
+  const M=[160,195];
+  poly(ctx,[J,K,L],'#ead8f0','#6a3a8a');
+  line(ctx,J[0],J[1],M[0],M[1],'#3a6ea5',1.8); // JM
+  // right angle at M (JM ⊥ KL)
+  rightAngle(ctx,M[0],M[1],K[0],K[1],J[0],J[1]);
+  lbl(ctx,'J',J[0],J[1]-14);lbl(ctx,'K',K[0]-14,K[1]);lbl(ctx,'L',L[0]+12,L[1]);lbl(ctx,'M',M[0],M[1]+16);
+  lbl(ctx,'x m',(J[0]+K[0])/2-12,(J[1]+K[1])/2,{align:'right',color:'#b05020'});
+  lbl(ctx,'(3x−2) m',(K[0]+M[0])/2,(K[1])+16,{color:'#555',font:'11px "JetBrains Mono",monospace'});
+  lbl(ctx,'(2x−3) m',(M[0]+L[0])/2,(L[1])+16,{color:'#555',font:'11px "JetBrains Mono",monospace'});
+})();
+</script>
+</body>
+</html>
