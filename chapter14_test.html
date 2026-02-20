@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 14 — Circle Theorems Test</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f0e8; font-family: 'Lora', Georgia, serif; color: #1a1a1a; padding: 40px 20px; }
+  h1 { text-align: center; font-size: 1.7rem; font-weight: 600; margin-bottom: 6px; color: #2c2c2c; }
+  .subtitle { text-align: center; font-style: italic; color: #666; margin-bottom: 36px; font-size: 0.95rem; }
+  .theorem-box {
+    max-width: 900px; margin: 0 auto 36px;
+    background: #f0f4ff; border: 1.5px solid #c8d4f0; border-radius: 4px;
+    padding: 14px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px;
+  }
+  .theorem-box div { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #3a4a8a; line-height: 1.7; }
+  .theorem-box div::before { content: '→ '; color: #b05020; }
+  .section-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; color: #888;
+    border-bottom: 1px solid #ccc; padding-bottom: 6px; margin: 40px auto 20px; max-width: 900px;
+  }
+  .questions { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+  .qcard { background: #fff; border: 1.5px solid #ddd; border-radius: 4px; padding: 24px 28px; box-shadow: 3px 3px 0 #d0c9bc; }
+  .qlabel { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #b05020; margin-bottom: 8px; }
+  .qtext { font-size: 1rem; line-height: 1.6; color: #222; margin-bottom: 12px; }
+  canvas { display: block; margin: 10px 0 6px; border: 1px solid #e8e0d4; border-radius: 2px; background: #fdfaf6; max-width: 100%; }
+  details { margin-top: 14px; }
+  summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 600; color: #3a6ea5; letter-spacing: 0.06em; user-select: none; }
+  summary:hover { color: #b05020; }
+  .answer { margin-top: 12px; background: #f0f6ee; border-left: 3px solid #4a8a60; padding: 14px 16px; font-size: 0.92rem; line-height: 1.8; color: #1a1a1a; border-radius: 0 4px 4px 0; }
+  .answer strong { color: #2c6e40; }
+  .answer em { color: #b05020; font-style: normal; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Chapter 14 — Circle Theorems</h1>
+<p class="subtitle">12 questions · click "Show answer" to reveal working</p>
+
+<div class="theorem-box">
+  <div>Angle at centre = 2 × angle at circumference (same arc)</div>
+  <div>Angles in semicircle = 90° (angle in diameter)</div>
+  <div>Angles in same segment are equal</div>
+  <div>Opposite angles of cyclic quad sum to 180°</div>
+  <div>Tangent ⊥ radius at point of contact</div>
+  <div>Two tangents from external point are equal length</div>
+  <div>Tangent–chord angle = inscribed angle in alternate segment</div>
+  <div>Perpendicular from centre bisects chord</div>
+</div>
+
+<!-- ═══════════════════════ 14A: Centre & circumference angles -->
+<p class="section-title">Part 1 — Angle at Centre &amp; Circumference (14A)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 1 · 14A Q2a</div>
+  <div class="qtext">Find x, giving a reason.</div>
+  <canvas id="q1" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    The 28° is the angle at the centre. The angle x° is at the circumference, both subtended by the same arc.<br>
+    <em>Angle at circumference = ½ × angle at centre</em><br>
+    x = 28 / 2 = <strong>14°</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 2 · 14A Q2b</div>
+  <div class="qtext">Find x, giving a reason. (Angle on a diameter.)</div>
+  <canvas id="q2" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    The triangle is inscribed in the semicircle with the base as the diameter.<br>
+    <em>Angle in a semicircle = 90°</em> (angle subtended by diameter at circumference).<br>
+    The angles 3x° and 2x° are the other two angles of the triangle.<br>
+    3x + 2x + 90 = 180<br>
+    5x = 90<br>
+    <strong>x = 18°</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 3 · 14A Q3</div>
+  <div class="qtext">A circle has diameter AB = 11 cm. The chord AC = 7 cm. Find the length of chord BC.</div>
+  <canvas id="q3" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Since AB is a diameter, angle ACB = 90° (angle in a semicircle).<br>
+    Triangle ABC is right-angled at C.<br>
+    BC² = AB² − AC² = 11² − 7² = 121 − 49 = 72<br>
+    BC = √72 = 6√2<br>
+    <strong>BC ≈ 8.49 cm</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ 14B: Chords -->
+<p class="section-title">Part 2 — Chord Properties (14B)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 4 · 14B Q2a</div>
+  <div class="qtext">Find x, given radius = 11 cm and a chord of 16 cm with perpendicular x cm from centre. Round to 2 decimal places.</div>
+  <canvas id="q4" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    The perpendicular from the centre bisects the chord. Half-chord = 8 cm. Radius = 11 cm.<br>
+    By Pythagoras: x² + 8² = 11²<br>
+    x² = 121 − 64 = 57<br>
+    <strong>x = √57 ≈ 7.55 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 5 · 14B Q3</div>
+  <div class="qtext">A circle has diameter 12 cm. A chord has length 7 cm. Find the shortest distance from the chord to the centre, to the nearest mm.</div>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Radius = 6 cm. Perpendicular from centre bisects chord → half-chord = 3.5 cm.<br>
+    d² + 3.5² = 6²<br>
+    d² = 36 − 12.25 = 23.75<br>
+    d = √23.75 ≈ 4.873…<br>
+    <strong>d ≈ 4.9 cm (to nearest mm)</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ 14C: Radius & tangent -->
+<p class="section-title">Part 3 — Radius &amp; Tangent (14C)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 6 · 14C Q1a</div>
+  <div class="qtext">O is the centre. Find x, giving reasons. (Two radii form an isosceles triangle with angle 30° at base.)</div>
+  <canvas id="q6" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Two radii from O to points on the chord form an isosceles triangle.<br>
+    The base angle is 30°. Since the triangle is isosceles, both base angles equal 30°.<br>
+    <em>Angles in a triangle sum to 180°</em><br>
+    x + 30 + 30 = 180<br>
+    x = 120°<br>
+    But x is the angle at the circumference on the other side — actually x° is the angle at the top vertex of the isosceles triangle formed by two radii.<br>
+    x = 180 − 30 − 30 = <strong>120°</strong><br><br>
+    (Alternatively: the central angle = 180° − 2×30° = 120°. The inscribed angle at the circumference subtending the same arc = 120°/2 = 60° — but x here is at the centre, so x = 120°.)
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 7 · 14C Q1c</div>
+  <div class="qtext">Find a and b, giving reasons. Angles 40° and 30° are given, with a tangent at the base.</div>
+  <canvas id="q7" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    The radius OT meets the tangent at T at a right angle (tangent ⊥ radius).<br>
+    ∴ <strong>b = 90°</strong><br><br>
+    The two radii OA and OT are equal, so triangle OAT is isosceles. The base angles are equal, meaning the angle at T inside the triangle (between OT and chord AT) also equals 40°.<br><br>
+    The full angle at T between the tangent and the radius is 90°, so the angle between the chord AT and the tangent:<br>
+    a = 90° − 40° = <strong>50°</strong><br><br>
+    <strong>a = 50°, b = 90°</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ 14D: Two tangents -->
+<p class="section-title">Part 4 — Two Tangents from External Point (14D)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 8 · 14D Q2a</div>
+  <div class="qtext">O is the centre, TP and SP are tangents from P. OT = 6 cm, OT ⊥ TP, OP = 4 cm (wait — radius = 6cm and PT = 4cm). Find x (= SP) and y (= OS direction). Give reasons.</div>
+  <canvas id="q8" width="280" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    From the diagram: radius OT = 6 cm, PT = 4 cm, tangent TP ⊥ OT.<br>
+    By Pythagoras: OP² = OT² + PT² = 36 + 16 = 52 → OP = √52 = 2√13.<br><br>
+    Two tangents from an external point are equal: TP = SP = 4 cm → <strong>x = 4 cm</strong><br><br>
+    The kite OTPS has OT = OS (radii) and TP = SP (tangents).<br>
+    By symmetry, y cm = OS = 6 cm (radius) → <strong>y = 6 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 9 · 14D Q2b</div>
+  <div class="qtext">O is the centre, TP and SP are tangents. Angle P = 46°. Find a and b (the angles at T and at O).</div>
+  <canvas id="q9" width="260" height="280"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    The tangent TP meets radius OT at a right angle (tangent ⊥ radius).<br>
+    ∴ <strong>a = 90°</strong><br><br>
+    OTPS is a quadrilateral. Angles sum to 360°.<br>
+    Angle at T (= a) = 90°, angle at S = 90°, angle at P = 46°.<br>
+    b + 90 + 46 + 90 = 360<br>
+    b = 360 − 226 = <strong>134°</strong><br><br>
+    <strong>a = 90°, b = 134°</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ 14E: Tangent-chord angle -->
+<p class="section-title">Part 5 — Tangent–Chord Angle (14E)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 10 · 14E Q1a</div>
+  <div class="qtext">C is the point of contact of tangent CT. Angle BCA = 40°, angle BAC = 60°. Find x (angle BCT).</div>
+  <canvas id="q10" width="280" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    By the <em>alternate segment theorem</em>:<br>
+    The angle between a tangent and a chord equals the inscribed angle in the alternate segment.<br><br>
+    In triangle ABC: angle BAC = 60°, angle BCA = 40°, so angle ABC = 180° − 60° − 40° = 80°.<br><br>
+    The chord is BC. The tangent is CT at point C. The angle x° = angle BCT is between the chord BC and the tangent CT.<br>
+    By the alternate segment theorem: angle BCT = angle BAC (inscribed angle in the alternate segment).<br>
+    <strong>x = 60°</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ 14F: Same segment / cyclic quad -->
+<p class="section-title">Part 6 — Same Segment &amp; Cyclic Quadrilateral (14F)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 11 · 14F Q1a</div>
+  <div class="qtext">Find x, giving a reason. (128° is an inscribed angle; x° is another inscribed angle subtending the same arc.)</div>
+  <canvas id="q11" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    x° and 128° are <em>opposite angles</em> of a cyclic quadrilateral (all four vertices lie on the circle).<br>
+    <em>Opposite angles of a cyclic quadrilateral sum to 180°.</em><br>
+    x + 128 = 180<br>
+    <strong>x = 52°</strong>
+  </div></details>
+</div>
+
+</div>
+
+<!-- ═══════════════════════ 14G: Mixed circle angles -->
+<p class="section-title">Part 7 — Mixed Circle Angles (14G)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 12 · 14G Q1a</div>
+  <div class="qtext">Find x, giving a reason. (Intersecting chords inside the circle, with 46° marked.)</div>
+  <canvas id="q12" width="260" height="260"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Two chords cross <em>inside</em> the circle, creating two pairs of vertically opposite angles at the point of intersection.<br>
+    x° and 46° are vertically opposite angles.<br>
+    <em>Vertically opposite angles are equal.</em><br>
+    <strong>x = 46°</strong><br><br>
+    (The other pair of angles at the intersection each measure 180° − 46° = 134°.)
+  </div></details>
+</div>
+
+</div>
+
+<script>
+const TAU = Math.PI * 2;
+
+function lbl(ctx, text, x, y, opts={}) {
+  ctx.save();
+  ctx.font = opts.font || '13px "JetBrains Mono",monospace';
+  ctx.fillStyle = opts.color || '#222';
+  ctx.textAlign = opts.align || 'center';
+  ctx.textBaseline = opts.base || 'middle';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+function dot(ctx, x, y, r=4, color='#555') {
+  ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
+  ctx.fillStyle = color; ctx.fill();
+}
+function circle(ctx, cx, cy, r, stroke='#3a6ea5', fill='#e8f0fc', lw=1.8) {
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, TAU);
+  if(fill) { ctx.fillStyle = fill; ctx.fill(); }
+  ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke();
+}
+function line(ctx, x1, y1, x2, y2, color='#333', w=1.8, dash=[]) {
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=w; ctx.setLineDash(dash);
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.restore();
+}
+function poly(ctx, pts, fill, stroke, lw=1.8) {
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  pts.slice(1).forEach(p => ctx.lineTo(p[0],p[1])); ctx.closePath();
+  if(fill) { ctx.fillStyle=fill; ctx.fill(); }
+  if(stroke) { ctx.strokeStyle=stroke; ctx.lineWidth=lw; ctx.stroke(); }
+}
+function smallArc(ctx, vx, vy, ax, ay, bx, by, r, color='#b05020') {
+  const a1 = Math.atan2(ay-vy, ax-vx);
+  const a2 = Math.atan2(by-vy, bx-vx);
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.arc(vx, vy, r, a1, a2); ctx.stroke(); ctx.restore();
+}
+
+// helper: point on circle
+function onCircle(cx, cy, r, angleDeg) {
+  const a = angleDeg * Math.PI / 180;
+  return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+}
+
+// ── Q1: 14A Q2a — angle at centre 28°, angle at circumference x° ─────────────
+(()=>{
+  const c=document.getElementById('q1'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=105;
+  circle(ctx, cx, cy, r);
+  dot(ctx, cx, cy);
+  // Arc from -140° to -40° (bottom arc). Centre angle = 28° subtended at O.
+  // Point P on circle at top-right subtends x at circumference
+  const A = onCircle(cx,cy,r,-160); // left point of arc
+  const B = onCircle(cx,cy,r,-20);  // right point of arc
+  const P = onCircle(cx,cy,r,150);  // circumference point (top-left)
+  const O = [cx, cy];
+  // Draw chord AB
+  line(ctx, A[0],A[1], B[0],B[1], '#3a6ea5', 1.5);
+  // Draw lines from O to A, O to B
+  line(ctx, O[0],O[1], A[0],A[1], '#555', 1.5);
+  line(ctx, O[0],O[1], B[0],B[1], '#555', 1.5);
+  // Draw lines from P to A, P to B
+  line(ctx, P[0],P[1], A[0],A[1], '#4a8a60', 1.5);
+  line(ctx, P[0],P[1], B[0],B[1], '#4a8a60', 1.5);
+  dot(ctx, A[0],A[1]); dot(ctx, B[0],B[1]); dot(ctx, P[0],P[1]);
+  // 28° label at O
+  smallArc(ctx, O[0],O[1], A[0],A[1], B[0],B[1], 22, '#e05020');
+  lbl(ctx, '28°', O[0]-28, O[1]+28, {color:'#e05020'});
+  // x° label at P
+  smallArc(ctx, P[0],P[1], A[0],A[1], B[0],B[1], 22, '#3a6ea5');
+  lbl(ctx, 'x°', P[0]+22, P[1]+14, {color:'#b05020'});
+})();
+
+// ── Q2: 14A Q2b — angle in semicircle 90°, 3x° and 2x° ──────────────────────
+(()=>{
+  const c=document.getElementById('q2'), ctx=c.getContext('2d');
+  const cx=130, cy=150, r=105;
+  // semicircle: diameter horizontal
+  ctx.beginPath(); ctx.arc(cx,cy,r,Math.PI,0); ctx.strokeStyle='#3a6ea5'; ctx.lineWidth=1.8; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI); ctx.strokeStyle='#bbb'; ctx.lineWidth=1; ctx.setLineDash([4,3]); ctx.stroke(); ctx.setLineDash([]);
+  const A=[cx-r, cy], B=[cx+r, cy]; // diameter endpoints
+  const P=onCircle(cx,cy,r,-55); // point on upper semicircle
+  line(ctx,A[0],A[1],B[0],B[1],'#3a6ea5',1.8); // diameter
+  line(ctx,A[0],A[1],P[0],P[1],'#4a8a60',1.5);
+  line(ctx,B[0],B[1],P[0],P[1],'#4a8a60',1.5);
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]); dot(ctx,P[0],P[1]);
+  dot(ctx,cx,cy,4,'#888');
+  // right angle at P
+  const dx1=A[0]-P[0],dy1=A[1]-P[1],l1=Math.sqrt(dx1*dx1+dy1*dy1);
+  const dx2=B[0]-P[0],dy2=B[1]-P[1],l2=Math.sqrt(dx2*dx2+dy2*dy2);
+  const u1=[dx1/l1,dy1/l1],u2=[dx2/l2,dy2/l2],s=10;
+  ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.3;
+  ctx.beginPath();
+  ctx.moveTo(P[0]+u1[0]*s,P[1]+u1[1]*s);
+  ctx.lineTo(P[0]+u1[0]*s+u2[0]*s,P[1]+u1[1]*s+u2[1]*s);
+  ctx.lineTo(P[0]+u2[0]*s,P[1]+u2[1]*s);
+  ctx.stroke(); ctx.restore();
+  // angle labels
+  lbl(ctx,'3x°',A[0]+28,A[1]-16,{color:'#b05020'});
+  lbl(ctx,'2x°',B[0]-32,B[1]-16,{color:'#b05020'});
+})();
+
+// ── Q3: 14A Q3 — diameter AB=11cm, chord AC=7cm, find BC ─────────────────────
+(()=>{
+  const c=document.getElementById('q3'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=100;
+  circle(ctx,cx,cy,r);
+  dot(ctx,cx,cy,3,'#aaa');
+  const A=onCircle(cx,cy,r,180);
+  const B=onCircle(cx,cy,r,0);
+  const P=onCircle(cx,cy,r,-65); // point C on circle
+  poly(ctx,[A,B,P],'#d4e8d0cc','#4a8a60');
+  // right angle at P (angle in semicircle)
+  const dA=[A[0]-P[0],A[1]-P[1]],lA=Math.sqrt(dA[0]*dA[0]+dA[1]*dA[1]);
+  const dB=[B[0]-P[0],B[1]-P[1]],lB=Math.sqrt(dB[0]*dB[0]+dB[1]*dB[1]);
+  const uA=[dA[0]/lA,dA[1]/lA],uB=[dB[0]/lB,dB[1]/lB],s=11;
+  ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.3;
+  ctx.beginPath();
+  ctx.moveTo(P[0]+uA[0]*s,P[1]+uA[1]*s);
+  ctx.lineTo(P[0]+uA[0]*s+uB[0]*s,P[1]+uA[1]*s+uB[1]*s);
+  ctx.lineTo(P[0]+uB[0]*s,P[1]+uB[1]*s);
+  ctx.stroke(); ctx.restore();
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]); dot(ctx,P[0],P[1]);
+  lbl(ctx,'A',A[0]-14,A[1]);
+  lbl(ctx,'B',B[0]+14,B[1]);
+  lbl(ctx,'C',P[0]+14,P[1]-14);
+  lbl(ctx,'11 cm',(A[0]+B[0])/2,cy+16,{color:'#555'});
+  lbl(ctx,'7 cm',(A[0]+P[0])/2-16,(A[1]+P[1])/2,{align:'right'});
+  lbl(ctx,'?',(B[0]+P[0])/2+14,(B[1]+P[1])/2,{color:'#b05020',align:'left'});
+})();
+
+// ── Q4: 14B Q2a — radius 11, chord 16, perpendicular x from centre ────────────
+(()=>{
+  const c=document.getElementById('q4'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=100;
+  circle(ctx,cx,cy,r);
+  dot(ctx,cx,cy);
+  // horizontal chord below centre
+  const chordY = cy+40;
+  const halfChord = Math.sqrt(r*r - 40*40); // ≈91.6 → scale so visible
+  const cL=[cx-80,chordY], cR=[cx+80,chordY];
+  line(ctx,cL[0],cL[1],cR[0],cR[1],'#4a8a60',2);
+  // perpendicular from centre to chord
+  line(ctx,cx,cy,cx,chordY,'#e05020',1.8,[4,3]);
+  // right angle marker
+  ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.moveTo(cx+9,chordY); ctx.lineTo(cx+9,chordY-9); ctx.lineTo(cx,chordY-9); ctx.stroke(); ctx.restore();
+  dot(ctx,cx,cy); dot(ctx,cx,chordY,3,'#e05020');
+  lbl(ctx,'x cm',cx+20,(cy+chordY)/2,{color:'#b05020',align:'left'});
+  lbl(ctx,'8 cm',(cx+cR[0])/2,chordY+16);
+  lbl(ctx,'8 cm',(cx+cL[0])/2,chordY+16);
+  lbl(ctx,'r = 11 cm',cx+4,cy-14,{align:'left',color:'#3a6ea5'});
+  // radius line to chord endpoint
+  line(ctx,cx,cy,cR[0],cR[1],'#3a6ea5',1.4,[3,2]);
+  lbl(ctx,'11',(cx+cR[0])/2+10,(cy+chordY)/2-10,{color:'#3a6ea5',font:'11px "JetBrains Mono",monospace'});
+})();
+
+// ── Q6: 14C Q1a — isosceles triangle from radii, base angle 30°, find x ──────
+(()=>{
+  const c=document.getElementById('q6'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=100;
+  circle(ctx,cx,cy,r);
+  dot(ctx,cx,cy);
+  const A=onCircle(cx,cy,r,-150);
+  const B=onCircle(cx,cy,r,-30);
+  const O=[cx,cy];
+  // triangle OAB (isosceles: OA=OB=radius)
+  poly(ctx,[O,A,B],'#c8daf088','#3a6ea5',1.5);
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]);
+  // angle labels
+  lbl(ctx,'30°',A[0]+28,A[1]-8,{color:'#555'});
+  lbl(ctx,'x°',O[0]-6,O[1]+28,{color:'#b05020'});
+  // base of chord extended to bottom of circle
+  line(ctx,A[0],A[1],B[0],B[1],'#4a8a60',1.5);
+  lbl(ctx,'O',O[0]+14,O[1]-8,{color:'#888'});
+})();
+
+// ── Q7: 14C Q1c — 40° and 30° with tangent, find a and b ─────────────────────
+(()=>{
+  const c=document.getElementById('q7'), ctx=c.getContext('2d');
+  const cx=130, cy=120, r=95;
+  circle(ctx,cx,cy,r);
+  dot(ctx,cx,cy,4,'#888');
+  // tangent at bottom
+  const T=onCircle(cx,cy,r,-90); // bottom of circle
+  line(ctx,T[0]-90,T[1],T[0]+90,T[1],'#a04030',2); // tangent line
+  // two radii to points on circle
+  const A=onCircle(cx,cy,r,-140);
+  const B=onCircle(cx,cy,r,-50);
+  // triangle with radii from O to A and O to B, and chord AB
+  line(ctx,cx,cy,A[0],A[1],'#555',1.5);
+  line(ctx,cx,cy,B[0],B[1],'#555',1.5);
+  line(ctx,A[0],A[1],B[0],B[1],'#4a8a60',1.5);
+  // radius to tangent point
+  line(ctx,cx,cy,T[0],T[1],'#3a6ea5',1.5,[3,2]);
+  line(ctx,T[0],T[1],A[0],A[1],'#4a8a60',1.5);
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]); dot(ctx,T[0],T[1]);
+  // right angle at T
+  ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.moveTo(T[0]+9,T[1]); ctx.lineTo(T[0]+9,T[1]-9); ctx.lineTo(T[0],T[1]-9); ctx.stroke(); ctx.restore();
+  lbl(ctx,'40°',cx,cy+28,{color:'#555',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'30°',T[0]-28,T[1]-18,{color:'#555',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'a°',A[0]+18,A[1]+8,{color:'#b05020',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'b°',T[0]+18,T[1]-22,{color:'#b05020',font:'12px "JetBrains Mono",monospace'});
+})();
+
+// ── Q8: 14D Q2a — two tangents TP and SP, OT=6, PT=4, find x and y ───────────
+(()=>{
+  const c=document.getElementById('q8'), ctx=c.getContext('2d');
+  const cx=110, cy=130, r=85;
+  circle(ctx,cx,cy,r);
+  dot(ctx,cx,cy,4,'#888');
+  const T=onCircle(cx,cy,r,-60);
+  const S=onCircle(cx,cy,r,60);
+  const P=[cx+r+70, cy]; // external point
+  // tangent lines
+  line(ctx,T[0],T[1],P[0],P[1],'#a04030',1.8);
+  line(ctx,S[0],S[1],P[0],P[1],'#a04030',1.8);
+  // radii
+  line(ctx,cx,cy,T[0],T[1],'#3a6ea5',1.5,[3,2]);
+  line(ctx,cx,cy,S[0],S[1],'#3a6ea5',1.5,[3,2]);
+  // right angle at T and S
+  function ra(ctx,vx,vy,ax,ay,bx,by,s=9) {
+    const da=[ax-vx,ay-vy],la=Math.sqrt(da[0]*da[0]+da[1]*da[1]);
+    const db=[bx-vx,by-vy],lb=Math.sqrt(db[0]*db[0]+db[1]*db[1]);
+    const ua=[da[0]/la,da[1]/la],ub=[db[0]/lb,db[1]/lb];
+    ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.2;
+    ctx.beginPath();
+    ctx.moveTo(vx+ua[0]*s,vy+ua[1]*s);
+    ctx.lineTo(vx+ua[0]*s+ub[0]*s,vy+ua[1]*s+ub[1]*s);
+    ctx.lineTo(vx+ub[0]*s,vy+ub[1]*s);
+    ctx.stroke(); ctx.restore();
+  }
+  ra(ctx,T[0],T[1],cx,cy,P[0],P[1]);
+  ra(ctx,S[0],S[1],cx,cy,P[0],P[1]);
+  dot(ctx,T[0],T[1]); dot(ctx,S[0],S[1]);
+  lbl(ctx,'O',cx-14,cy,{color:'#888'});
+  lbl(ctx,'T',T[0]-14,T[1]-8);
+  lbl(ctx,'S',S[0]-14,S[1]+12);
+  lbl(ctx,'P',P[0]+14,P[1]);
+  lbl(ctx,'6 cm',(cx+T[0])/2-8,(cy+T[1])/2-8,{color:'#3a6ea5',font:'11px "JetBrains Mono",monospace'});
+  lbl(ctx,'4 cm',(T[0]+P[0])/2,(T[1]+P[1])/2-14,{font:'11px "JetBrains Mono",monospace'});
+  lbl(ctx,'x cm',(S[0]+P[0])/2,(S[1]+P[1])/2+14,{color:'#b05020',font:'11px "JetBrains Mono",monospace'});
+  lbl(ctx,'y cm',(cx+S[0])/2-8,(cy+S[1])/2+10,{color:'#b05020',font:'11px "JetBrains Mono",monospace'});
+})();
+
+// ── Q9: 14D Q2b — two tangents, angle P=46°, find a and b ────────────────────
+(()=>{
+  const c=document.getElementById('q9'), ctx=c.getContext('2d');
+  const cx=110, cy=140, r=85;
+  circle(ctx,cx,cy,r);
+  dot(ctx,cx,cy,4,'#888');
+  const T=onCircle(cx,cy,r,-55);
+  const S=onCircle(cx,cy,r,55);
+  const P=[cx+r+75, cy];
+  line(ctx,T[0],T[1],P[0],P[1],'#a04030',1.8);
+  line(ctx,S[0],S[1],P[0],P[1],'#a04030',1.8);
+  line(ctx,cx,cy,T[0],T[1],'#3a6ea5',1.5,[3,2]);
+  line(ctx,cx,cy,S[0],S[1],'#3a6ea5',1.5,[3,2]);
+  function ra(ctx,vx,vy,ax,ay,bx,by,s=9) {
+    const da=[ax-vx,ay-vy],la=Math.sqrt(da[0]*da[0]+da[1]*da[1]);
+    const db=[bx-vx,by-vy],lb=Math.sqrt(db[0]*db[0]+db[1]*db[1]);
+    const ua=[da[0]/la,da[1]/la],ub=[db[0]/lb,db[1]/lb];
+    ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.2;
+    ctx.beginPath();
+    ctx.moveTo(vx+ua[0]*s,vy+ua[1]*s);
+    ctx.lineTo(vx+ua[0]*s+ub[0]*s,vy+ua[1]*s+ub[1]*s);
+    ctx.lineTo(vx+ub[0]*s,vy+ub[1]*s);
+    ctx.stroke(); ctx.restore();
+  }
+  ra(ctx,T[0],T[1],cx,cy,P[0],P[1]);
+  ra(ctx,S[0],S[1],cx,cy,P[0],P[1]);
+  dot(ctx,T[0],T[1]); dot(ctx,S[0],S[1]);
+  // angle at P
+  smallArc(ctx,P[0],P[1],T[0],T[1],S[0],S[1],30,'#e05020');
+  lbl(ctx,'46°',P[0]-44,P[1],{color:'#e05020'});
+  lbl(ctx,'a°',cx-28,cy,{color:'#b05020'});
+  lbl(ctx,'b°',T[0]-10,T[1]+18,{color:'#b05020'});
+  lbl(ctx,'O',cx+12,cy,{color:'#888'});
+  lbl(ctx,'T',T[0]-14,T[1]-10);
+  lbl(ctx,'S',S[0]-14,S[1]+14);
+  lbl(ctx,'P',P[0]+12,P[1]);
+})();
+
+// ── Q10: 14E Q1a — tangent-chord angle, 40°, 60°, find x ─────────────────────
+(()=>{
+  const c=document.getElementById('q10'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=100;
+  circle(ctx,cx,cy,r);
+  const A=onCircle(cx,cy,r,180);  // left
+  const B=onCircle(cx,cy,r,50);   // top-right
+  const CC=onCircle(cx,cy,r,-90); // bottom (tangent point)
+  poly(ctx,[A,B,CC],'#ead8f088','#6a3a8a',1.5);
+  // tangent at C (horizontal)
+  const T=[CC[0]+90, CC[1]];
+  line(ctx,CC[0]-80,CC[1],T[0],T[1],'#a04030',1.8);
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]); dot(ctx,CC[0],CC[1]);
+  lbl(ctx,'A',A[0]-14,A[1]);
+  lbl(ctx,'B',B[0]+10,B[1]-10);
+  lbl(ctx,'C',CC[0]-14,CC[1]+14);
+  lbl(ctx,'T',T[0]+10,T[1]);
+  // angles
+  lbl(ctx,'40°',CC[0]+8,CC[1]-22,{color:'#555',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'60°',A[0]+30,A[1]-18,{color:'#555',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'x°',CC[0]+30,CC[1]-8,{color:'#b05020',font:'12px "JetBrains Mono",monospace'});
+})();
+
+// ── Q11: 14F Q1a — cyclic quad, 128° and x° opposite ─────────────────────────
+(()=>{
+  const c=document.getElementById('q11'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=100;
+  circle(ctx,cx,cy,r);
+  const A=onCircle(cx,cy,r,150);
+  const B=onCircle(cx,cy,r,30);
+  const CC=onCircle(cx,cy,r,-60);
+  const D=onCircle(cx,cy,r,-150);
+  poly(ctx,[A,B,CC,D],'#d4e8d088','#4a8a60',1.5);
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]); dot(ctx,CC[0],CC[1]); dot(ctx,D[0],D[1]);
+  // angle at D = 128° (bottom-left vertex of cyclic quad)
+  lbl(ctx,'128°',D[0]+32,D[1]-8,{color:'#555',font:'12px "JetBrains Mono",monospace'});
+  // angle at B = x° (opposite to D)
+  lbl(ctx,'x°',B[0]-28,B[1]+14,{color:'#b05020',font:'12px "JetBrains Mono",monospace'});
+})();
+
+// ── Q12: 14G Q1a — two chords crossing, 46° and x° ───────────────────────────
+(()=>{
+  const c=document.getElementById('q12'), ctx=c.getContext('2d');
+  const cx=130, cy=130, r=100;
+  circle(ctx,cx,cy,r);
+  const A=onCircle(cx,cy,r,160);
+  const B=onCircle(cx,cy,r,20);
+  const CC=onCircle(cx,cy,r,-70);
+  const D=onCircle(cx,cy,r,-140);
+  // two chords: A-C and B-D (crossing inside)
+  line(ctx,A[0],A[1],CC[0],CC[1],'#4a8a60',1.8);
+  line(ctx,B[0],B[1],D[0],D[1],'#3a6ea5',1.8);
+  dot(ctx,A[0],A[1]); dot(ctx,B[0],B[1]); dot(ctx,CC[0],CC[1]); dot(ctx,D[0],D[1]);
+  // intersection point
+  // find intersection of A-C and B-D
+  const [ax,ay]=[A[0],A[1]],[bx,by]=[CC[0],CC[1]];
+  const [cx2,cy2]=[B[0],B[1]],[dx2,dy2]=[D[0],D[1]];
+  const denom=(ax-bx)*(cy2-dy2)-(ay-by)*(cx2-dx2);
+  const t=((ax-cx2)*(cy2-dy2)-(ay-cy2)*(cx2-dx2))/denom;
+  const ix=ax+t*(bx-ax), iy=ay+t*(by-ay);
+  dot(ctx,ix,iy,3,'#888');
+  // angle labels — 46° at one intersection angle, x° at the other
+  lbl(ctx,'46°',ix+16,iy+16,{color:'#555',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'x°',ix-32,iy-16,{color:'#b05020',font:'12px "JetBrains Mono",monospace'});
+})();
+</script>
+</body>
+</html>
