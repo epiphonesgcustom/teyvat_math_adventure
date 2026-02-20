@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geometry — Test Suite</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f0e8;
+    color: #1a1a1a;
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* ─── Header ────────────────────────────────────────────── */
+  .header {
+    background: #18181f;
+    color: #e8e4dc;
+    padding: 60px 40px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% -10%, #2a1c08 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #e8b86d;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .header-sub {
+    color: #666678;
+    font-size: 0.9rem;
+    font-style: italic;
+    position: relative;
+  }
+
+  /* ─── Container ─────────────────────────────────────────── */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 52px 24px 0; }
+
+  /* ─── Section label ─────────────────────────────────────── */
+  .slabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #aaa;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+    margin: 44px 0 16px;
+  }
+
+  /* ─── Stats strip ───────────────────────────────────────── */
+  .stats {
+    display: flex;
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 #d0c9bc;
+    overflow: hidden;
+  }
+  .stat {
+    flex: 1;
+    text-align: center;
+    padding: 20px 10px;
+    border-right: 1px solid #eee;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #b05020;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.57rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #bbb;
+  }
+
+  /* ─── Cards ─────────────────────────────────────────────── */
+  .cards { display: flex; flex-direction: column; gap: 11px; }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-left: 4px solid currentColor;
+    border-radius: 4px;
+    padding: 17px 20px;
+    box-shadow: 3px 3px 0 #d0c9bc;
+    transition: transform .1s, box-shadow .1s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-1px,-1px);
+    box-shadow: 5px 5px 0 #c8c0b2;
+  }
+
+  /* per-chapter accent colours (used as currentColor on border-left) */
+  .c5  { color: #bf4444; } .c5  .badge { background: #bf4444; }
+  .c8  { color: #b07618; } .c8  .badge { background: #b07618; }
+  .c13 { color: #888818; } .c13 .badge { background: #888818; }
+  .c14 { color: #259425; } .c14 .badge { background: #259425; }
+  .c15 { color: #267cb8; } .c15 .badge { background: #267cb8; }
+  .c16 { color: #6545b8; } .c16 .badge { background: #6545b8; }
+  .cR  { color: #7838a0; } .cR  .badge { background: #7838a0; }
+
+  /* Reset color so card text isn't tinted */
+  .card .card-body,
+  .card .arrow { color: #1a1a1a; }
+
+  .badge {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .card-body { flex: 1; min-width: 0; }
+  .cmeta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 2px;
+  }
+  .ctitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 1px;
+  }
+  .cdesc {
+    font-size: 0.82rem;
+    color: #777;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .arrow {
+    flex-shrink: 0;
+    font-size: 1rem;
+    color: #ccc;
+    transition: transform .1s, color .1s;
+  }
+  .card:hover .arrow { transform: translateX(4px); color: #999; }
+
+  /* Final test — dark card */
+  .final {
+    background: #18181f;
+    border-color: #36364a;
+    border-left-color: #e8b86d;
+  }
+  .final .cmeta  { color: #44445a; }
+  .final .ctitle { color: #e8e4dc; }
+  .final .cdesc  { color: #44445a; }
+  .final .arrow  { color: #36364a; }
+  .final:hover .arrow { color: #777; }
+  .final .badge  { background: #e8b86d; color: #18181f; font-size: 1rem; }
+
+  /* ─── Formula grid ───────────────────────────────────────── */
+  .fgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 #d0c9bc;
+    overflow: hidden;
+  }
+  .fblock {
+    padding: 20px 22px;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+  .fblock:nth-child(even)       { border-right: none; }
+  .fblock:nth-last-child(-n+2)  { border-bottom: none; }
+
+  .ftitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.57rem;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #f0ebe2;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .frow {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 2;
+  }
+  .fl { color: #bbb; min-width: 70px; flex-shrink: 0; font-size: 0.7rem; }
+  .fr { color: #1a1a1a; font-weight: 600; }
+
+  .fnote {
+    font-family: 'Lora', serif;
+    font-size: 0.74rem;
+    color: #999;
+    font-style: italic;
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 560px) {
+    .fgrid { grid-template-columns: 1fr; }
+    .fblock { border-right: none; }
+    .fblock:nth-last-child(-n+2) { border-bottom: 1px solid #eee; }
+    .fblock:last-child { border-bottom: none; }
+    .stats { flex-wrap: wrap; }
+    .stat { min-width: 50%; border-bottom: 1px solid #eee; }
+    .header { padding: 40px 20px 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Mathematics · Geometry</div>
+  <h1>Test Suite</h1>
+  <p class="header-sub">Select a chapter or revision test below</p>
+</div>
+
+<div class="wrap">
+
+  <!-- Stats -->
+  <div class="slabel" style="margin-top:0; border-bottom:none; padding:0 0 0 2px; margin-bottom:14px;"></div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">9</div><div class="stat-l">Tests</div></div>
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Chapters</div></div>
+    <div class="stat"><div class="stat-n">2</div><div class="stat-l">Revision sets</div></div>
+    <div class="stat"><div class="stat-n">94</div><div class="stat-l">Questions</div></div>
+  </div>
+
+  <!-- ══ Chapter tests ══════════════════════════════════════════ -->
+  <div class="slabel">Chapter Tests</div>
+  <div class="cards">
+
+    <a class="card c5" href="chapter5_test.html">
+      <div class="badge">5</div>
+      <div class="card-body">
+        <div class="cmeta">Chapter 5 · Pythagoras</div>
+        <div class="ctitle">Pythagorean Theorem</div>
+        <div class="cdesc">Finding hypotenuse &amp; unknown sides, surd form, Pythagorean triples, right-angle test — 11 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card c8" href="chapter8_test.html">
+      <div class="badge">8</div>
+      <div class="card-body">
+        <div class="cmeta">Chapter 8 · Mensuration</div>
+        <div class="ctitle">Lengths, Areas, Surface Areas &amp; Volumes</div>
+        <div class="cdesc">Perimeter, arc length, sectors, annuli, prisms, pyramids, cylinders, cones — 10 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card c13" href="chapter13_test.html">
+      <div class="badge">13</div>
+      <div class="card-body">
+        <div class="cmeta">Chapter 13 · Congruence &amp; Similarity</div>
+        <div class="ctitle">Congruence Tests &amp; Similar Triangles</div>
+        <div class="cdesc">SAS, RHS, ASA, AAS congruence; AA similarity; scale factors &amp; real applications — 10 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card c14" href="chapter14_test.html">
+      <div class="badge">14</div>
+      <div class="card-body">
+        <div class="cmeta">Chapter 14 · Circle Theorems</div>
+        <div class="ctitle">Circle Theorems</div>
+        <div class="cdesc">Central &amp; inscribed angles, chords, tangents, cyclic quadrilaterals, alternate segment — 12 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card c15" href="chapter15_test.html">
+      <div class="badge">15</div>
+      <div class="card-body">
+        <div class="cmeta">Chapter 15 · Right-Angle Trigonometry</div>
+        <div class="ctitle">Right-Angled Triangle Trigonometry</div>
+        <div class="cdesc">sin/cos/tan ratios, finding sides &amp; angles, elevation, depression &amp; bearings — 10 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card c16" href="chapter16_test.html">
+      <div class="badge">16</div>
+      <div class="card-body">
+        <div class="cmeta">Chapter 16 · Non-Right Trigonometry</div>
+        <div class="ctitle">Non-Right Triangle Trigonometry</div>
+        <div class="cdesc">Area = ½ab sin C; sine rule; cosine rule; bearings &amp; real-world problems — 12 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- ══ Revision tests ═════════════════════════════════════════ -->
+  <div class="slabel">Revision Tests</div>
+  <div class="cards">
+
+    <a class="card cR" href="revision1_test.html">
+      <div class="badge">R1</div>
+      <div class="card-body">
+        <div class="cmeta">Revision 1 · Review Sets 8A &amp; 13B</div>
+        <div class="ctitle">Midterm Review</div>
+        <div class="cdesc">Measures &amp; congruence / similarity in exam review format — 10 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card cR" href="revision2_test.html">
+      <div class="badge">R2</div>
+      <div class="card-body">
+        <div class="cmeta">Revision 2 · Review Sets 8B, 13A, 14A, 15B, 16B</div>
+        <div class="ctitle">Final Review</div>
+        <div class="cdesc">All topics mixed — measures, congruence, circles, trig — 22 questions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- ══ Final test ═════════════════════════════════════════════ -->
+  <div class="slabel">Cumulative Final</div>
+  <div class="cards">
+    <a class="card final" href="final_test.html">
+      <div class="badge">★</div>
+      <div class="card-body">
+        <div class="cmeta">Final Test · All Chapters</div>
+        <div class="ctitle">Comprehensive Final Test</div>
+        <div class="cdesc">20 questions spanning all 6 chapters — full step-by-step worked solutions</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ══ Formula reference ══════════════════════════════════════ -->
+  <div class="slabel">Quick Formula Reference</div>
+  <div class="fgrid">
+
+    <div class="fblock">
+      <div class="ftitle"><span class="dot" style="background:#bf4444"></span>Pythagoras · Ch 5</div>
+      <div class="frow"><span class="fl">c²</span><span class="fr">= a² + b²</span></div>
+      <div class="frow"><span class="fl">c</span><span class="fr">= √(a² + b²)</span></div>
+      <div class="frow"><span class="fl">a</span><span class="fr">= √(c² − b²)</span></div>
+      <div class="fnote">c is always the hypotenuse (longest side, opposite the right angle)</div>
+    </div>
+
+    <div class="fblock">
+      <div class="ftitle"><span class="dot" style="background:#267cb8"></span>Right-Angle Trig · Ch 15</div>
+      <div class="frow"><span class="fl">sin θ</span><span class="fr">= opp / hyp</span></div>
+      <div class="frow"><span class="fl">cos θ</span><span class="fr">= adj / hyp</span></div>
+      <div class="frow"><span class="fl">tan θ</span><span class="fr">= opp / adj</span></div>
+      <div class="fnote">SOH · CAH · TOA — invert for finding angles</div>
+    </div>
+
+    <div class="fblock">
+      <div class="ftitle"><span class="dot" style="background:#6545b8"></span>Non-Right Trig · Ch 16</div>
+      <div class="frow"><span class="fl">Area</span><span class="fr">= ½ab sin C</span></div>
+      <div class="frow"><span class="fl">Sine rule</span><span class="fr">a/sin A = b/sin B = c/sin C</span></div>
+      <div class="frow"><span class="fl">Cosine</span><span class="fr">c² = a²+b² − 2ab cos C</span></div>
+      <div class="frow"><span class="fl">Rearranged</span><span class="fr">cos C = (a²+b²−c²) / 2ab</span></div>
+    </div>
+
+    <div class="fblock">
+      <div class="ftitle"><span class="dot" style="background:#b07618"></span>Areas &amp; Volumes · Ch 8</div>
+      <div class="frow"><span class="fl">Circle</span><span class="fr">A = πr², C = 2πr</span></div>
+      <div class="frow"><span class="fl">Sector</span><span class="fr">A = (θ/360)πr², ℓ = (θ/360)2πr</span></div>
+      <div class="frow"><span class="fl">Trapezium</span><span class="fr">A = ½(a+b)h</span></div>
+      <div class="frow"><span class="fl">Prism/cyl.</span><span class="fr">V = A<sub>base</sub> × h</span></div>
+      <div class="frow"><span class="fl">Pyramid</span><span class="fr">V = ⅓ × A<sub>base</sub> × h</span></div>
+    </div>
+
+    <div class="fblock">
+      <div class="ftitle"><span class="dot" style="background:#259425"></span>Circle Theorems · Ch 14</div>
+      <div class="frow"><span class="fl">Centre ∠</span><span class="fr">= 2 × inscribed ∠ (same arc)</span></div>
+      <div class="frow"><span class="fl">Semicircle</span><span class="fr">inscribed ∠ = 90°</span></div>
+      <div class="frow"><span class="fl">Same seg.</span><span class="fr">inscribed ∠s are equal</span></div>
+      <div class="frow"><span class="fl">Cyclic □</span><span class="fr">opposite ∠s sum to 180°</span></div>
+      <div class="frow"><span class="fl">Tangent</span><span class="fr">⊥ radius at point of contact</span></div>
+      <div class="fnote">Alternate segment theorem: tangent–chord ∠ = inscribed ∠ in opposite segment</div>
+    </div>
+
+    <div class="fblock">
+      <div class="ftitle"><span class="dot" style="background:#888818"></span>Congruence &amp; Similarity · Ch 13</div>
+      <div class="frow"><span class="fl">Congruent</span><span class="fr">SSS, SAS, ASA, AAS, RHS</span></div>
+      <div class="frow"><span class="fl">Similar</span><span class="fr">AA (two equal angles)</span></div>
+      <div class="frow"><span class="fl">Sides</span><span class="fr">scale factor k</span></div>
+      <div class="frow"><span class="fl">Areas</span><span class="fr">scale factor k²</span></div>
+      <div class="frow"><span class="fl">Volumes</span><span class="fr">scale factor k³</span></div>
+      <div class="fnote">SSA is <em>not</em> a valid congruence test</div>
+    </div>
+
+  </div>
+
+</div><!-- /wrap -->
+</body>
+</html>

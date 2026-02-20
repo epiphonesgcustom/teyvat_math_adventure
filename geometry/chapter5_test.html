@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 5 — Pythagorean Theorem Test</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f0e8; font-family: 'Lora', Georgia, serif; color: #1a1a1a; padding: 40px 20px; }
+  h1 { text-align: center; font-size: 1.7rem; font-weight: 600; margin-bottom: 6px; color: #2c2c2c; }
+  .subtitle { text-align: center; font-style: italic; color: #666; margin-bottom: 48px; font-size: 0.95rem; }
+  .section-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; color: #888;
+    border-bottom: 1px solid #ccc; padding-bottom: 6px; margin: 40px auto 20px;
+    max-width: 900px;
+  }
+  .questions { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+  .qcard {
+    background: #fff; border: 1.5px solid #ddd; border-radius: 4px;
+    padding: 24px 28px; box-shadow: 3px 3px 0 #d0c9bc;
+  }
+  .qlabel {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #b05020; margin-bottom: 8px;
+  }
+  .qtext { font-size: 1rem; line-height: 1.6; color: #222; margin-bottom: 12px; }
+  canvas { display: block; margin: 10px 0 6px; border: 1px solid #e8e0d4; border-radius: 2px; background: #fdfaf6; max-width: 100%; }
+  details { margin-top: 14px; }
+  summary {
+    cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    font-weight: 600; color: #3a6ea5; letter-spacing: 0.06em; user-select: none;
+  }
+  summary:hover { color: #b05020; }
+  .answer {
+    margin-top: 12px; background: #f0f6ee; border-left: 3px solid #4a8a60;
+    padding: 14px 16px; font-size: 0.92rem; line-height: 1.8; color: #1a1a1a;
+    border-radius: 0 4px 4px 0;
+  }
+  .answer strong { color: #2c6e40; }
+  .answer em { color: #b05020; font-style: normal; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Chapter 5 — Pythagorean Theorem</h1>
+<p class="subtitle">10 questions · click "Show answer" to reveal working</p>
+
+<p class="section-title">Part 1 — Finding the Hypotenuse (5A Q1)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 1 · 5A Q1a</div>
+  <div class="qtext">Find the length of the hypotenuse. Give your answer in simplest surd form where appropriate.</div>
+  <canvas id="q1" width="280" height="180"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    c² = 7² + 4² = 49 + 16 = 65<br>
+    <strong>c = √65 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 2 · 5A Q1d</div>
+  <div class="qtext">Find the length of the hypotenuse. Give your answer in simplest surd form. (Tick marks indicate the two legs are equal.)</div>
+  <canvas id="q2" width="280" height="180"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    c² = 5² + 5² = 50<br>
+    c = √50 = √(25 × 2)<br>
+    <strong>c = 5√2 cm</strong>
+  </div></details>
+</div>
+
+</div>
+<p class="section-title">Part 2 — Finding an Unknown Side (5A Q2 & Q3)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 3 · 5A Q2a</div>
+  <div class="qtext">Find the length of the unknown side in simplest surd form.</div>
+  <canvas id="q3" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    6² + b² = 11²<br>
+    36 + b² = 121<br>
+    b² = 85<br>
+    <strong>b = √85 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 4 · 5A Q2b</div>
+  <div class="qtext">Find the length of the unknown side in simplest surd form.</div>
+  <canvas id="q4" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    15² + b² = 17²<br>
+    225 + b² = 289<br>
+    b² = 64<br>
+    <strong>b = 8 m</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 5 · 5A Q2c</div>
+  <div class="qtext">Find the length of the unknown side in simplest surd form.</div>
+  <canvas id="q5" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    3² + b² = 9²<br>
+    9 + b² = 81<br>
+    b² = 72 = 36 × 2<br>
+    <strong>b = 6√2 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 6 · 5A Q3a</div>
+  <div class="qtext">Find the unknown side to 1 decimal place.</div>
+  <canvas id="q6" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    c² = 5² + 8² = 25 + 64 = 89<br>
+    c = √89 ≈ <strong>9.4 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 7 · 5A Q3d</div>
+  <div class="qtext">Find the hypotenuse to 1 decimal place.</div>
+  <canvas id="q7" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    c² = 6.1² + 8.5² = 37.21 + 72.25 = 109.46<br>
+    c = √109.46 ≈ <strong>10.5 cm</strong>
+  </div></details>
+</div>
+
+</div>
+<p class="section-title">Part 3 — Surd Values of x (5A Q4)</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 8 · 5A Q4a</div>
+  <div class="qtext">Find the value of x.</div>
+  <canvas id="q8" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    (√2)² + x² = 3²<br>
+    2 + x² = 9<br>
+    x² = 7<br>
+    <strong>x = √7 cm</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Question 9 · 5A Q4d</div>
+  <div class="qtext">Find the value of x.</div>
+  <canvas id="q9" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    x² + (2√2)² = (3√3)²<br>
+    x² + 8 = 27<br>
+    x² = 19<br>
+    <strong>x = √19 cm</strong>
+  </div></details>
+</div>
+
+</div>
+<p class="section-title">Part 4 — Pythagorean Triples & Right Angle Test</p>
+<div class="questions">
+
+<div class="qcard">
+  <div class="qlabel">Question 10 · 5B Q3a</div>
+  <div class="qtext">Find k given that {12, 16, k} is a Pythagorean triple.</div>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    k must be the largest value (hypotenuse).<br>
+    k² = 12² + 16² = 144 + 256 = 400<br>
+    <strong>k = 20</strong>
+  </div></details>
+</div>
+
+<div class="qcard">
+  <div class="qlabel">Bonus · 5D Q1f</div>
+  <div class="qtext">The triangle below has sides 8 m, 15 m and 17 m. Is it right-angled? Show working.</div>
+  <canvas id="qb" width="300" height="190"></canvas>
+  <details><summary>Show answer</summary>
+  <div class="answer">
+    Check: does a² + b² = c²?<br>
+    8² + 15² = 64 + 225 = 289<br>
+    17² = 289 ✓<br>
+    <strong>Yes, the triangle is right-angled (converse of Pythagorean theorem).</strong>
+  </div></details>
+</div>
+
+</div>
+
+<script>
+// ── Helpers ──────────────────────────────────────────────────────────────────
+// All triangles use generous padding: left=60, right=20, top=20, bottom=30
+// so side labels are never clipped by the canvas edge.
+
+function lbl(ctx, text, x, y, opts={}) {
+  ctx.save();
+  ctx.font = opts.font || '13px "JetBrains Mono",monospace';
+  ctx.fillStyle = opts.color || '#333';
+  ctx.textAlign = opts.align || 'center';
+  ctx.textBaseline = opts.base || 'middle';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+function tri(ctx, A, B, C, fill, stroke) {
+  ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(B[0],B[1]); ctx.lineTo(C[0],C[1]); ctx.closePath();
+  if(fill){ctx.fillStyle=fill; ctx.fill();}
+  ctx.strokeStyle=stroke||'#3a6ea5'; ctx.lineWidth=2; ctx.stroke();
+}
+function rightAngle(ctx, vx, vy, ax, ay, bx, by, size=11) {
+  const da=[ax-vx,ay-vy], la=Math.sqrt(da[0]*da[0]+da[1]*da[1]);
+  const db=[bx-vx,by-vy], lb=Math.sqrt(db[0]*db[0]+db[1]*db[1]);
+  const ua=[da[0]/la,da[1]/la], ub=[db[0]/lb,db[1]/lb];
+  const p1=[vx+ua[0]*size,vy+ua[1]*size];
+  const p2=[vx+ua[0]*size+ub[0]*size,vy+ua[1]*size+ub[1]*size];
+  const p3=[vx+ub[0]*size,vy+ub[1]*size];
+  ctx.save(); ctx.strokeStyle='#555'; ctx.lineWidth=1.4;
+  ctx.beginPath(); ctx.moveTo(p1[0],p1[1]); ctx.lineTo(p2[0],p2[1]); ctx.lineTo(p3[0],p3[1]); ctx.stroke();
+  ctx.restore();
+}
+function tick(ctx, x1,y1,x2,y2,n=1,color='#555') {
+  const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+  const px=-dy/len*7,py=dx/len*7;
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=1.6;
+  for(let i=0;i<n;i++){
+    const off=(i-(n-1)/2)*5;
+    const nx=mx+(dx/len)*off,ny=my+(dy/len)*off;
+    ctx.beginPath(); ctx.moveTo(nx-px,ny-py); ctx.lineTo(nx+px,ny+py); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// Layout helper: right-angle at bottom-left, horizontal base, vertical left side
+// padL=left padding for vertical-side label, padB=bottom padding for base label
+function drawRightTri(id, legV, legH, fill, stroke, labelV, labelH, labelHyp, opts={}) {
+  const c = document.getElementById(id), ctx = c.getContext('2d');
+  const padL=55, padR=30, padT=25, padB=30;
+  const w=c.width, h=c.height;
+  // Triangle vertices
+  const A=[padL, h-padB];          // bottom-left, right angle
+  const B=[w-padR, h-padB];        // bottom-right
+  const C=[padL, padT];            // top-left
+  tri(ctx,A,B,C,fill,stroke);
+  rightAngle(ctx,A[0],A[1],C[0],C[1],B[0],B[1]);
+  if(opts.tickV) tick(ctx,A[0],A[1],C[0],C[1],1,stroke);
+  if(opts.tickH) tick(ctx,A[0],A[1],B[0],B[1],1,stroke);
+  // vertical side label (left side, centred, right-aligned)
+  lbl(ctx, labelV, A[0]-12, (A[1]+C[1])/2, {align:'right', color:'#333'});
+  // horizontal base label (below base, centred)
+  lbl(ctx, labelH, (A[0]+B[0])/2, A[1]+18, {align:'center', color:'#333'});
+  // hypotenuse label (above midpoint, slightly right)
+  const hx=(B[0]+C[0])/2, hy=(B[1]+C[1])/2;
+  lbl(ctx, labelHyp, hx+16, hy-10, {align:'left', color: opts.hypColor||'#b05020'});
+}
+
+// Q1: legs 7cm (vert) and 4cm (horiz), find hyp
+drawRightTri('q1',7,4,'#d4e8d0','#4a8a60','7 cm','4 cm','?');
+
+// Q2: equal legs 5cm, find hyp
+(()=>{
+  const c=document.getElementById('q2'),ctx=c.getContext('2d');
+  const padL=55,padR=30,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[padL,padT];
+  tri(ctx,A,B,C,'#d4e8d0','#4a8a60');
+  rightAngle(ctx,A[0],A[1],C[0],C[1],B[0],B[1]);
+  tick(ctx,A[0],A[1],C[0],C[1],1,'#4a8a60');
+  tick(ctx,A[0],A[1],B[0],B[1],1,'#4a8a60');
+  lbl(ctx,'5 cm',A[0]-12,(A[1]+C[1])/2,{align:'right'});
+  lbl(ctx,'5 cm',(A[0]+B[0])/2,A[1]+18);
+  lbl(ctx,'?',(B[0]+C[0])/2+16,(B[1]+C[1])/2-10,{color:'#b05020',align:'left'});
+})();
+
+// Q3: hyp 11cm, leg 6cm (vert), find base
+(()=>{
+  const c=document.getElementById('q3'),ctx=c.getContext('2d');
+  const padL=55,padR=30,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[padL,padT];
+  tri(ctx,A,B,C,'#c8daf0','#3a6ea5');
+  rightAngle(ctx,A[0],A[1],C[0],C[1],B[0],B[1]);
+  lbl(ctx,'6 cm',A[0]-12,(A[1]+C[1])/2,{align:'right'});
+  lbl(ctx,'? cm',(A[0]+B[0])/2,A[1]+18,{color:'#b05020'});
+  lbl(ctx,'11 cm',(B[0]+C[0])/2+16,(B[1]+C[1])/2-10,{align:'left'});
+})();
+
+// Q4: hyp 17m, base 15m, find vert side
+(()=>{
+  const c=document.getElementById('q4'),ctx=c.getContext('2d');
+  // right angle at bottom-right this time
+  const padL=30,padR=55,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[w-padR,padT];
+  tri(ctx,A,B,C,'#c8daf0','#3a6ea5');
+  rightAngle(ctx,B[0],B[1],A[0],A[1],C[0],C[1]);
+  lbl(ctx,'15 m',(A[0]+B[0])/2,A[1]+18);
+  lbl(ctx,'17 m',(A[0]+C[0])/2-16,(A[1]+C[1])/2,{align:'right'});
+  lbl(ctx,'? m',B[0]+12,(B[1]+C[1])/2,{color:'#b05020',align:'left'});
+})();
+
+// Q5: hyp 9cm, vert side 3cm, find base
+(()=>{
+  const c=document.getElementById('q5'),ctx=c.getContext('2d');
+  const padL=30,padR=55,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[w-padR,padT];
+  tri(ctx,A,B,C,'#c8daf0','#3a6ea5');
+  rightAngle(ctx,B[0],B[1],A[0],A[1],C[0],C[1]);
+  lbl(ctx,'9 cm',(A[0]+C[0])/2-16,(A[1]+C[1])/2,{align:'right'});
+  lbl(ctx,'3 cm',B[0]+12,(B[1]+C[1])/2,{align:'left'});
+  lbl(ctx,'? m',(A[0]+B[0])/2,A[1]+18,{color:'#b05020'});
+})();
+
+// Q6: legs 5cm (vert) and 8cm (horiz), find hyp
+drawRightTri('q6',5,8,'#ead8f0','#6a3a8a','5 cm','8 cm','?');
+
+// Q7: legs 6.1cm (vert) and 8.5cm (horiz), find hyp
+drawRightTri('q7',6.1,8.5,'#ead8f0','#6a3a8a','6.1 cm','8.5 cm','?');
+
+// Q8: hyp 3cm, vert leg √2cm, find base x
+(()=>{
+  const c=document.getElementById('q8'),ctx=c.getContext('2d');
+  const padL=60,padR=30,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[padL,padT];
+  tri(ctx,A,B,C,'#fdd8a0','#b08020');
+  rightAngle(ctx,A[0],A[1],C[0],C[1],B[0],B[1]);
+  lbl(ctx,'√2 cm',A[0]-12,(A[1]+C[1])/2,{align:'right'});
+  lbl(ctx,'x cm',(A[0]+B[0])/2,A[1]+18,{color:'#b05020'});
+  lbl(ctx,'3 cm',(B[0]+C[0])/2+16,(B[1]+C[1])/2-10,{align:'left'});
+})();
+
+// Q9: hyp 3√3cm, vert leg 2√2cm, find base x
+(()=>{
+  const c=document.getElementById('q9'),ctx=c.getContext('2d');
+  const padL=68,padR=30,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[padL,padT];
+  tri(ctx,A,B,C,'#fdd8a0','#b08020');
+  rightAngle(ctx,A[0],A[1],C[0],C[1],B[0],B[1]);
+  lbl(ctx,'2√2 cm',A[0]-12,(A[1]+C[1])/2,{align:'right',font:'12px "JetBrains Mono",monospace'});
+  lbl(ctx,'x cm',(A[0]+B[0])/2,A[1]+18,{color:'#b05020'});
+  lbl(ctx,'3√3 cm',(B[0]+C[0])/2+16,(B[1]+C[1])/2-10,{align:'left',font:'12px "JetBrains Mono",monospace'});
+})();
+
+// Bonus: sides 8m, 15m, 17m — is it right-angled?
+(()=>{
+  const c=document.getElementById('qb'),ctx=c.getContext('2d');
+  const padL=52,padR=30,padT=25,padB=30,w=c.width,h=c.height;
+  const A=[padL,h-padB],B=[w-padR,h-padB],C=[padL,padT];
+  tri(ctx,A,B,C,'#e0e0e0','#555');
+  lbl(ctx,'8 m',A[0]-12,(A[1]+C[1])/2,{align:'right'});
+  lbl(ctx,'15 m',(A[0]+B[0])/2,A[1]+18);
+  lbl(ctx,'17 m',(B[0]+C[0])/2+16,(B[1]+C[1])/2-10,{align:'left'});
+  lbl(ctx,'right angle?',A[0]+22,A[1]-14,{color:'#b05020',font:'11px "JetBrains Mono",monospace',align:'left'});
+})();
+</script>
+</body>
+</html>
